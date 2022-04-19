@@ -1,1 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use './theme' as theme;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Montserrat, Roboto, "Helvetica Neue", sans-serif; }
+*, *::before, *::after { box-sizing: border-box; }
+
+@include mat.core(theme.$app-typography);
+@include mat.core-theme(theme.$app-theme);
+@include mat.all-component-themes(theme.$app-theme);

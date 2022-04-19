@@ -1,0 +1,33 @@
+@use '@angular/material' as mat;
+@use 'src/theme' as theme;
+
+:host {
+  display: block;
+  margin-top: 40px;
+  text-align: center;
+}
+
+header {
+}
+
+main {
+  display: flex;
+  justify-content: space-evenly;
+
+  .download-button {
+    display: block;
+    margin: 0 auto;
+    padding: 10px 40px;
+
+    mat-icon {
+      margin-right: 10px;
+    }
+  }
+
+  .os-icon {
+    width: 200px;
+    height: 200px;
+    color: mat.get-color-from-palette(theme.$app-primary-palette, 400);
+    margin-bottom: 40px;
+  }
+}

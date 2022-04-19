@@ -1,27 +1,53 @@
-# GlintSite
+# Github Pages SPA
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.3.
+Uses https://github.com/rafgraph/spa-github-pages :
 
-## Development server
+404.html:
+```
+Single Page Apps for GitHub Pages
+MIT License
+https://github.com/rafgraph/spa-github-pages
+This script takes the current url and converts the path and query
+string into just a query string, and then redirects the browser
+to the new url with only a query string and hash fragment,
+e.g. https://www.foo.tld/one/two?a=b&c=d#qwe, becomes
+https://www.foo.tld/?/one/two&a=b~and~c=d#qwe
+Note: this 404.html file must be at least 512 bytes for it to work
+with Internet Explorer (it is currently > 512 bytes)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+If you're creating a Project Pages site and NOT using a custom domain,
+then set pathSegmentsToKeep to 1 (enterprise users may need to set it to > 1).
+This way the code will only replace the route part of the path, and not
+the real directory in which the app resides, for example:
+https://username.github.io/repo-name/one/two?a=b&c=d#qwe becomes
+https://username.github.io/repo-name/?/one/two&a=b~and~c=d#qwe
+Otherwise, leave pathSegmentsToKeep as 0.
+```
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `docs/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+index.html:
+```
+<!-- Start Single Page Apps for GitHub Pages -->
+<script type="text/javascript">
+  // Single Page Apps for GitHub Pages
+  // MIT License
+  // https://github.com/rafgraph/spa-github-pages
+  // This script checks to see if a redirect is present in the query string,
+  // converts it back into the correct url and adds it to the
+  // browser's history using window.history.replaceState(...),
+  // which won't cause the browser to attempt to load the new url.
+  // When the single page app is loaded further down in this file,
+  // the correct url will be waiting in the browser's history for
+  // the single page app to route accordingly.
+  (function(l) {
+    if (l.search[1] === '/' ) {
+      var decoded = l.search.slice(1).split('&').map(function(s) {
+        return s.replace(/~and~/g, '&')
+      }).join('?');
+      window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+      );
+    }
+  }(window.location))
+</script>
+<!-- End Single Page Apps for GitHub Pages -->
+```
