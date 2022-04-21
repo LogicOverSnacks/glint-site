@@ -51,3 +51,15 @@ import 'zone.js';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+ if (window.location.search[1] === '/' ) {
+  const decoded = window.location.search
+    .slice(1)
+    .split('&')
+    .map(s => s.replace(/~and~/g, '&'))
+    .join('?');
+  window.history.replaceState(
+    null,
+    null as any,
+    window.location.pathname.slice(0, -1) + decoded + window.location.hash
+  );
+}

@@ -4,10 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && npm run build:playground && npm run copy:playground",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:playground": "cd glint/angular && npm ci && npm run copy:playground",
+    "build:playground": "cd glint/angular && npm ci && npm run build:playground",
     "copy:playground": "cpx ./glint/angular/dist/**/* ./docs/playground-code"
   },
   "private": true,
