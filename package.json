@@ -4,11 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build && npm run build:playground && npm run copy:playground",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "build:playground": "cd glint/angular && npm ci && npm run build:playground",
-    "copy:playground": "cpx ./glint/angular/dist/**/* ./docs/playground-code"
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
@@ -32,7 +30,6 @@
     "@angular/compiler-cli": "~13.3.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
-    "cpx2": "^4.2.0",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
