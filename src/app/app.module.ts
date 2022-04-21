@@ -12,6 +12,7 @@ import { AboutComponent } from './about/about.components';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
 import { HomeComponent } from './home/home.component';
+import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { PlaygroundComponent } from './playground/playground.component';
     DocsComponent,
     DownloadComponent,
     HomeComponent,
+    PageNotFoundComponent,
     PlaygroundComponent
   ],
   providers: [

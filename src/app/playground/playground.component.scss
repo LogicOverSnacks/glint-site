@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 40px;
+  text-align: center;
+}
+
+header {
+  .title {
+    margin-bottom: 40px;
+  }
+}
+
+.glint {
+  height: 100%;
+  padding: 20px 60px;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    contain: content;
+  }
+}
