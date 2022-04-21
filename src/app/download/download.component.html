@@ -1,28 +1,37 @@
-<header class="mat-display-2">Download Glint</header>
+<header class="mat-display-2 title">Download Glint</header>
+
+<h2 class="latest-release">Latest {{releaseName ? '' : 'beta '}}release: {{releaseName ?? betaReleaseName}}</h2>
 
 <main>
   <div class="windows">
     <svg class="os-icon"><use xlink:href="assets/windows.svg#svg"></use></svg>
-    <button mat-stroked-button color="accent" class="download-button">
-      <mat-icon>file_download</mat-icon> <strong>Windows</strong>
-      <br>
-      Windows 8, 10, 11
-    </button>
+    <a [href]="releaseLinkWindows" target="_blank">
+      <button mat-stroked-button color="accent" class="download-button">
+        <mat-icon>file_download</mat-icon> <strong>Windows</strong>
+        <br>
+        x64
+      </button>
+    </a>
   </div>
   <div class="mac">
     <svg class="os-icon"><use xlink:href="assets/mac.svg#svg"></use></svg>
-    <button mat-stroked-button color="accent" class="download-button">
-      <mat-icon>file_download</mat-icon> <strong>Mac</strong>
-      <br>
-      macOS 10.11+, M1
-    </button>
+    <a [href]="releaseLinkMac" target="_blank">
+      <button mat-stroked-button color="accent" class="download-button">
+        <mat-icon>file_download</mat-icon> <strong>Mac</strong>
+        <br>
+        x64, arm64
+      </button>
+    </a>
   </div>
   <div class="linux">
     <svg class="os-icon"><use xlink:href="assets/linux.svg#svg"></use></svg>
-    <button mat-stroked-button color="accent" class="download-button">
-      <mat-icon>file_download</mat-icon> Linux
-      <br>
-      App Image
-    </button>
+    <a [href]="releaseLinkLinux" target="_blank">
+      <button mat-stroked-button color="accent" class="download-button">
+        <mat-icon>file_download</mat-icon> Linux
+        <br>
+        x64
+      </button>
+    </a>
+    <a href="https://snapcraft.io/glint" target="_blank"><img src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"></a>
   </div>
 </main>

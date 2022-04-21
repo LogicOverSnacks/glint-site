@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -7,13 +8,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AboutComponent } from './about/about.components';
+import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
 import { HomeComponent } from './home/home.component';
+import { PlaygroundComponent } from './playground/playground.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     MatButtonModule,
     MatIconModule,
     MatToolbarModule,
@@ -22,8 +27,11 @@ import { HomeComponent } from './home/home.component';
   ],
   declarations: [
     AppComponent,
+    AboutComponent,
+    DocsComponent,
     DownloadComponent,
-    HomeComponent
+    HomeComponent,
+    PlaygroundComponent
   ],
   providers: [
     Title

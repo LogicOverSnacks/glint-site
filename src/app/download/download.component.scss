@@ -3,11 +3,16 @@
 
 :host {
   display: block;
-  margin-top: 40px;
+  padding-top: 40px;
   text-align: center;
 }
 
-header {
+.title {
+  margin-bottom: 20px;
+}
+
+.latest-release {
+  margin-bottom: 40px;
 }
 
 main {
@@ -16,8 +21,9 @@ main {
 
   .download-button {
     display: block;
-    margin: 0 auto;
+    margin: 0 auto 10px auto;
     padding: 10px 40px;
+    width: 182px;
 
     mat-icon {
       margin-right: 10px;

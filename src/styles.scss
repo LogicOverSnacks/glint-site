@@ -1,9 +1,10 @@
 @use '@angular/material' as mat;
 @use './theme' as theme;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Montserrat, Roboto, "Helvetica Neue", sans-serif; }
 *, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; }
+body, h1, h2, h3, h4, p, li { margin: 0; }
+a { color: unset; text-decoration: unset; }
 
 @include mat.core(theme.$app-typography);
 @include mat.core-theme(theme.$app-theme);

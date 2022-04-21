@@ -1,11 +1,11 @@
 <mat-toolbar>
-  <button mat-button color="primary" routerLink="/">Logo Glint</button>
+  <a mat-button color="primary" routerLink="/">Logo</a>
 
   <ul class="links">
-    <li>Docs</li>
-    <li>Updates</li>
-    <li>FAQ</li>
-    <li>About</li>
+    <li><a routerLink="/docs" routerLinkActive="active">Docs</a></li>
+    <li><a routerLink="/updates" routerLinkActive="active">Updates</a></li>
+    <li><a routerLink="/faq" routerLinkActive="active">FAQ</a></li>
+    <li><a routerLink="/about" routerLinkActive="active">About</a></li>
   </ul>
 
   <button mat-flat-button class="download-button" color="accent" routerLink="/download">
