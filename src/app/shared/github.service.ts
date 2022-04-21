@@ -17,10 +17,6 @@ export interface IRelease {
 export class GithubService {
   constructor(private http: HttpClient) {}
 
-  getLatestRelease() {
-    return this.http.get<IRelease>(`https://api.github.com/repos/logicoversnacks/glint-release/releases/latest`);
-  }
-
   getReleases() {
     return this.http.get<IRelease[]>(`https://api.github.com/repos/logicoversnacks/glint-release/releases`);
   }
