@@ -15,6 +15,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     <h3>Sorry! The page you are looking for does not exist.</h3>
   `
 })
-export class PageNotFoundComponent {
-
-}
+export class PageNotFoundComponent {}

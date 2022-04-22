@@ -1,11 +1,22 @@
-<header>
-  <div class="mat-display-2 title">Play with Glint below:</div>
+<main fxShow fxHide.lt-md="true">
+  <header>
+    <div class="mat-display-2 title">Play with Glint below:</div>
 
+    <p>
+      Note: certain features are disabled and will do nothing - don't worry they will be available in the downloaded app!
+    </p>
+  </header>
+
+  <div class="glint">
+    <iframe src="https://gitglint.dev" frameborder="0"></iframe>
+  </div>
+</main>
+
+<main fxHide fxShow.lt-md="true">
   <p>
-    Note: certain features are disabled and will do nothing - don't worry they will be available in the downloaded app!
+    Your device is too small to use the playground.
   </p>
-</header>
-
-<div class="glint">
-  <iframe src="https://gitglint.dev" frameborder="0"></iframe>
-</div>
+  <p>
+    Try opening this page on a desktop computer to play with the demo.
+  </p>
+</main>

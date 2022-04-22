@@ -6,6 +6,7 @@ import { GithubService, IRelease } from '../shared/github.service';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-download',
   styleUrls: ['./download.component.scss'],
   templateUrl: './download.component.html'
 })

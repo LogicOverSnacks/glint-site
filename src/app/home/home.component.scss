@@ -1,0 +1,19 @@
+@use 'sass:map';
+@use '@angular/material' as mat;
+@use 'src/theme' as theme;
+
+:host {
+  display: block;
+  //height: 100%;
+}
+
+.banner {
+  background: mat.get-color-from-palette(map.get(map.get(theme.$app-theme, color), background), background);
+  padding: 60px 0;
+
+  &:nth-child(even) {
+    // background: mat.get-color-from-palette(map.get(map.get(theme.$app-theme, color), background), app-bar);
+    background: mat.get-color-from-palette(theme.$app-primary-palette, 400);
+    text-align: right;
+  }
+}

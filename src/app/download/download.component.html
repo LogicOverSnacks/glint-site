@@ -1,37 +1,71 @@
-<header class="mat-display-2 title">Download Glint</header>
+<app-container>
+  <header class="mat-display-2 title">Download Glint</header>
 
-<h2 class="latest-release">Latest {{releaseName ? '' : 'beta '}}release: {{releaseName ?? betaReleaseName}}</h2>
+  <h2 class="latest-release">Latest {{releaseName ? '' : 'beta '}}release: {{releaseName ?? betaReleaseName}}</h2>
 
-<main>
-  <div class="windows">
-    <svg class="os-icon"><use xlink:href="assets/windows.svg#svg"></use></svg>
-    <a [href]="releaseLinkWindows" target="_blank">
-      <button mat-stroked-button color="accent" class="download-button">
-        <mat-icon>file_download</mat-icon> <strong>Windows</strong>
-        <br>
-        x64
-      </button>
-    </a>
-  </div>
-  <div class="mac">
-    <svg class="os-icon"><use xlink:href="assets/mac.svg#svg"></use></svg>
-    <a [href]="releaseLinkMac" target="_blank">
-      <button mat-stroked-button color="accent" class="download-button">
-        <mat-icon>file_download</mat-icon> <strong>Mac</strong>
-        <br>
-        Universal
-      </button>
-    </a>
-  </div>
-  <div class="linux">
-    <svg class="os-icon"><use xlink:href="assets/linux.svg#svg"></use></svg>
-    <a [href]="releaseLinkLinux" target="_blank">
-      <button mat-stroked-button color="accent" class="download-button">
-        <mat-icon>file_download</mat-icon> Linux
-        <br>
-        x64
-      </button>
-    </a>
-    <a href="https://snapcraft.io/glint" target="_blank"><img src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg"></a>
-  </div>
-</main>
+  <main fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+    <div class="windows"
+      fxFlex="33"
+      fxLayout="column"
+      fxLayout.lt-md="row"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="space-evenly center"
+      [ngStyle.lt-md]="{ 'margin-bottom': '40px' }"
+    >
+      <div class="os-icon" [ngStyle.gt-sm]="{ 'margin-bottom': '40px' }">
+        <svg [ngStyle.lt-sm]="{ width: '100px', height: '100px' }"><use xlink:href="assets/windows.svg#svg"></use></svg>
+      </div>
+      <a [href]="releaseLinkWindows" target="_blank" class="download-button">
+        <button mat-stroked-button color="accent">
+          <mat-icon>file_download</mat-icon> <strong>Windows</strong>
+          <br>
+          x64
+        </button>
+      </a>
+    </div>
+
+    <div class="mac"
+      fxFlex="33"
+      fxLayout="column"
+      fxLayout.lt-md="row"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="space-evenly center"
+      [ngStyle.lt-md]="{ 'margin-bottom': '40px' }"
+    >
+      <div class="os-icon" [ngStyle.gt-sm]="{ 'margin-bottom': '40px' }">
+        <svg [ngStyle.lt-sm]="{ width: '100px', height: '100px' }"><use xlink:href="assets/mac.svg#svg"></use></svg>
+      </div>
+      <a [href]="releaseLinkMac" target="_blank" class="download-button">
+        <button mat-stroked-button color="accent">
+          <mat-icon>file_download</mat-icon> <strong>Mac</strong>
+          <br>
+          Universal
+        </button>
+      </a>
+    </div>
+
+    <div class="linux"
+      fxFlex="33"
+      fxLayout="column"
+      fxLayout.lt-md="row"
+      fxLayoutAlign="start center"
+      fxLayoutAlign.lt-md="space-evenly center"
+    >
+      <div class="os-icon" [ngStyle.gt-sm]="{ 'margin-bottom': '40px' }">
+        <svg [ngStyle.lt-sm]="{ width: '100px', height: '100px' }"><use xlink:href="assets/linux.svg#svg"></use></svg>
+      </div>
+      <div class="download-button">
+        <a [href]="releaseLinkLinux" target="_blank">
+          <button mat-stroked-button color="accent">
+            <mat-icon>file_download</mat-icon> Linux
+            <br>
+            x64
+          </button>
+        </a>
+        <a href="https://snapcraft.io/glint" target="_blank" class="snap-button">
+          <img src="https://snapcraft.io/static/images/badges/en/snap-store-black.svg">
+        </a>
+      </div>
+    </div>
+  </main>
+</app-container>

@@ -4,36 +4,41 @@
 :host {
   display: block;
   padding-top: 40px;
-  text-align: center;
 }
 
 .title {
   margin-bottom: 20px;
+  text-align: center;
 }
 
 .latest-release {
   margin-bottom: 40px;
+  text-align: center;
 }
 
 main {
-  display: flex;
-  justify-content: space-evenly;
-
   .download-button {
-    display: block;
-    margin: 0 auto 10px auto;
-    padding: 10px 40px;
-    width: 182px;
+    button {
+      display: block;
+      padding: 10px 40px;
+      width: 182px;
 
-    mat-icon {
-      margin-right: 10px;
+      mat-icon {
+        margin-right: 10px;
+      }
     }
   }
 
   .os-icon {
-    width: 200px;
-    height: 200px;
-    color: mat.get-color-from-palette(theme.$app-primary-palette, 400);
-    margin-bottom: 40px;
+    > svg {
+      width: 200px;
+      height: 200px;
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 400);
+    }
+  }
+
+  .snap-button {
+    display: block;
+    margin-top: 10px;
   }
 }
