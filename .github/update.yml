@@ -1,0 +1,23 @@
+name: update
+
+on: workflow_dispatch
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout glint-site
+        uses: actions/checkout@v3
+
+      - name: Rebuild
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit
+        run: |
+          git config user.name "GitHub"
+          git config user.email "noreply@github.com"
+          git add .
+          git commit -m "build: update for new glint release"
+          git push origin main

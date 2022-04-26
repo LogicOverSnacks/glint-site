@@ -8,7 +8,10 @@ await new Promise((resolve, reject) => {
     .get(
       'https://api.github.com/repos/logicoversnacks/glint-release/releases',
       {
-        headers: { 'User-Agent': 'nodejs' }
+        headers: {
+          'User-Agent': 'nodejs',
+          'Authorization': `token ${process.env.GITHUB_TOKEN}`
+        }
       },
       response => {
         if (response.statusCode !== 200) {
