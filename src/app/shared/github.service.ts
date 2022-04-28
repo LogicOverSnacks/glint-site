@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 export interface IRelease {
   html_url: string;
   name: string;
+  tag_name: string;
   draft: boolean;
   prerelease: boolean;
   published_at: string;

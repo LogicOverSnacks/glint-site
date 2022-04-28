@@ -1,7 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AboutComponent } from './about/about.components';
+import { AboutComponent } from './about/about.component';
+import { ConfirmEmailComponent } from './auth/confirm-email.component';
+import { LostPasswordComponent } from './auth/lost-password.component';
+import { ResetPasswordComponent } from './auth/reset-password.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
 import { FaqComponent } from './faq/faq.component';
@@ -16,6 +19,9 @@ const routes: Routes = [
   { path: 'download', component: DownloadComponent, data: { title: 'Download' } },
   { path: 'faq', component: FaqComponent, data: { title: 'Frequently Asked Questions' } },
   { path: 'playground', component: PlaygroundComponent, data: { title: 'Playground' } },
+  { path: 'auth/confirm-email', component: ConfirmEmailComponent, data: { title: 'Confirm Email' } },
+  { path: 'auth/lost-password', component: LostPasswordComponent, data: { title: 'Lost Password' } },
+  { path: 'auth/reset-password', component: ResetPasswordComponent, data: { title: 'Reset Password' } },
   { path: '**', component: PageNotFoundComponent, data: { title: 'Page Not Found' } }
 ];
 
