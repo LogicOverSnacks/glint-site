@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, catchError, EMPTY, finalize, takeUntil } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, takeUntil } from 'rxjs';
 
 import { BaseComponent } from '../shared/base.component';
 
