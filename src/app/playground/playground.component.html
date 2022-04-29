@@ -8,7 +8,8 @@
   </header>
 
   <div class="glint">
-    <iframe src="https://playground.glint.info" frameborder="0"></iframe>
+    <div class="spinner" *ngIf="(loaded | async) === false"><mat-spinner></mat-spinner></div>
+    <iframe src="https://playground.glint.info" frameborder="0" (load)="loaded.next(true)"></iframe>
   </div>
 </main>
 

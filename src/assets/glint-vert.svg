@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 34 13" fill="currentColor" id="svg" style="border: 1px solid red; width: 680px; height: 260px;">
+<defs>
+  <style type="text/css">
+    @import url('https://fonts.googleapis.com/css?family=Cormorant+Garamond:wght@300');
+ </style>
+</defs>
+<text x="0" y="12" font-family="Cormorant Garamond" font-size="16px">Glint</text>
+</svg>

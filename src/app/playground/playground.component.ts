@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -6,5 +7,5 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   templateUrl: './playground.component.html'
 })
 export class PlaygroundComponent {
-
+  loaded = new BehaviorSubject(false);
 }

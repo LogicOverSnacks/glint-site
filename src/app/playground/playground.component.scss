@@ -22,6 +22,12 @@ header {
   height: 100%;
   padding: 20px 60px;
 
+  .spinner {
+    position: absolute;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+  }
+
   iframe {
     display: block;
     width: 100%;

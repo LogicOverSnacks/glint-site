@@ -144,7 +144,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
         if (params['email'])
           this.emailControl.setValue(params['email']);
 
-        if (this.codeControl.invalid || this.emailControl.invalid)
+        if (this.emailControl.invalid)
           this.view.next('invalid');
       });
   }
