@@ -5,6 +5,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styles: [],
   template: ``
 })
-export class AboutComponent {
+export class PricingComponent {
 
 }

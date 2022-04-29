@@ -11,7 +11,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     `.title { margin-bottom: 50px; }`
   ],
   template: `
-    <header class="mat-display-3 title">404 Page Not Found</header>
+    <header class="mat-display-2 title">404 Page Not Found</header>
     <h3>Sorry! The page you are looking for does not exist.</h3>
   `
 })

@@ -34,25 +34,33 @@ export class ContainerComponent extends BaseComponent {
         this.hostMargin = '0 16px';
         this.hostWidth = 'auto';
 
-        for (const change of changes) {
+        for (const change of changes.reverse()) {
           if (change.matches) {
             switch (change.mqAlias) {
+              case 'lt-sm':
               case 'xs':
                 this.hostMargin = '0 16px';
                 this.hostWidth = 'auto';
                 break;
+              case 'gt-xs':
+              case 'lt-md':
               case 'sm':
                 this.hostMargin = '0 32px';
                 this.hostWidth = 'auto';
                 break;
+              case 'gt-sm':
+              case 'lt-lg':
               case 'md':
                 this.hostMargin = '0 auto';
                 this.hostWidth = '895px';
                 break;
+              case 'gt-md':
+              case 'lt-xl':
               case 'lg':
                 this.hostMargin = '0 192px';
                 this.hostWidth = 'auto';
                 break;
+              case 'gt-lg':
               case 'xl':
                 this.hostMargin = '0 auto';
                 this.hostWidth = '1536px';

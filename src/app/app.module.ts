@@ -15,9 +15,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AboutComponent } from './about/about.component';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
-import { LostPasswordComponent } from './auth/lost-password.component';
+import { RegisterComponent } from './auth/register.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
@@ -25,6 +24,7 @@ import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
+import { PricingComponent } from './pricing/pricing.component';
 import { ContainerComponent } from './shared/container.component';
 
 @NgModule({
@@ -48,16 +48,16 @@ import { ContainerComponent } from './shared/container.component';
   ],
   declarations: [
     AppComponent,
-    AboutComponent,
     ConfirmEmailComponent,
     ContainerComponent,
     DocsComponent,
     DownloadComponent,
     FaqComponent,
     HomeComponent,
-    LostPasswordComponent,
     PageNotFoundComponent,
     PlaygroundComponent,
+    PricingComponent,
+    RegisterComponent,
     ResetPasswordComponent
   ],
   providers: [
