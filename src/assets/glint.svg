@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" id="svg">
-<path d="M7,7.5 l-2,-5 l-5,5 z" fill="#b0bec5" />
-<path d="M7,7.5 l-2,-5 l5,0 z" fill="#eceff1" />
-<path d="M7,7.5 l-7,0 l10,10 z" fill="#607d8b" />
+<path d="M5,7.5 L5,2.5 L0,7.5 z" fill="#b0bec5" />
+<path d="M5,7.5 L5,2.5 L10,2.5 z" fill="#eceff1" />
+<path d="M5,7.5 L0,7.5 L10,17.5 z" fill="#607d8b" />
 
-<path d="M7,7.5 l3,-5 l3,5 z" fill="#90a4ae" />
-<path d="M7,7.5 l6,0 l-3,10 z" fill="#b0bec5" />
+<path d="M5,7.5 L10,2.5 L15,7.5 z" fill="#90a4ae" />
+<path d="M5,7.5 L15,7.5 L10,17.5 z" fill="#b0bec5" />
 
-<path d="M13,7.5 l2,-5 l5,5 z" fill="#b0bec5" />
-<path d="M13,7.5 l2,-5 l-5,0 z" fill="#eceff1" />
-<path d="M13,7.5 l7,0 l-10,10 z" fill="#607d8b" />
+<path d="M15,7.5 L15,2.5 L20,7.5 z" fill="#b0bec5" />
+<path d="M15,7.5 L15,2.5 L10,2.5 z" fill="#eceff1" />
+<path d="M15,7.5 L20,7.5 L10,17.5 z" fill="#607d8b" />
 </svg>
