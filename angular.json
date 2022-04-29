@@ -29,8 +29,8 @@
             "assets": [
               "src/404.html",
               "src/CNAME",
-              "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              { "glob": "**/*", "input": "src/assets/favicon", "output": "./" }
             ],
             "styles": [
               "src/styles.scss"
