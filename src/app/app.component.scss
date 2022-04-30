@@ -9,25 +9,23 @@
 .home-link {
   display: flex;
   align-items: center;
-
-  // font-family: 'Goldman', cursive;
-  // font-family: 'Jura', sans-serif;
-  // font-family: 'Syncopate', sans-serif;
   font-family: 'Alegreya Sans SC', sans-serif;
 
-  font-size: 28px;
+  font-size: 32px;
   line-height: 64px;
 
   mat-icon {
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     font-size: 0;
-    margin-right: 10px;
+    margin-right: 15px;
   }
 }
 
 mat-toolbar {
   display: flex;
+  font-family: 'Alegreya Sans SC', sans-serif;
+  letter-spacing: 0.1rem;
   justify-content: space-between;
   position: fixed;
   top: 0;
