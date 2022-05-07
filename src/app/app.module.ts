@@ -13,11 +13,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
+import { NgxsModule } from '@ngxs/store';
 
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
-import { RegisterComponent } from './auth/register.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
@@ -26,7 +29,9 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PricingComponent } from './pricing/pricing.component';
-import { ContainerComponent } from './shared/container.component';
+import { SharedModule } from './shared/shared.module';
+import { AuthState } from './state/auth.state';
+import { migrations } from './state/migrations';
 
 @NgModule({
   imports: [
@@ -45,13 +50,24 @@ import { ContainerComponent } from './shared/container.component';
     MatSidenavModule,
     MatToolbarModule,
     ReactiveFormsModule,
+    NgxsModule.forRoot([AuthState], {
+      developmentMode: !environment.production,
+      selectorOptions: {
+        injectContainerState: false,
+        suppressErrors: false
+      }
+    }),
+    NgxsStoragePluginModule.forRoot({ key: ['auth'], migrations: migrations }),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production
+    }),
 
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule
   ],
   declarations: [
     AppComponent,
     ConfirmEmailComponent,
-    ContainerComponent,
     DocsComponent,
     DownloadComponent,
     FaqComponent,
@@ -59,7 +75,6 @@ import { ContainerComponent } from './shared/container.component';
     PageNotFoundComponent,
     PlaygroundComponent,
     PricingComponent,
-    RegisterComponent,
     ResetPasswordComponent
   ],
   providers: [

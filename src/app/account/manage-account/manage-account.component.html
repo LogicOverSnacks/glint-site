@@ -1,0 +1,53 @@
+<app-container>
+  <header class="mat-display-2 title">Your account</header>
+
+  <main *ngIf="user | async as userData">
+    <h3>You are logged in as: {{ userData.email }}</h3>
+    <ng-container *ngIf="bestSubscription">
+      <h3>
+        Subscription: {{ bestSubscription.accessLevel }}
+        <span *ngIf="!bestSubscription.autoRenew">(expires {{ bestSubscription.expiryDate | date }})</span>
+      </h3>
+      <h4 *ngIf="bestSubscription.email !== userData.email">Provided by {{bestSubscription.email}}</h4>
+    </ng-container>
+
+    <!-- <button type="button" mat-button>Change email</button> -->
+    <!-- <button type="button" mat-button>Change password</button> -->
+    <button type="button"
+      mat-button
+      title="Click to change the number of subscriptions or to manage payments"
+    >Manage payments</button>
+
+    <div class="warning" *ngIf="totalPurchased > assigned.length">
+      You have <span class="highlight">{{ totalPurchased - assigned.length }}</span> unassigned subscriptions.
+      You can assign the remaining ones below, or cancel excess subscriptions.
+    </div>
+
+    <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
+    <ul>
+      <li *ngFor="let subscription of assigned">
+        <span>{{ subscription.email }}</span>
+        <button type="button" mat-icon-button title="Expire" (click)="unassign(subscription)">
+          <mat-icon>{{ subscription.activated ? 'time' : 'delete' }}</mat-icon>
+        </button>
+        <!-- deleting will expire that subscription at the end of the billing period, at which point you can reassign it -->
+      </li>
+    </ul>
+
+    <mat-form-field>
+      <mat-label>User email</mat-label>
+        <input matInput
+          type="email"
+          [formControl]="assignEmailControl"
+        >
+        <button type="button"
+          matSuffix
+          mat-button
+          title="Assign a subscription to this user"
+          (click)="assign()"
+        >
+          <mat-icon>plus</mat-icon> Assign
+        </button>
+    </mat-form-field>
+  </main>
+</app-container>

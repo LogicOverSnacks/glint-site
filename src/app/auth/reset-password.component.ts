@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { BaseComponent } from '../shared/base.component';
+import { ApiBaseUrl, BaseComponent } from '../shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -156,7 +156,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`https://api.glint.info/auth/email/confirm`, {
+      .post(`${ApiBaseUrl}/auth/email/confirm`, {
         email: this.emailControl.value,
         password: this.passwordControl.value,
         lostPasswordCode: this.codeControl.value
@@ -182,7 +182,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`https://api.glint.info/auth/email/lost-password`, {
+      .post(`${ApiBaseUrl}/auth/email/lost-password`, {
         email: this.emailControl.value
       })
       .pipe(

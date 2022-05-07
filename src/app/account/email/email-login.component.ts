@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
+import { Store } from '@ngxs/store';
+import { BehaviorSubject, EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { ApiBaseUrl } from 'src/app/shared';
+import { UpdateUser } from 'src/app/state/auth.state';
+import { UserVm } from 'src/app/state/user.vm';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -33,15 +39,15 @@ import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Register</header>
+      <header class="mat-display-2 title">Login</header>
 
       <ng-container [ngSwitch]="view | async">
-        <form *ngSwitchCase="'init'" (ngSubmit)="register()">
+        <form *ngSwitchCase="'init'" (ngSubmit)="login()">
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Email</mat-label>
             <input type="email" matInput required [formControl]="emailControl" placeholder="Enter your email address...">
-            <mat-error *ngIf="emailControl.hasError('email')">
-              Please enter a valid email address
+            <mat-error *ngIf="emailControl.hasError('invalid')">
+              Email address incorrect
             </mat-error>
           </mat-form-field>
 
@@ -51,7 +57,7 @@ import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
               [attr.type]="(passwordHidden | async) ? 'password' : 'text'"
               required
               [formControl]="passwordControl"
-              placeholder="Choose a password..."
+              placeholder="Enter your password..."
             >
             <button type="button"
               matSuffix
@@ -61,8 +67,8 @@ import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl.hasError('pattern')">
-              Please enter a strong password with these rules:
+            <mat-error *ngIf="passwordControl.hasError('invalid')">
+              Password incorrect
             </mat-error>
           </mat-form-field>
 
@@ -74,8 +80,8 @@ import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
         <h3 *ngSwitchCase="'processing'">Processing...</h3>
 
         <h3 *ngSwitchCase="'success'">
-          New account created!<br>
-          Please click the link in your email to confirm your registration.
+          Logged in successfully!<br>
+          Redirecting...
         </h3>
 
         <h3 *ngSwitchCase="'error'">
@@ -88,39 +94,49 @@ import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
     </app-container>
   `
 })
-export class RegisterComponent {
+export class EmailLoginComponent {
   emailControl = new FormControl();
   passwordControl = new FormControl();
   view = new BehaviorSubject<'init' | 'processing' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store
+  ) {}
 
-  register() {
+  login() {
     if (this.view.value === 'processing') return;
 
     this.view.next('processing');
 
     this.http
-      .post(`https://api.glint.info/auth/email/register`, {
+      .post<{ user: UserVm; }>(`${ApiBaseUrl}/auth/email/login`, {
         email: this.emailControl.value,
         password: this.passwordControl.value
       })
       .pipe(
-        catchError(() => {
-          this.view.next('error');
+        catchError(error => {
+          if (error.reason === 'invalid') {
+            this.emailControl.setErrors({ invalid: true });
+            this.passwordControl.setErrors({ invalid: true });
+            this.view.next('init');
+          } else {
+            this.view.next('error');
+          }
 
           return EMPTY;
         })
       )
-      .subscribe(() => {
+      .subscribe(({ user }) => {
+        this.store.dispatch(new UpdateUser(user));
         this.view.next('success');
       });
   }
 
   reset() {
-    this.emailControl.setValue(null);
-    this.passwordControl.setValue(null);
+    this.emailControl.reset();
+    this.passwordControl.reset();
     this.view.next('init');
   }
 }

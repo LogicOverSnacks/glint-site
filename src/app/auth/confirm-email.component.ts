@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { BaseComponent } from '../shared/base.component';
+import { ApiBaseUrl, BaseComponent } from '../shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -144,7 +144,7 @@ export class ConfirmEmailComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`https://api.glint.info/auth/email/confirm`, {
+      .post(`${ApiBaseUrl}/auth/email/confirm`, {
         email: this.emailControl.value,
         code: (this.codeControl.value as string).toLowerCase()
       })
@@ -169,7 +169,7 @@ export class ConfirmEmailComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`https://api.glint.info/auth/email/request-confirm`, {
+      .post(`${ApiBaseUrl}/auth/email/request-confirm`, {
         email: this.emailControl.value
       })
       .pipe(
