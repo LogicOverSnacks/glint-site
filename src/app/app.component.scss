@@ -6,22 +6,6 @@
   height: 100%;
 }
 
-.home-link {
-  display: flex;
-  align-items: center;
-  font-family: 'Alegreya Sans SC', sans-serif;
-
-  font-size: 32px;
-  line-height: 64px;
-
-  mat-icon {
-    width: 36px;
-    height: 36px;
-    font-size: 0;
-    margin-right: 15px;
-  }
-}
-
 mat-toolbar {
   display: flex;
   font-family: 'Alegreya Sans SC', sans-serif;
@@ -31,8 +15,21 @@ mat-toolbar {
   top: 0;
   z-index: 500;
 
-  .download-button {
-    background-color: mat.get-color-from-palette(theme.$app-accent-palette, 300);
+  .home-link {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-family: 'Alegreya Sans SC', sans-serif;
+
+    font-size: 32px;
+    line-height: 64px;
+
+    mat-icon {
+      width: 36px;
+      height: 36px;
+      font-size: 0;
+      margin-right: 15px;
+    }
   }
 
   .links {
@@ -49,10 +46,44 @@ mat-toolbar {
       }
     }
   }
+
+  .end-links {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    justify-content: end;
+
+    .account-link {
+      margin: 0 20px 0 10px;
+      font-size: 16px;
+
+      &.active {
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      }
+    }
+
+    .download-button {
+      background-color: mat.get-color-from-palette(theme.$app-accent-palette, 300);
+    }
+  }
+
+  &.smaller {
+    font-size: 16px;
+
+    .links > li {
+      margin: 0 10px;
+    }
+  }
 }
 
 mat-sidenav-container {
   height: 100%;
+
+  .mat-list-item {
+    &.active {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+    }
+  }
 }
 
 footer {

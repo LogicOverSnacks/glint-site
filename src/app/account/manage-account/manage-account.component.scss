@@ -7,3 +7,23 @@
 .title {
   margin-bottom: 50px;
 }
+
+
+.subscription-list {
+  > li {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      opacity: 0;
+      transition: opacity ease-in-out 0.3s;
+    }
+
+    &:hover {
+      button {
+        opacity: 1;
+      }
+    }
+  }
+}
+

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Select } from '@ngxs/store';
-import { catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
+import { catchError, combineLatest, finalize, Observable, startWith, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
@@ -35,29 +35,28 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   ) { super(); }
 
   ngOnInit() {
-    combineLatest([this.user, this.refresh$])
+    combineLatest([this.user, this.refresh$.pipe(startWith(undefined))])
       .pipe(
         switchMap(() => this.api.getSubscriptions()),
-        catchError(error => {
-          this.router.navigate(['/account/unauthorized']);
-          return throwError(() => error);
-        }),
         takeUntil(this.destroyed$)
       )
       .subscribe(({ totalPurchased, assigned, using }) => {
         this.totalPurchased = totalPurchased;
-        this.assigned = assigned;
+
+        const now = new Date();
+        this.assigned = assigned
+          .filter(subscription => !subscription.expiryDate || new Date(subscription.expiryDate) > now);
         this.using = using;
         this.bestSubscription = using.length > 0 ? using[0] : null;
         this.cdr.markForCheck();
       });
   }
 
-  assign() {
+  assign(email: string) {
     if (this.assigning) return;
 
     this.assigning = true;
-    this.api.assignSubscription(this.assignEmailControl.value)
+    this.api.assignSubscription(email)
       .pipe(finalize(() => {
         this.assigning = false;
       }))

@@ -24,13 +24,28 @@
     </div>
 
     <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
-    <ul>
+    <ul class="subscription-list">
       <li *ngFor="let subscription of assigned">
         <span>{{ subscription.email }}</span>
-        <button type="button" mat-icon-button title="Expire" (click)="unassign(subscription)">
+        <span *ngIf="!subscription.autoRenew" title="After expiry you may assign the subscription to another user">
+          Expires {{ subscription.expiryDate | date }}
+        </span>
+        <button type="button"
+          *ngIf="!subscription.autoRenew"
+          mat-icon-button
+          title="Reinstate subscription"
+          (click)="assign(subscription.email)"
+        >
+          <mat-icon>plus</mat-icon>
+        </button>
+        <button type="button"
+          *ngIf="subscription.autoRenew"
+          mat-icon-button
+          [title]="subscription.activated ? 'Expire subscription at the end of the billing period' : 'Remove subscription'"
+          (click)="unassign(subscription)"
+        >
           <mat-icon>{{ subscription.activated ? 'time' : 'delete' }}</mat-icon>
         </button>
-        <!-- deleting will expire that subscription at the end of the billing period, at which point you can reassign it -->
       </li>
     </ul>
 
@@ -44,7 +59,7 @@
           matSuffix
           mat-button
           title="Assign a subscription to this user"
-          (click)="assign()"
+          (click)="assign(assignEmailControl.value)"
         >
           <mat-icon>plus</mat-icon> Assign
         </button>

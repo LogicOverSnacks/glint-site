@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 
 import { ApiBaseUrl } from 'src/app/shared';
 import { UpdateUser } from 'src/app/state/auth.state';
@@ -32,9 +32,12 @@ import { UserVm } from 'src/app/state/user.vm';
     `
       @use '@angular/material' as mat;
       @use 'src/theme' as theme;
-      a, .reset { color: mat.get-color-from-palette(theme.$app-primary-palette, 400); }
+      a, .reset { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
     `,
-    `.submit-btn { margin-top: 10px; }`,
+    `.submit-btn {
+      margin-top: 10px;
+      margin-bottom: 40px;
+    }`,
     `.error-icon { font-size: 48px; }`
   ],
   template: `
@@ -47,7 +50,10 @@ import { UserVm } from 'src/app/state/user.vm';
             <mat-label>Email</mat-label>
             <input type="email" matInput required [formControl]="emailControl" placeholder="Enter your email address...">
             <mat-error *ngIf="emailControl.hasError('invalid')">
-              Email address incorrect
+              Invalid email address
+            </mat-error>
+            <mat-error *ngIf="emailControl.hasError('server')">
+              {{ emailControl.getError('server').join(', ') }}
             </mat-error>
           </mat-form-field>
 
@@ -68,16 +74,17 @@ import { UserVm } from 'src/app/state/user.vm';
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
             <mat-error *ngIf="passwordControl.hasError('invalid')">
-              Password incorrect
+              Password must have at least 10 characters
+            </mat-error>
+            <mat-error *ngIf="passwordControl.hasError('server')">
+              {{ passwordControl.getError('server').join(', ') }}
             </mat-error>
           </mat-form-field>
 
-          <div>
-            <button type="submit" class="submit-btn" mat-stroked-button>Create account</button>
-          </div>
-        </form>
+          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Login</button>
 
-        <h3 *ngSwitchCase="'processing'">Processing...</h3>
+          <p>Don't have an account? Click <a [routerLink]="['/account/email/register']">here</a> to register.</p>
+        </form>
 
         <h3 *ngSwitchCase="'success'">
           Logged in successfully!<br>
@@ -95,20 +102,22 @@ import { UserVm } from 'src/app/state/user.vm';
   `
 })
 export class EmailLoginComponent {
-  emailControl = new FormControl();
-  passwordControl = new FormControl();
-  view = new BehaviorSubject<'init' | 'processing' | 'success' | 'error'>('init');
+  emailControl = new FormControl(null, [Validators.required, Validators.email]);
+  passwordControl = new FormControl(null, [Validators.required, Validators.minLength(10)]);
+  view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
+  processing = false;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private http: HttpClient,
     private store: Store
   ) {}
 
   login() {
-    if (this.view.value === 'processing') return;
+    if (this.processing) return;
 
-    this.view.next('processing');
+    this.processing = true;
 
     this.http
       .post<{ user: UserVm; }>(`${ApiBaseUrl}/auth/email/login`, {
@@ -116,16 +125,30 @@ export class EmailLoginComponent {
         password: this.passwordControl.value
       })
       .pipe(
-        catchError(error => {
-          if (error.reason === 'invalid') {
-            this.emailControl.setErrors({ invalid: true });
-            this.passwordControl.setErrors({ invalid: true });
-            this.view.next('init');
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 400) {
+            const emailErrors: string[] = [];
+            const passwordErrors: string[] = [];
+
+            for (const error of response.error.errors) {
+              if (error.param === 'email') {
+                emailErrors.push(error.msg);
+              } else if (error.param === 'password') {
+                passwordErrors.push(error.msg);
+              }
+            }
+
+            this.emailControl.setErrors(emailErrors.length > 0 ? { server: emailErrors } : null);
+            this.passwordControl.setErrors(passwordErrors.length > 0 ? { server: passwordErrors } : null);
           } else {
             this.view.next('error');
           }
 
           return EMPTY;
+        }),
+        finalize(() => {
+          this.processing = false;
+          this.cdr.markForCheck();
         })
       )
       .subscribe(({ user }) => {

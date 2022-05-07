@@ -3,9 +3,12 @@ import { MediaObserver } from '@angular/flex-layout';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, map } from 'rxjs';
+import { Select } from '@ngxs/store';
+import { filter, map, Observable } from 'rxjs';
 
 import { BaseComponent } from './shared/base.component';
+import { AuthState } from './state/auth.state';
+import { UserVm } from './state/user.vm';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +16,9 @@ import { BaseComponent } from './shared/base.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent extends BaseComponent {
+  @Select(AuthState.user)
+  user!: Observable<UserVm | null>;
+
   currentYear = new Date().getFullYear();
   xsQuery = this.media.asObservable().pipe(map(changes => changes.some(change => change.mqAlias === 'xs' && change.matches)));
 

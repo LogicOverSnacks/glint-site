@@ -8,7 +8,12 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       padding-top: 40px;
       text-align: center;
     }`,
-    `.title { margin-bottom: 50px; }`
+    `.title { margin-bottom: 50px; }`,
+    `
+      @use '@angular/material' as mat;
+      @use 'src/theme' as theme;
+      a { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+    `
   ],
   template: `
     <header class="mat-display-2 title">403 Unauthorized</header>

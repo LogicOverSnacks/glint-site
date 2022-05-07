@@ -6,16 +6,20 @@ import { AuthState } from '../state/auth.state';
 import { ApiBaseUrl } from '.';
 import { GetSubscriptionsResponse } from './models/subscriptions';
 import { catchError, map, of, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(
     private http: HttpClient,
+    private router: Router,
     private store: Store
   ) {}
 
   getSubscriptions() {
-    return this.http.get<GetSubscriptionsResponse>(`${ApiBaseUrl}/subscriptions`, { headers: this.getHeaders() });
+    return this.http
+      .get<GetSubscriptionsResponse>(`${ApiBaseUrl}/subscriptions`, { headers: this.getHeaders() })
+      .pipe(catchError(this.redirectUnauthorized));
   }
 
   purchaseSubscriptions(priceId: string, quantity: number) {
@@ -34,6 +38,7 @@ export class ApiService {
       )
       .pipe(
         map(() => null),
+        catchError(this.redirectUnauthorized),
         catchError((error: HttpErrorResponse) => error.status === 303 ? of(error.url) : throwError(() => error))
       );
   }
@@ -44,7 +49,8 @@ export class ApiService {
         `${ApiBaseUrl}/subscriptions/assign`,
         { email: userEmail },
         { headers: this.getHeaders() }
-      );
+      )
+      .pipe(catchError(this.redirectUnauthorized));
   }
 
   unassignSubscription(userEmail: string) {
@@ -53,7 +59,15 @@ export class ApiService {
         `${ApiBaseUrl}/subscriptions/unassign`,
         { email: userEmail },
         { headers: this.getHeaders() }
-      );
+      )
+      .pipe(catchError(this.redirectUnauthorized));
+  }
+
+  private redirectUnauthorized = (error: HttpErrorResponse) => {
+    if (error.status === 401)
+      this.router.navigate(['/account/login']);
+
+    return throwError(() => error);
   }
 
   private getHeaders() {

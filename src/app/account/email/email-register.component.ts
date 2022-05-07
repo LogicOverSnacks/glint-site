@@ -1,11 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Store } from '@ngxs/store';
-import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, catchError, EMPTY, finalize } from 'rxjs';
 
 import { ApiBaseUrl } from 'src/app/shared';
-import { Login } from 'src/app/state/auth.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -30,7 +28,7 @@ import { Login } from 'src/app/state/auth.state';
     `
       @use '@angular/material' as mat;
       @use 'src/theme' as theme;
-      a, .reset { color: mat.get-color-from-palette(theme.$app-primary-palette, 400); }
+      a, .reset { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
     `,
     `.submit-btn { margin-top: 10px; }`,
     `.error-icon { font-size: 48px; }`
@@ -40,12 +38,15 @@ import { Login } from 'src/app/state/auth.state';
       <header class="mat-display-2 title">Register</header>
 
       <ng-container [ngSwitch]="view | async">
-        <form *ngSwitchCase="'init'" (ngSubmit)="register()">
+        <form *ngSwitchCase="'init'" (ngSubmit)="register()" [formGroup]="form">
           <mat-form-field class="form-field" appearance="outline">
             <mat-label>Email</mat-label>
-            <input type="email" matInput required [formControl]="emailControl" placeholder="Enter your email address...">
-            <mat-error *ngIf="emailControl.hasError('email')">
-              Please enter a valid email address
+            <input type="email" matInput required formControlName="email" placeholder="Enter your email address...">
+            <mat-error *ngIf="form.controls['email'].hasError('email')">
+              Invalid email address
+            </mat-error>
+            <mat-error *ngIf="form.controls['email'].hasError('server')">
+              {{ form.controls['email'].getError('server').join(', ') }}
             </mat-error>
           </mat-form-field>
 
@@ -54,7 +55,7 @@ import { Login } from 'src/app/state/auth.state';
             <input matInput
               [attr.type]="(passwordHidden | async) ? 'password' : 'text'"
               required
-              [formControl]="passwordControl"
+              formControlName="password"
               placeholder="Choose a password..."
             >
             <button type="button"
@@ -65,21 +66,21 @@ import { Login } from 'src/app/state/auth.state';
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl.hasError('pattern')">
-              Please enter a strong password with these rules:
+            <mat-error *ngIf="form.controls['password'].hasError('minlength')">
+              Password must have at least 10 characters
+            </mat-error>
+            <mat-error *ngIf="form.controls['password'].hasError('server')">
+              {{ form.controls['password'].getError('server').join(', ') }}
             </mat-error>
           </mat-form-field>
 
-          <div>
-            <button type="submit" class="submit-btn" mat-stroked-button>Create account</button>
-          </div>
+          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Create account</button>
         </form>
-
-        <h3 *ngSwitchCase="'processing'">Processing...</h3>
 
         <h3 *ngSwitchCase="'success'">
           New account created!<br>
-          Please click the link in your email to confirm your registration.
+          Please click the link in your email to confirm your registration.<br>
+          Click <a routerLink="/account/email/login">here</a> to login.
         </h3>
 
         <h3 *ngSwitchCase="'error'">
@@ -93,44 +94,63 @@ import { Login } from 'src/app/state/auth.state';
   `
 })
 export class EmailRegisterComponent {
-  emailControl = new FormControl();
-  passwordControl = new FormControl();
-  view = new BehaviorSubject<'init' | 'processing' | 'success' | 'error'>('init');
+  form = new FormGroup({
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [Validators.required, Validators.minLength(10)])
+  });
+  view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
+  processing = false;
 
   constructor(
-    private http: HttpClient,
-    private store: Store
+    private cdr: ChangeDetectorRef,
+    private http: HttpClient
   ) {}
 
   register() {
-    if (this.view.value === 'processing') return;
+    if (this.processing) return;
 
-    this.view.next('processing');
+    this.processing = true;
 
-    const email = this.emailControl.value;
-    const password = this.passwordControl.value;
+    const email = this.form.controls['email'].value;
+    const password = this.form.controls['password'].value;
 
     this.http
       .post(`${ApiBaseUrl}/auth/email/register`, { email, password })
       .pipe(
-        catchError(() => {
-          this.view.next('error');
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 400 && response.error.reason === 'validation') {
+            const emailErrors: string[] = [];
+            const passwordErrors: string[] = [];
+
+            for (const error of response.error.errors) {
+              if (error.param === 'email') {
+                emailErrors.push(error.msg);
+              } else if (error.param === 'password') {
+                passwordErrors.push(error.msg);
+              }
+            }
+
+            this.form.controls['email'].setErrors(emailErrors.length > 0 ? { server: emailErrors } : null);
+            this.form.controls['password'].setErrors(passwordErrors.length > 0 ? { server: passwordErrors } : null);
+          } else {
+            this.view.next('error');
+          }
 
           return EMPTY;
+        }),
+        finalize(() => {
+          this.processing = false;
+          this.cdr.markForCheck();
         })
       )
       .subscribe(() => {
-        this.store.dispatch(new Login(email, password)).subscribe(() => {
-          // TODO: redirect to logged in account page
-        });
         this.view.next('success');
       });
   }
 
   reset() {
-    this.emailControl.reset();
-    this.passwordControl.reset();
+    this.form.reset();
     this.view.next('init');
   }
 }

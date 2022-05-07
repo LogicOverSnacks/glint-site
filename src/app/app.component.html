@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar ngClass.lt-lg="smaller">
   <a class="home-link" routerLink="/">
     <mat-icon svgIcon="glint"></mat-icon>
     <span class="text">Glint</span>
@@ -12,10 +12,13 @@
     <li><a href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a></li>
   </ul>
 
-  <button mat-flat-button fxShow fxHide.lt-md="true" class="download-button" color="accent" routerLink="/download">
-    Download
-    <mat-icon>file_download</mat-icon>
-  </button>
+  <div class="end-links" fxShow fxHide.lt-md="true">
+    <a class="account-link" routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
+    <button mat-flat-button class="download-button" color="accent" routerLink="/download">
+      Download
+      <mat-icon>file_download</mat-icon>
+    </button>
+  </div>
 
   <div fxHide fxShow.lt-md="true">
     <button mat-icon-button (click)="sidenav.toggle()">
@@ -40,6 +43,7 @@
       <a mat-list-item routerLink="/faq" routerLinkActive="active">FAQ</a>
       <a mat-list-item routerLink="/pricing" routerLinkActive="active">Pricing</a>
       <a mat-list-item href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a>
+      <a mat-list-item routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
