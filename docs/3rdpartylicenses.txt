@@ -69,6 +69,15 @@ MIT
 @angular/router
 MIT
 
+@ngxs/devtools-plugin
+MIT
+
+@ngxs/storage-plugin
+MIT
+
+@ngxs/store
+MIT
+
 rxjs
 Apache-2.0
                                Apache License
