@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { SharedModule } from '../shared/shared.module';
 import { AccountRoutingModule } from './account-routing.module';
@@ -10,6 +11,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
 
 @NgModule({
   imports: [
+    FlexLayoutModule,
     SharedModule,
     AccountRoutingModule
   ],

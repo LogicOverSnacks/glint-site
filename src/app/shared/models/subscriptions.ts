@@ -1,13 +1,13 @@
 export interface GetSubscriptionsResponse {
   totalPurchased: number;
-  using: AuthSubscription[];
+  using: string[];
   assigned: AuthSubscription[];
+  previouslyAssigned: string[];
 }
 
 export interface AuthSubscription {
-  accessLevel: 'pro';
   activated: boolean;
   autoRenew: boolean;
   email: string;
-  expiryDate: string | null;
+  expiryDate: string;
 }

@@ -1,68 +1,94 @@
 <app-container>
-  <header class="mat-display-2 title">Your account</header>
+  <header>
+    <div class="mat-display-2 title">Your account</div>
+    <h3>You are logged in as: {{ (user | async)?.email }}</h3>
+  </header>
 
-  <main *ngIf="user | async as userData">
-    <h3>You are logged in as: {{ userData.email }}</h3>
-    <ng-container *ngIf="bestSubscription">
-      <h3>
-        Subscription: {{ bestSubscription.accessLevel }}
-        <span *ngIf="!bestSubscription.autoRenew">(expires {{ bestSubscription.expiryDate | date }})</span>
-      </h3>
-      <h4 *ngIf="bestSubscription.email !== userData.email">Provided by {{bestSubscription.email}}</h4>
-    </ng-container>
+  <main *ngIf="user | async as userData" fxLayout>
+    <div fxFlex="25" fxFlex.lt-md="16" fxFlex.lt-sm="0"></div>
+    <div fxFlex fxFlex.lt-sm="100">
+      <ng-container *ngIf="bestSubscription">
+        <h3>
+          Subscription: pro
+          <!-- <span *ngIf="!bestSubscription.autoRenew">(expires {{ bestSubscription.expiryDate | date }})</span> -->
+        </h3>
+        <h4 *ngIf="bestSubscription !== userData.email">Provided by {{bestSubscription}}</h4>
+      </ng-container>
 
-    <!-- <button type="button" mat-button>Change email</button> -->
-    <!-- <button type="button" mat-button>Change password</button> -->
-    <button type="button"
-      mat-button
-      title="Click to change the number of subscriptions or to manage payments"
-    >Manage payments</button>
+      <!-- <button type="button" mat-button>Change email</button> -->
+      <!-- <button type="button" mat-button>Change password</button> -->
+      <button type="button"
+        mat-stroked-button
+        class="purchase-btn"
+        color="accent"
+        title="Click to purchase a subscription"
+        (click)="purchase(1)"
+      >Purchase subscription</button>
 
-    <div class="warning" *ngIf="totalPurchased > assigned.length">
-      You have <span class="highlight">{{ totalPurchased - assigned.length }}</span> unassigned subscriptions.
-      You can assign the remaining ones below, or cancel excess subscriptions.
-    </div>
+      <div class="errors" *ngIf="purchaseError | async as error">{{ error }}</div>
 
-    <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
-    <ul class="subscription-list">
-      <li *ngFor="let subscription of assigned">
-        <span>{{ subscription.email }}</span>
-        <span *ngIf="!subscription.autoRenew" title="After expiry you may assign the subscription to another user">
-          Expires {{ subscription.expiryDate | date }}
-        </span>
-        <button type="button"
-          *ngIf="!subscription.autoRenew"
-          mat-icon-button
-          title="Reinstate subscription"
-          (click)="assign(subscription.email)"
-        >
-          <mat-icon>plus</mat-icon>
-        </button>
-        <button type="button"
-          *ngIf="subscription.autoRenew"
-          mat-icon-button
-          [title]="subscription.activated ? 'Expire subscription at the end of the billing period' : 'Remove subscription'"
-          (click)="unassign(subscription)"
-        >
-          <mat-icon>{{ subscription.activated ? 'time' : 'delete' }}</mat-icon>
-        </button>
-      </li>
-    </ul>
+      <button type="button"
+        mat-stroked-button
+        class="payments-btn"
+        color="primary"
+        title="Click to manage payments or change the number of subscriptions"
+        (click)="manage()"
+      >Manage payments</button>
 
-    <mat-form-field>
-      <mat-label>User email</mat-label>
+      <div class="warning" *ngIf="totalPurchased > assigned.length">
+        You have <span class="highlight">{{ totalPurchased - assigned.length }}</span> unassigned subscriptions.
+        You can assign the remaining ones below, or cancel excess subscriptions.
+      </div>
+
+      <div class="subscriptions" *ngIf="totalPurchased > 0">
+        <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
+        <ul class="subscription-list">
+          <li *ngFor="let subscription of assigned">
+            <span>{{ subscription.email }}</span>
+            <span *ngIf="!subscription.autoRenew" title="After expiry you may assign the subscription to another user">
+              Expires {{ subscription.expiryDate | date }}
+            </span>
+            <button type="button"
+              *ngIf="!subscription.autoRenew"
+              mat-icon-button
+              title="Reinstate subscription"
+              (click)="assign(subscription.email)"
+            >
+              <mat-icon>plus</mat-icon>
+            </button>
+            <button type="button"
+              *ngIf="subscription.autoRenew"
+              mat-icon-button
+              [title]="subscription.activated ? 'Expire subscription at the end of the billing period' : 'Remove subscription'"
+              (click)="unassign(subscription)"
+            >
+              <mat-icon>{{ subscription.activated ? 'time' : 'delete' }}</mat-icon>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <mat-form-field class="form-field" appearance="outline" *ngIf="totalPurchased > assigned.length">
+        <mat-label>Assign to user</mat-label>
         <input matInput
           type="email"
           [formControl]="assignEmailControl"
         >
         <button type="button"
           matSuffix
-          mat-button
+          mat-icon-button
           title="Assign a subscription to this user"
           (click)="assign(assignEmailControl.value)"
         >
-          <mat-icon>plus</mat-icon> Assign
+          <mat-icon>add</mat-icon>
         </button>
-    </mat-form-field>
+        <mat-error *ngIf="assignEmailControl.hasError('server')">
+          {{ assignEmailControl.getError('server').join(', ') }}
+        </mat-error>
+      </mat-form-field>
+
+      <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
+    </div>
+    <div fxFlex="25" fxFlex.lt-md="16" fxFlex.lt-sm="0"></div>
   </main>
 </app-container>

@@ -1,15 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
-import { tap } from 'rxjs';
+import { catchError, tap, throwError } from 'rxjs';
 
 import { ApiBaseUrl } from '../shared';
 import { UserVm } from './user.vm';
-
-export class Login {
-  static readonly type = '[Auth] Login';
-  constructor(public email: string, public password: string) {}
-}
 
 export class Logout {
   static readonly type = '[Auth] Logout';
@@ -42,23 +38,6 @@ export class AuthState {
     return state.user;
   }
 
-  @Action(Login)
-  login(ctx: StateContext<IAuthStateModel>, action: Login) {
-    return this.http
-      .post<{ user: UserVm; }>(`${ApiBaseUrl}/auth/email/login`, {
-        email: action.email,
-        password: action.password
-      })
-      .pipe(
-        tap(({ user }) => {
-          ctx.setState(state => ({
-            ...state,
-            user
-          }));
-        })
-      );
-  }
-
   @Action(Logout)
   logout(ctx: StateContext<IAuthStateModel>, action: Logout) {
     ctx.setState(state => ({
@@ -70,13 +49,27 @@ export class AuthState {
   @Action(RefreshAccessToken)
   refreshAccessToken(ctx: StateContext<IAuthStateModel>, action: RefreshAccessToken) {
     const user = ctx.getState().user;
-    if (!user) throw new Error(`Cannot refresh access token as no user is currently logged in.`);
+    if (!user) {
+      this.router.navigate(['/account/login']);
+      throw new Error(`Cannot refresh access token as no user is currently logged in.`);
+    }
 
     return this.http
       .post<{ accessToken: string; expires: string; }>(`${ApiBaseUrl}/auth/email/refresh-token`, {
         refreshToken: user.refreshToken
       })
       .pipe(
+        catchError((error: HttpErrorResponse) => {
+          ctx.setState(state => ({
+            ...state,
+            user: null
+          }));
+
+          if (error.status === 401)
+            this.router.navigate(['/account/login']);
+
+          return throwError(() => error);
+        }),
         tap(({ accessToken, expires }) => {
           ctx.setState(state => ({
             ...state,
@@ -100,5 +93,8 @@ export class AuthState {
     }));
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 }

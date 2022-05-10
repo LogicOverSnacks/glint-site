@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
@@ -111,6 +112,7 @@ export class EmailLoginComponent {
   constructor(
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
+    private router: Router,
     private store: Store
   ) {}
 
@@ -152,8 +154,10 @@ export class EmailLoginComponent {
         })
       )
       .subscribe(({ user }) => {
-        this.store.dispatch(new UpdateUser(user));
         this.view.next('success');
+        this.store.dispatch(new UpdateUser(user)).subscribe(() => {
+          this.router.navigate(['/account']);
+        });
       });
   }
 

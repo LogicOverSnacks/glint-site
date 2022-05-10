@@ -4,26 +4,61 @@
   text-align: center;
 }
 
-.title {
-  margin-bottom: 50px;
-}
+header {
+  margin-bottom: 30px;
 
-
-.subscription-list {
-  > li {
-    display: flex;
-    justify-content: space-between;
-
-    button {
-      opacity: 0;
-      transition: opacity ease-in-out 0.3s;
-    }
-
-    &:hover {
-      button {
-        opacity: 1;
-      }
-    }
+  .title {
+    margin-bottom: 40px;
   }
 }
 
+main {
+  text-align: left;
+
+  .purchase-btn {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .payments-btn {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .warning {
+    margin-bottom: 10px;
+  }
+
+  .subscriptions {
+    margin-bottom: 10px;
+
+    .subscription-list {
+
+      > li {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+          opacity: 0;
+          transition: opacity ease-in-out 0.3s;
+        }
+
+        &:hover {
+          button {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+  .form-field {
+    min-width: 250px;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .logout-btn {
+    display: block;
+  }
+}

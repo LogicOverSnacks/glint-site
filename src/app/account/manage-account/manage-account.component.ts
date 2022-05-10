@@ -1,13 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Select } from '@ngxs/store';
-import { catchError, combineLatest, finalize, Observable, startWith, Subject, switchMap, takeUntil, throwError } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
 import { AuthSubscription } from '../../shared/models/subscriptions';
-import { AuthState } from '../../state/auth.state';
+import { AuthState, Logout } from '../../state/auth.state';
 import { UserVm } from '../../state/user.vm';
 
 @Component({
@@ -21,21 +22,23 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
   totalPurchased = 0;
   assigned: AuthSubscription[] = [];
-  using: AuthSubscription[] = [];
-  bestSubscription: AuthSubscription | null = null;
+  using: string[] = [];
+  bestSubscription: string | null = null;
 
-  assigning = false;
+  processing = false;
   assignEmailControl = new FormControl(null, Validators.email);
+  purchaseError = new BehaviorSubject<string | null>(null);
   refresh$ = new Subject<void>();
 
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
+    private store: Store,
     private api: ApiService
   ) { super(); }
 
   ngOnInit() {
-    combineLatest([this.user, this.refresh$.pipe(startWith(undefined))])
+    combineLatest([this.user, this.refresh$])
       .pipe(
         switchMap(() => this.api.getSubscriptions()),
         takeUntil(this.destroyed$)
@@ -44,37 +47,127 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         this.totalPurchased = totalPurchased;
 
         const now = new Date();
-        this.assigned = assigned
-          .filter(subscription => !subscription.expiryDate || new Date(subscription.expiryDate) > now);
+        this.assigned = assigned.filter(subscription => new Date(subscription.expiryDate) > now);
         this.using = using;
         this.bestSubscription = using.length > 0 ? using[0] : null;
         this.cdr.markForCheck();
       });
+
+    if (this.store.selectSnapshot(AuthState.user)) {
+      this.refresh$.next();
+    } else {
+      this.router.navigate(['/account/login']);
+    }
+  }
+
+  purchase(quantity: number) {
+    if (this.processing) return;
+
+    this.processing = true;
+
+    this.api.purchaseSubscriptions(quantity)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
+            : response.status === 400 ? '400PB'
+            : '500PA';
+
+          this.purchaseError.next(
+            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}`
+          );
+
+          return throwError(() => response);
+        }),
+        finalize(() => {
+          this.processing = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe(url => {
+        this.purchaseError.next(null);
+        if (url) window.open(url);
+      });
+  }
+
+  manage() {
+    if (this.processing) return;
+
+    this.processing = true;
+
+    this.api.manageSubscriptions()
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          const code = response.status === 400 ? '400MA'
+            : response.status === 403 ? '403MA'
+            : '500MA';
+
+          this.purchaseError.next(
+            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}`
+          );
+
+          return throwError(() => response);
+        }),
+        finalize(() => {
+          this.processing = false;
+          this.cdr.markForCheck();
+        })
+      )
+      .subscribe(url => {
+        this.purchaseError.next(null);
+        if (url) window.open(url);
+      });
   }
 
   assign(email: string) {
-    if (this.assigning) return;
+    if (this.processing) return;
 
-    this.assigning = true;
+    this.processing = true;
+
     this.api.assignSubscription(email)
-      .pipe(finalize(() => {
-        this.assigning = false;
-      }))
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 400) {
+            const errors: string[] = [];
+
+            for (const error of response.error.errors)
+              if (error.param === 'email') errors.push(error.msg);
+
+            this.assignEmailControl.setErrors(errors.length > 0 ? { server: errors } : null);
+          } else if (response.status === 403) {
+            this.assignEmailControl.setErrors({
+              server: ['Unable to find available subscriptions, please check your payment settings are in working order by clicking the button above. If the problem persists email support at help@glint.info']
+            });
+          }
+
+          return throwError(() => response);
+        }),
+        finalize(() => {
+          this.processing = false;
+          this.cdr.markForCheck();
+        })
+      )
       .subscribe(() => {
         this.refresh$.next();
       });
   }
 
   unassign(subscription: AuthSubscription) {
-    if (this.assigning) return;
+    if (this.processing) return;
 
-    this.assigning = true;
+    this.processing = true;
+
     this.api.unassignSubscription(subscription.email)
       .pipe(finalize(() => {
-        this.assigning = false;
+        this.processing = false;
       }))
       .subscribe(() => {
         this.refresh$.next();
       });
+  }
+
+  logout() {
+    this.store.dispatch(new Logout()).subscribe(() => {
+      this.router.navigate(['/account/login']);
+    });
   }
 }
