@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 
@@ -23,24 +23,40 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   totalPurchased = 0;
   assigned: AuthSubscription[] = [];
   using: string[] = [];
-  bestSubscription: string | null = null;
+  yourSubscription: string | null = null;
 
   processing = false;
+  quantityControl = new FormControl(null, [Validators.min(1), Validators.max(99)]);
   assignEmailControl = new FormControl(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
+  manageError = new BehaviorSubject<string | null>(null);
   refresh$ = new Subject<void>();
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private route: ActivatedRoute,
     private router: Router,
     private store: Store,
     private api: ApiService
   ) { super(); }
 
   ngOnInit() {
+    const assign = this.route.snapshot.queryParamMap.get('assign');
+    if (assign === 'self') {
+      const user = this.store.selectSnapshot(AuthState.user);
+      if (user) this.assign(user.email);
+    }
+
+    this.quantityControl.valueChanges.subscribe(() => console.log(this.quantityControl.getError('min')));
+
     combineLatest([this.user, this.refresh$])
       .pipe(
         switchMap(() => this.api.getSubscriptions()),
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 403) this.logout();
+
+          return throwError(() => response);
+        }),
         takeUntil(this.destroyed$)
       )
       .subscribe(({ totalPurchased, assigned, using }) => {
@@ -49,7 +65,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         const now = new Date();
         this.assigned = assigned.filter(subscription => new Date(subscription.expiryDate) > now);
         this.using = using;
-        this.bestSubscription = using.length > 0 ? using[0] : null;
+        this.yourSubscription = using.length > 0 ? using[0] : null;
         this.cdr.markForCheck();
       });
 
@@ -60,12 +76,12 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     }
   }
 
-  purchase(quantity: number) {
+  purchase(quantity: number, forSelf: boolean) {
     if (this.processing) return;
 
     this.processing = true;
 
-    this.api.purchaseSubscriptions(quantity)
+    this.api.purchaseSubscriptions(quantity, forSelf)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
@@ -85,7 +101,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       )
       .subscribe(url => {
         this.purchaseError.next(null);
-        if (url) window.open(url);
+        if (url) window.location.href = url;
       });
   }
 
@@ -97,11 +113,16 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     this.api.manageSubscriptions()
       .pipe(
         catchError((response: HttpErrorResponse) => {
+          if (response.status === 403 && response.error.reason === 'invalid') {
+            this.manageError.next(`You have no payment details to manage. Please purchase a subscription first.`);
+            return throwError(() => response);
+          }
+
           const code = response.status === 400 ? '400MA'
             : response.status === 403 ? '403MA'
             : '500MA';
 
-          this.purchaseError.next(
+          this.manageError.next(
             `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}`
           );
 
@@ -113,8 +134,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         })
       )
       .subscribe(url => {
-        this.purchaseError.next(null);
-        if (url) window.open(url);
+        this.manageError.next(null);
+        if (url) window.location.href = url;
       });
   }
 
@@ -135,7 +156,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             this.assignEmailControl.setErrors(errors.length > 0 ? { server: errors } : null);
           } else if (response.status === 403) {
             this.assignEmailControl.setErrors({
-              server: ['Unable to find available subscriptions, please check your payment settings are in working order by clicking the button above. If the problem persists email support at help@glint.info']
+              server: ['Unable to find available subscriptions, please check your payment settings are in working order by clicking the Manage Payments button above. If the problem persists email help@glint.info for support.']
             });
           }
 

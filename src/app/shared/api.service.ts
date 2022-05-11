@@ -23,11 +23,11 @@ export class ApiService {
     ));
   }
 
-  purchaseSubscriptions(quantity: number): Observable<string | null> {
+  purchaseSubscriptions(quantity: number, forSelf: boolean): Observable<string | null> {
     return this.withRetries(() => this.http
       .post<{ url: string; }>(
         `${ApiBaseUrl}/subscriptions/purchase`,
-        { quantity: quantity },
+        { quantity, forSelf },
         { headers: this.getHeaders() }
       )
       .pipe(map(({ url }) => url))

@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@use 'src/theme' as theme;
+
 :host {
   display: block;
   padding-top: 40px;
@@ -8,12 +11,32 @@ header {
   margin-bottom: 30px;
 
   .title {
-    margin-bottom: 40px;
+    margin-bottom: 20px;
+  }
+
+  > h3 {
+    margin-bottom: 10px;
+  }
+
+  .change-password-btn {
+    margin-right: 10px;
   }
 }
 
 main {
   text-align: left;
+
+  .your-subscription {
+    .highlight {
+      color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+    }
+
+    .small {
+      font-size: 0.5em;
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+  }
 
   .purchase-btn {
     display: block;
@@ -25,18 +48,35 @@ main {
     margin-bottom: 10px;
   }
 
-  .warning {
+  .errors {
+    vertical-align: middle;
     margin-bottom: 10px;
+
+    > mat-icon {
+      margin-right: 5px;
+      vertical-align: middle;
+    }
   }
 
   .subscriptions {
     margin-bottom: 10px;
+    margin-top: 30px;
+
+    > h2 {
+      margin-bottom: 0;
+    }
 
     .subscription-list {
+      margin: 0;
+      padding: 0;
 
       > li {
         display: flex;
         justify-content: space-between;
+        line-height: 40px;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        white-space: nowrap;
 
         button {
           opacity: 0;
@@ -58,7 +98,13 @@ main {
     margin-bottom: 10px;
   }
 
-  .logout-btn {
-    display: block;
+  .warning {
+    color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+    color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
+
+    > mat-icon {
+      margin-right: 5px;
+      vertical-align: top;
+    }
   }
 }

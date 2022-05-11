@@ -2,30 +2,34 @@
   <header>
     <div class="mat-display-2 title">Your account</div>
     <h3>You are logged in as: {{ (user | async)?.email }}</h3>
+
+      <!-- <button type="button" mat-button>Change email</button> -->
+    <button type="button" mat-stroked-button color="primary" class="change-password-btn">Change password</button>
+    <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
   </header>
 
   <main *ngIf="user | async as userData" fxLayout>
     <div fxFlex="25" fxFlex.lt-md="16" fxFlex.lt-sm="0"></div>
     <div fxFlex fxFlex.lt-sm="100">
-      <ng-container *ngIf="bestSubscription">
-        <h3>
-          Subscription: pro
-          <!-- <span *ngIf="!bestSubscription.autoRenew">(expires {{ bestSubscription.expiryDate | date }})</span> -->
-        </h3>
-        <h4 *ngIf="bestSubscription !== userData.email">Provided by {{bestSubscription}}</h4>
-      </ng-container>
+      <h2 class="your-subscription">
+        Your subscription level: <span class="highlight">{{yourSubscription ? 'Premium' : 'Free'}}</span>
+        <span class="small" *ngIf="yourSubscription && yourSubscription !== userData.email">
+          (Provided by {{yourSubscription}})
+        </span>
+      </h2>
 
-      <!-- <button type="button" mat-button>Change email</button> -->
-      <!-- <button type="button" mat-button>Change password</button> -->
       <button type="button"
+        *ngIf="true || !yourSubscription"
         mat-stroked-button
         class="purchase-btn"
         color="accent"
         title="Click to purchase a subscription"
-        (click)="purchase(1)"
+        (click)="purchase(1, true)"
       >Purchase subscription</button>
 
-      <div class="errors" *ngIf="purchaseError | async as error">{{ error }}</div>
+      <div class="errors" *ngIf="purchaseError | async as error">
+        <mat-icon inline color="warn">warning</mat-icon> {{ error }}
+      </div>
 
       <button type="button"
         mat-stroked-button
@@ -35,13 +39,37 @@
         (click)="manage()"
       >Manage payments</button>
 
-      <div class="warning" *ngIf="totalPurchased > assigned.length">
-        You have <span class="highlight">{{ totalPurchased - assigned.length }}</span> unassigned subscriptions.
-        You can assign the remaining ones below, or cancel excess subscriptions.
+      <div class="errors" *ngIf="manageError | async as error">
+        <mat-icon inline color="warn">warning</mat-icon> {{ error }}
+      </div>
+
+      <div class="teammate-purchase">
+        <mat-form-field *ngIf="totalPurchased > assigned.length">
+          <mat-label>Quantity</mat-label>
+          <input matInput
+            type="number"
+            min="1"
+            max="100"
+            [formControl]="quantityControl"
+          >
+          <mat-error *ngIf="quantityControl.hasError('min')">
+            Must be greater than 0
+          </mat-error>
+          <mat-error *ngIf="quantityControl.hasError('max')">
+            Must be less than 100
+          </mat-error>
+        </mat-form-field>
+        <button type="button"
+          mat-stroked-button
+          class="purchase-teammates-btn"
+          color="accent"
+          title="Click to purchase subscriptions that can be assigned to other accounts"
+          (click)="purchase(quantityControl.value, false)"
+        >Purchase subscriptions for teammates</button>
       </div>
 
       <div class="subscriptions" *ngIf="totalPurchased > 0">
-        <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
+        <h2>Assigned subscriptions ({{ assigned.length }}):</h2>
         <ul class="subscription-list">
           <li *ngFor="let subscription of assigned">
             <span>{{ subscription.email }}</span>
@@ -68,7 +96,7 @@
         </ul>
       </div>
 
-      <mat-form-field class="form-field" appearance="outline" *ngIf="totalPurchased > assigned.length">
+      <mat-form-field class="form-field" *ngIf="totalPurchased > assigned.length">
         <mat-label>Assign to user</mat-label>
         <input matInput
           type="email"
@@ -87,7 +115,13 @@
         </mat-error>
       </mat-form-field>
 
-      <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
+      <div class="warning" *ngIf="totalPurchased > assigned.length">
+        <mat-icon inline>info</mat-icon>You have
+        <span class="highlight">{{ totalPurchased - assigned.length }}</span>
+        unassigned subscription{{(totalPurchased - assigned.length) > 1 ? 's' : ''}}.
+        You can assign the remaining one{{(totalPurchased - assigned.length) > 1 ? 's' : ''}} above,
+        or cancel excess subscriptions by clicking the Manage Payments button at the top of the page and reducing the subscription quantity.
+      </div>
     </div>
     <div fxFlex="25" fxFlex.lt-md="16" fxFlex.lt-sm="0"></div>
   </main>
