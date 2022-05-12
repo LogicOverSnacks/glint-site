@@ -4,7 +4,9 @@
     <h3>You are logged in as: {{ (user | async)?.email }}</h3>
 
     <!-- <button type="button" mat-button>Change email</button> -->
-    <button type="button" mat-stroked-button color="primary" class="change-password-btn">Change password</button>
+    <a routerLink="/account/email/change-password">
+      <button type="button" mat-stroked-button color="primary" class="change-password-btn">Change password</button>
+    </a>
     <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
   </header>
 
@@ -63,13 +65,7 @@
       </div>
 
       <div class="teammate-purchase" fxLayout.lt-sm="column">
-        <!-- <div class="text"></div> -->
         <h3 class="left">
-          <!-- <span title="You can assign subscriptions to other users">
-            <mat-icon inline>info</mat-icon>
-            Buy more subscriptions:
-          </span>
-          <span>more subscription{{quantityControl.value === 1 ? '' : 's'}}</span> -->
           Subscriptions purchased: <span class="highlight">{{totalPurchased}}</span>
         </h3>
 
@@ -112,12 +108,22 @@
         <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
         <ul class="subscription-list">
           <li *ngFor="let subscription of assigned">
-            <span class="email">{{ subscription.email }}</span>
+            <span class="email" [matTooltip]="subscription.email">{{ subscription.email }}</span>
             <span *ngIf="!subscription.autoRenew"
               class="expires-warning"
-              title="After expiry you may assign the subscription to another user"
+              matTooltip="This subscription is due to expire. After expiry you may assign the subscription to another user"
             >
-              Expires {{ subscription.expiryDate | date }}
+              <mat-icon inline fxHide.gt-xs>schedule</mat-icon>
+              <span fxHide.lt-sm>Expires on</span>
+              {{ subscription.expiryDate | date }}
+            </span>
+            <span *ngIf="subscription.autoRenew && subscription.pausedUntil"
+              class="expires-warning"
+              matTooltip="Payment for this subscription has been paused"
+            >
+              <mat-icon inline fxHide.gt-xs>pause</mat-icon>
+              <span fxHide.lt-sm>Paused until</span>
+              {{ subscription.pausedUntil | date }}
             </span>
             <button type="button"
               *ngIf="!subscription.autoRenew"

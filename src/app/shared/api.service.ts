@@ -16,6 +16,14 @@ export class ApiService {
     private store: Store
   ) {}
 
+  changePassword(password: string, newPassword: string) {
+    return this.withRetries(() => this.http.post(
+      `${ApiBaseUrl}/auth/email/change-password`,
+      { password, newPassword },
+      { headers: this.getHeaders() }
+    ));
+  }
+
   getSubscriptions() {
     return this.withRetries(() => this.http.get<GetSubscriptionsResponse>(
       `${ApiBaseUrl}/subscriptions`,

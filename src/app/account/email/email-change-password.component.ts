@@ -1,13 +1,13 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngxs/store';
-import { BehaviorSubject, EMPTY } from 'rxjs';
+import { Select } from '@ngxs/store';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
-import { ApiBaseUrl } from 'src/app/shared';
-import { UpdateUser } from 'src/app/state/auth.state';
+import { ApiService } from 'src/app/shared/api.service';
+import { AuthState } from 'src/app/state/auth.state';
 import { UserVm } from 'src/app/state/user.vm';
 
 @Component({
@@ -43,23 +43,12 @@ import { UserVm } from 'src/app/state/user.vm';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Login</header>
+      <header class="mat-display-2 title">Change Password</header>
 
       <ng-container [ngSwitch]="view | async">
-        <form *ngSwitchCase="'init'" (ngSubmit)="login()">
+        <form *ngSwitchCase="'init'" (ngSubmit)="change()">
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input type="email" matInput required [formControl]="emailControl" placeholder="Enter your email address...">
-            <mat-error *ngIf="emailControl.hasError('invalid')">
-              Invalid email address
-            </mat-error>
-            <mat-error *ngIf="emailControl.hasError('server')">
-              {{ emailControl.getError('server').join(', ') }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label>Current Password</mat-label>
             <input matInput
               [attr.type]="(passwordHidden | async) ? 'password' : 'text'"
               required
@@ -82,14 +71,41 @@ import { UserVm } from 'src/app/state/user.vm';
             </mat-error>
           </mat-form-field>
 
-          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Login</button>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>New Password</mat-label>
+            <input matInput
+              [attr.type]="(newPasswordHidden | async) ? 'password' : 'text'"
+              required
+              [formControl]="newPasswordControl"
+              placeholder="Enter a new password..."
+            >
+            <button type="button"
+              matSuffix
+              mat-icon-button
+              [title]="(newPasswordHidden | async) ? 'Show' : 'Hide'"
+              (click)="newPasswordHidden.next(!newPasswordHidden.value)"
+            >
+              <mat-icon>{{newPasswordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="newPasswordControl.hasError('invalid')">
+              Password must have at least 10 characters
+            </mat-error>
+            <mat-error *ngIf="newPasswordControl.hasError('server')">
+              {{ newPasswordControl.getError('server').join(', ') }}
+            </mat-error>
+          </mat-form-field>
 
-          <p>Forgot your password? Click <a [routerLink]="['/account/email/lost-password']" class="link">here</a> to reset it.</p>
-          <p>Don't have an account? Click <a [routerLink]="['/account/email/register']">here</a> to register.</p>
+          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Change password</button>
+
+          <p>
+            Forgot your password? Click
+            <a [routerLink]="['/account/email/lost-password']" [queryParams]="{ email: (user | async)?.email }">here</a>
+            to reset it.
+          </p>
         </form>
 
         <h3 *ngSwitchCase="'success'">
-          Logged in successfully!<br>
+          Password changed successfully!<br>
           Redirecting...
         </h3>
 
@@ -103,46 +119,45 @@ import { UserVm } from 'src/app/state/user.vm';
     </app-container>
   `
 })
-export class EmailLoginComponent {
-  emailControl = new FormControl(null, [Validators.required, Validators.email]);
+export class EmailChangePasswordComponent {
+  @Select(AuthState.user)
+  user!: Observable<UserVm>;
+
   passwordControl = new FormControl(null, [Validators.required, Validators.minLength(10)]);
+  newPasswordControl = new FormControl(null, [Validators.required, Validators.minLength(10)]);
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
+  newPasswordHidden = new BehaviorSubject(true);
   processing = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private http: HttpClient,
     private router: Router,
-    private store: Store
+    private api: ApiService
   ) {}
 
-  login() {
+  change() {
     if (this.processing) return;
 
     this.processing = true;
 
-    this.http
-      .post<{ user: UserVm; }>(`${ApiBaseUrl}/auth/email/login`, {
-        email: this.emailControl.value,
-        password: this.passwordControl.value
-      })
+    this.api.changePassword(this.passwordControl.value, this.newPasswordControl.value)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           if (response.status === 400) {
-            const emailErrors: string[] = [];
             const passwordErrors: string[] = [];
+            const newPasswordErrors: string[] = [];
 
             for (const error of response.error.errors) {
-              if (error.param === 'email') {
-                emailErrors.push(error.msg);
-              } else if (error.param === 'password') {
+              if (error.param === 'password') {
                 passwordErrors.push(error.msg);
+              } else if (error.param === 'newPassword') {
+                newPasswordErrors.push(error.msg);
               }
             }
 
-            this.emailControl.setErrors(emailErrors.length > 0 ? { server: emailErrors } : null);
             this.passwordControl.setErrors(passwordErrors.length > 0 ? { server: passwordErrors } : null);
+            this.newPasswordControl.setErrors(newPasswordErrors.length > 0 ? { server: newPasswordErrors } : null);
           } else {
             this.view.next('error');
           }
@@ -154,17 +169,15 @@ export class EmailLoginComponent {
           this.cdr.markForCheck();
         })
       )
-      .subscribe(({ user }) => {
+      .subscribe(() => {
         this.view.next('success');
-        this.store.dispatch(new UpdateUser(user)).subscribe(() => {
-          this.router.navigate(['/account']);
-        });
+        this.router.navigate(['/account']);
       });
   }
 
   reset() {
-    this.emailControl.reset();
     this.passwordControl.reset();
+    this.newPasswordControl.reset();
     this.view.next('init');
   }
 }

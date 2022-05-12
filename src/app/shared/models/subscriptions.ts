@@ -10,4 +10,6 @@ export interface AuthSubscription {
   autoRenew: boolean;
   email: string;
   expiryDate: string;
+  cancelled: boolean;
+  pausedUntil: string | null;
 }

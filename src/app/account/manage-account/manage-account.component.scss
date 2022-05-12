@@ -115,6 +115,7 @@ main {
 
     mat-form-field {
       margin: 0 5px;
+      width: 160px;
     }
 
     .info-icon {
@@ -155,7 +156,7 @@ main {
         }
 
         button {
-          margin-left: 20px;
+          margin-left: 10px;
 
           mat-icon {
             &.nudge-up {
@@ -171,12 +172,16 @@ main {
         .expires-warning {
           color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
           margin-left: 20px;
+
+          mat-icon {
+            vertical-align: bottom;
+          }
         }
       }
     }
 
     .assign-subscription {
-      min-width: 250px;
+      min-width: 247px;
       margin-bottom: 20px;
     }
 
