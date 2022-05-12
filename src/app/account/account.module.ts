@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SharedModule } from '../shared/shared.module';
 import { AccountRoutingModule } from './account-routing.module';
@@ -12,6 +13,8 @@ import { UnauthorizedComponent } from './unauthorized.component';
 @NgModule({
   imports: [
     FlexLayoutModule,
+    MatTooltipModule,
+
     SharedModule,
     AccountRoutingModule
   ],

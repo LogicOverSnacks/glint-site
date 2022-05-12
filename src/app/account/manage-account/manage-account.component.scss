@@ -27,30 +27,71 @@ main {
   text-align: left;
 
   .your-subscription {
-    .highlight {
-      color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+    margin-bottom: 60px;
+
+    .level {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      height: 36px;
+
+      .large {
+        flex-shrink: 0;
+        margin-bottom: 0;
+      }
+
+      .small {
+        font-size: 10px;
+        margin-left: 10px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .highlight {
+        color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+      }
+
+      .upgrade-btn {
+        align-self: center;
+        margin-left: 10px;
+      }
     }
 
-    .small {
-      font-size: 0.5em;
-      margin-left: 5px;
+    .errors {
+      color: mat.get-color-from-palette(theme.$app-warn-palette);
+      font-size: 14px;
+      line-height: 20px;
+      margin-top: 10px;
+      margin-bottom: 26px;
       vertical-align: middle;
+
+      > mat-icon {
+        margin-right: 5px;
+        vertical-align: middle;
+      }
     }
   }
 
-  .purchase-btn {
-    display: block;
-    margin-bottom: 10px;
+  .manage-subscriptions-title {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin: 0;
+
+    > span {
+      margin-bottom: 20px;
+    }
+
+    .manage-payments-btn {
+      margin-bottom: 20px;
+    }
   }
 
-  .payments-btn {
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  .errors {
+  .manage-payments-errors {
+    color: mat.get-color-from-palette(theme.$app-warn-palette);
+    margin-bottom: 26px;
     vertical-align: middle;
-    margin-bottom: 10px;
 
     > mat-icon {
       margin-right: 5px;
@@ -58,53 +99,94 @@ main {
     }
   }
 
+  .teammate-purchase {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+
+    .right {
+      flex-shrink: 0;
+    }
+
+    .highlight {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+    }
+
+    mat-form-field {
+      margin: 0 5px;
+    }
+
+    .info-icon {
+      margin-right: 5px;
+      vertical-align: top;
+    }
+
+    .teammate-purchase-btn {
+      margin-left: 10px;
+    }
+  }
+
   .subscriptions {
     margin-bottom: 10px;
-    margin-top: 30px;
 
-    > h2 {
+    > h3 {
       margin-bottom: 0;
     }
 
     .subscription-list {
       margin: 0;
       padding: 0;
+      min-width: 50%;
+      max-width: 100%;
+      width: fit-content;
 
       > li {
         display: flex;
         justify-content: space-between;
-        line-height: 40px;
+        align-items: center;
         text-overflow: ellipsis;
         overflow-x: hidden;
         white-space: nowrap;
 
-        button {
-          opacity: 0;
-          transition: opacity ease-in-out 0.3s;
+        .email {
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
-        &:hover {
-          button {
-            opacity: 1;
+        button {
+          margin-left: 20px;
+
+          mat-icon {
+            &.nudge-up {
+              transform: translateY(-2.5px);
+            }
+
+            &.nudge-right {
+              transform: translateX(3.5px);
+            }
           }
+        }
+
+        .expires-warning {
+          color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
+          margin-left: 20px;
         }
       }
     }
-  }
 
-  .form-field {
-    min-width: 250px;
-    width: 100%;
-    margin-bottom: 10px;
-  }
+    .assign-subscription {
+      min-width: 250px;
+      margin-bottom: 20px;
+    }
 
-  .warning {
-    color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
-    color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
+    .assign-warning {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
 
-    > mat-icon {
-      margin-right: 5px;
-      vertical-align: top;
+      > mat-icon {
+        margin-right: 5px;
+        vertical-align: top;
+      }
     }
   }
 }

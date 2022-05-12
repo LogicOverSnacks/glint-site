@@ -3,126 +3,175 @@
     <div class="mat-display-2 title">Your account</div>
     <h3>You are logged in as: {{ (user | async)?.email }}</h3>
 
-      <!-- <button type="button" mat-button>Change email</button> -->
+    <!-- <button type="button" mat-button>Change email</button> -->
     <button type="button" mat-stroked-button color="primary" class="change-password-btn">Change password</button>
     <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
   </header>
 
   <main *ngIf="user | async as userData" fxLayout>
-    <div fxFlex="25" fxFlex.lt-md="16" fxFlex.lt-sm="0"></div>
-    <div fxFlex fxFlex.lt-sm="100">
-      <h2 class="your-subscription">
-        Your subscription level: <span class="highlight">{{yourSubscription ? 'Premium' : 'Free'}}</span>
-        <span class="small" *ngIf="yourSubscription && yourSubscription !== userData.email">
-          (Provided by {{yourSubscription}})
-        </span>
-      </h2>
+    <div fxFlex="0" fxFlex.gt-lg="20" fxFlex.gt-md="15"></div>
+    <div fxFlex="100" fxFlex.gt-lg="60" fxFlex.gt-md="70">
+      <div class="your-subscription">
+        <div class="level">
+          <h1 class="large">
+            Your plan: <span [class.highlight]="yourSubscription">{{yourSubscription ? 'Premium' : 'Free'}}</span>
+          </h1>
 
-      <button type="button"
-        *ngIf="true || !yourSubscription"
-        mat-stroked-button
-        class="purchase-btn"
-        color="accent"
-        title="Click to purchase a subscription"
-        (click)="purchase(1, true)"
-      >Purchase subscription</button>
-
-      <div class="errors" *ngIf="purchaseError | async as error">
-        <mat-icon inline color="warn">warning</mat-icon> {{ error }}
-      </div>
-
-      <button type="button"
-        mat-stroked-button
-        class="payments-btn"
-        color="primary"
-        title="Click to manage payments or change the number of subscriptions"
-        (click)="manage()"
-      >Manage payments</button>
-
-      <div class="errors" *ngIf="manageError | async as error">
-        <mat-icon inline color="warn">warning</mat-icon> {{ error }}
-      </div>
-
-      <div class="teammate-purchase">
-        <mat-form-field *ngIf="totalPurchased > assigned.length">
-          <mat-label>Quantity</mat-label>
-          <input matInput
-            type="number"
-            min="1"
-            max="100"
-            [formControl]="quantityControl"
+          <span class="small"
+            *ngIf="yourSubscription && yourSubscription !== userData.email"
+            [title]="'Your subscription is paid for by ' + yourSubscription"
           >
-          <mat-error *ngIf="quantityControl.hasError('min')">
-            Must be greater than 0
-          </mat-error>
-          <mat-error *ngIf="quantityControl.hasError('max')">
-            Must be less than 100
-          </mat-error>
-        </mat-form-field>
+            (Provided by {{yourSubscription}})
+          </span>
+
+          <button type="button"
+            *ngIf="false || !yourSubscription"
+            mat-stroked-button
+            class="upgrade-btn"
+            color="accent"
+            title="Click to purchase a subscription"
+            (click)="purchase(1, true)"
+          >Upgrade</button>
+        </div>
+
+        <!-- <div class="errors">
+          <mat-icon inline>warning</mat-icon> There was a problem processing the request. Please email support at help@glint.info quoting code 400PA
+        </div> -->
+        <div class="errors" *ngIf="purchaseError | async as error">
+          <mat-icon inline>warning</mat-icon> {{ error }}
+        </div>
+      </div>
+
+      <h1 class="manage-subscriptions-title" fxLayout.lt-sm="column">
+        <span>Manage Subscriptions</span>
+
         <button type="button"
+          *ngIf="totalPurchased > 0"
           mat-stroked-button
-          class="purchase-teammates-btn"
-          color="accent"
-          title="Click to purchase subscriptions that can be assigned to other accounts"
-          (click)="purchase(quantityControl.value, false)"
-        >Purchase subscriptions for teammates</button>
+          color="primary"
+          class="manage-payments-btn"
+          title="Click to manage payments or change the number of subscriptions"
+          (click)="manage()"
+        >Manage payments</button>
+      </h1>
+
+      <!-- <div class="manage-payments-errors">
+        <mat-icon inline>warning</mat-icon> There was a problem processing the request. Please email support at help@glint.info quoting code 400PA
+      </div> -->
+      <div class="manage-payments-errors" *ngIf="manageError | async as error">
+        <mat-icon inline>warning</mat-icon> {{ error }}
+      </div>
+
+      <div class="teammate-purchase" fxLayout.lt-sm="column">
+        <!-- <div class="text"></div> -->
+        <h3 class="left">
+          <!-- <span title="You can assign subscriptions to other users">
+            <mat-icon inline>info</mat-icon>
+            Buy more subscriptions:
+          </span>
+          <span>more subscription{{quantityControl.value === 1 ? '' : 's'}}</span> -->
+          Subscriptions purchased: <span class="highlight">{{totalPurchased}}</span>
+        </h3>
+
+        <div class="right" [ngStyle.gt-xs]="{ 'margin-left': '10px' }">
+          <mat-form-field>
+            <mat-label>Quantity</mat-label>
+            <input matInput
+              type="number"
+              min="1"
+              max="100"
+              [formControl]="quantityControl"
+            >
+            <mat-hint
+              align="start"
+              matTooltip="You can buy subscriptions and assign them to other users e.g. teammates"
+            >
+              <mat-icon inline class="info-icon">info</mat-icon>
+              Buy more subscriptions
+              <!-- <strong>Buy more subscriptions</strong> -->
+            </mat-hint>
+            <mat-error *ngIf="quantityControl.hasError('min')">
+              Must be greater than 0
+            </mat-error>
+            <mat-error *ngIf="quantityControl.hasError('max')">
+              Must be less than 100
+            </mat-error>
+          </mat-form-field>
+          <button type="button"
+            mat-stroked-button
+            class="teammate-purchase-btn"
+            color="accent"
+            title="Click to purchase subscriptions that can be assigned to other users"
+            [disabled]="!quantityControl.value || quantityControl.invalid"
+            (click)="purchase(quantityControl.value, false)"
+          >Purchase</button>
+        </div>
       </div>
 
       <div class="subscriptions" *ngIf="totalPurchased > 0">
-        <h2>Assigned subscriptions ({{ assigned.length }}):</h2>
+        <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
         <ul class="subscription-list">
           <li *ngFor="let subscription of assigned">
-            <span>{{ subscription.email }}</span>
-            <span *ngIf="!subscription.autoRenew" title="After expiry you may assign the subscription to another user">
+            <span class="email">{{ subscription.email }}</span>
+            <span *ngIf="!subscription.autoRenew"
+              class="expires-warning"
+              title="After expiry you may assign the subscription to another user"
+            >
               Expires {{ subscription.expiryDate | date }}
             </span>
             <button type="button"
               *ngIf="!subscription.autoRenew"
               mat-icon-button
+              color="primary"
               title="Reinstate subscription"
               (click)="assign(subscription.email)"
-            >
-              <mat-icon>plus</mat-icon>
-            </button>
+            ><mat-icon class="nudge-up">restart_alt</mat-icon></button>
             <button type="button"
               *ngIf="subscription.autoRenew"
               mat-icon-button
-              [title]="subscription.activated ? 'Expire subscription at the end of the billing period' : 'Remove subscription'"
+              color="warn"
+              [title]="subscription.activated ? 'Unassign subscription at the end of the billing period' : 'Unassign subscription'"
               (click)="unassign(subscription)"
             >
-              <mat-icon>{{ subscription.activated ? 'time' : 'delete' }}</mat-icon>
+              <mat-icon [class.nudge-right]="subscription.activated">
+                {{ subscription.activated ? 'auto_delete' : 'delete' }}
+              </mat-icon>
             </button>
           </li>
         </ul>
-      </div>
 
-      <mat-form-field class="form-field" *ngIf="totalPurchased > assigned.length">
-        <mat-label>Assign to user</mat-label>
-        <input matInput
-          type="email"
-          [formControl]="assignEmailControl"
-        >
+        <mat-form-field class="assign-subscription" *ngIf="totalPurchased > assigned.length">
+          <mat-label>Assign a subscription</mat-label>
+          <input matInput
+            type="email"
+            placeholder="Enter the user's email address..."
+            [formControl]="assignEmailControl"
+          >
+          <mat-error *ngIf="assignEmailControl.hasError('email')">
+            Invalid email
+          </mat-error>
+          <mat-error *ngIf="assignEmailControl.hasError('server')">
+            {{ assignEmailControl.getError('server').join(', ') }}
+          </mat-error>
+        </mat-form-field>
         <button type="button"
-          matSuffix
           mat-icon-button
           title="Assign a subscription to this user"
-          (click)="assign(assignEmailControl.value)"
+          [disabled]="!assignEmailControl.value || assignEmailControl.invalid"
+          (click)="assign(assignEmailControl.value); assignEmailControl.reset()"
         >
           <mat-icon>add</mat-icon>
         </button>
-        <mat-error *ngIf="assignEmailControl.hasError('server')">
-          {{ assignEmailControl.getError('server').join(', ') }}
-        </mat-error>
-      </mat-form-field>
 
-      <div class="warning" *ngIf="totalPurchased > assigned.length">
-        <mat-icon inline>info</mat-icon>You have
-        <span class="highlight">{{ totalPurchased - assigned.length }}</span>
-        unassigned subscription{{(totalPurchased - assigned.length) > 1 ? 's' : ''}}.
-        You can assign the remaining one{{(totalPurchased - assigned.length) > 1 ? 's' : ''}} above,
-        or cancel excess subscriptions by clicking the Manage Payments button at the top of the page and reducing the subscription quantity.
+        <div class="assign-warning" *ngIf="totalPurchased > assigned.length">
+          <mat-icon inline>info</mat-icon>You have
+          <span class="highlight">{{ totalPurchased - assigned.length }}</span>
+          unassigned subscription{{(totalPurchased - assigned.length) > 1 ? 's' : ''}}.
+          You can assign the remaining one{{(totalPurchased - assigned.length) > 1 ? 's' : ''}},
+          or cancel excess subscriptions by clicking the Manage Payments button and reducing the subscription quantity.
+        </div>
       </div>
     </div>
-    <div fxFlex="25" fxFlex.lt-md="16" fxFlex.lt-sm="0"></div>
+    <div fxFlex="0" fxFlex.gt-lg="20" fxFlex.gt-md="15"></div>
   </main>
 </app-container>

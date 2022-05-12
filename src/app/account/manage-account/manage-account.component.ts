@@ -47,8 +47,6 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       if (user) this.assign(user.email);
     }
 
-    this.quantityControl.valueChanges.subscribe(() => console.log(this.quantityControl.getError('min')));
-
     combineLatest([this.user, this.refresh$])
       .pipe(
         switchMap(() => this.api.getSubscriptions()),
@@ -89,7 +87,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             : '500PA';
 
           this.purchaseError.next(
-            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}`
+            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
           );
 
           return throwError(() => response);
@@ -123,7 +121,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             : '500MA';
 
           this.manageError.next(
-            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}`
+            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
           );
 
           return throwError(() => response);

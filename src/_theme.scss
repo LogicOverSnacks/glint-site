@@ -4,9 +4,9 @@ $app-typography: mat.define-typography-config(
   $font-family: 'Montserrat'
 );
 
-$app-primary-palette: mat.define-palette(mat.$blue-grey-palette);
+$app-primary-palette: mat.define-palette(mat.$blue-grey-palette, 400);
 $app-accent-palette:  mat.define-palette(mat.$orange-palette, A100, A200, A400);
-$app-warn-palette:    mat.define-palette(mat.$red-palette);
+$app-warn-palette:    mat.define-palette(mat.$red-palette, 300);
 
 $app-theme: mat.define-dark-theme((
   color: (
