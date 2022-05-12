@@ -153,6 +153,7 @@ main {
         .email {
           overflow: hidden;
           text-overflow: ellipsis;
+          flex: 1;
         }
 
         button {

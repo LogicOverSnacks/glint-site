@@ -69,7 +69,7 @@ import { UserVm } from 'src/app/state/user.vm';
             <button type="button"
               matSuffix
               mat-icon-button
-              [title]="(passwordHidden | async) ? 'Show' : 'Hide'"
+              [matTooltip]="(passwordHidden | async) ? 'Show' : 'Hide'"
               (click)="passwordHidden.next(!passwordHidden.value)"
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>

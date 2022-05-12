@@ -21,7 +21,7 @@
 
           <span class="small"
             *ngIf="yourSubscription && yourSubscription !== userData.email"
-            [title]="'Your subscription is paid for by ' + yourSubscription"
+            [matTooltip]="'Your subscription is paid for by ' + yourSubscription"
           >
             (Provided by {{yourSubscription}})
           </span>
@@ -31,7 +31,7 @@
             mat-stroked-button
             class="upgrade-btn"
             color="accent"
-            title="Click to purchase a subscription"
+            matTooltip="Click to purchase a subscription"
             (click)="purchase(1, true)"
           >Upgrade</button>
         </div>
@@ -52,7 +52,7 @@
           mat-stroked-button
           color="primary"
           class="manage-payments-btn"
-          title="Click to manage payments or change the number of subscriptions"
+          matTooltip="Click to manage payments or change the number of subscriptions"
           (click)="manage()"
         >Manage payments</button>
       </h1>
@@ -97,7 +97,7 @@
             mat-stroked-button
             class="teammate-purchase-btn"
             color="accent"
-            title="Click to purchase subscriptions that can be assigned to other users"
+            matTooltip="Click to purchase subscriptions that can be assigned to other users"
             [disabled]="!quantityControl.value || quantityControl.invalid"
             (click)="purchase(quantityControl.value, false)"
           >Purchase</button>
@@ -129,14 +129,14 @@
               *ngIf="!subscription.autoRenew"
               mat-icon-button
               color="primary"
-              title="Reinstate subscription"
+              matTooltip="Reinstate subscription"
               (click)="assign(subscription.email)"
             ><mat-icon class="nudge-up">restart_alt</mat-icon></button>
             <button type="button"
               *ngIf="subscription.autoRenew"
               mat-icon-button
               color="warn"
-              [title]="subscription.activated ? 'Unassign subscription at the end of the billing period' : 'Unassign subscription'"
+              [matTooltip]="subscription.activated ? 'Unassign subscription at the end of the billing period' : 'Unassign subscription'"
               (click)="unassign(subscription)"
             >
               <mat-icon [class.nudge-right]="subscription.activated">
@@ -162,7 +162,7 @@
         </mat-form-field>
         <button type="button"
           mat-icon-button
-          title="Assign a subscription to this user"
+          matTooltip="Assign a subscription to this user"
           [disabled]="!assignEmailControl.value || assignEmailControl.invalid"
           (click)="assign(assignEmailControl.value); assignEmailControl.reset()"
         >
