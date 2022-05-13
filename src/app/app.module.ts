@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -37,6 +38,7 @@ import { migrations } from './state/migrations';
     FormsModule,
     HttpClientModule,
     LayoutModule,
+    MatCardModule,
     MatListModule,
     MatProgressSpinnerModule,
     MatSidenavModule,

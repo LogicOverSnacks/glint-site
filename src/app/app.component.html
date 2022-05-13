@@ -14,10 +14,12 @@
 
   <div class="end-links" fxShow fxHide.lt-md="true">
     <a class="account-link" routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
-    <button mat-flat-button class="download-button" color="accent" routerLink="/download">
-      Download
-      <mat-icon>file_download</mat-icon>
-    </button>
+    <a routerLink="/download">
+      <button mat-flat-button class="download-button" color="accent">
+        Download
+        <mat-icon>file_download</mat-icon>
+      </button>
+    </a>
   </div>
 
   <div fxHide fxShow.lt-md="true">
