@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 
-import { ApiBaseUrl, BaseComponent } from '../../shared';
+import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
 import { AuthSubscription } from '../../shared/models/subscriptions';
 import { AuthState, Logout } from '../../state/auth.state';

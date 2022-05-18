@@ -1,0 +1,116 @@
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json",
+          "e2e/tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/ng-cli-compat",
+        "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "type": "element",
+            "prefix": "app",
+            "style": "kebab-case"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
+        ],
+        "curly": ["error", "multi-or-nest", "consistent"],
+        "object-shorthand": ["error", "consistent-as-needed"],
+        "max-len": [
+          "warn",
+          { "code": 140 }
+        ],
+        "no-fallthrough": "off",
+        "@typescript-eslint/member-delimiter-style": [
+          "error",
+          {
+            "multiline": {
+              "delimiter": "semi",
+              "requireLast": true
+            },
+            "singleline": {
+              "delimiter": "semi",
+              "requireLast": true
+            }
+          }
+        ],
+        "@typescript-eslint/member-ordering": [
+          "error",
+          {
+            "default": [
+              // Index signature
+              "signature",
+
+              // Static fields
+              "public-static-field",
+              "protected-static-field",
+              "private-static-field",
+
+              // Static methods
+              "public-static-method",
+              "protected-static-method",
+              "private-static-method",
+
+              // Decorated fields
+              "public-decorated-field",
+              "protected-decorated-field",
+              "private-decorated-field",
+
+              // Decorated methods
+              "public-decorated-method",
+              "protected-decorated-method",
+              "private-decorated-method",
+
+              // Fields
+              "public-field",
+              "protected-field",
+              "private-field",
+
+              // Constructors
+              "public-constructor",
+              "protected-constructor",
+              "private-constructor",
+
+              // Methods
+              "public-method",
+              "protected-method",
+              "private-method"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}

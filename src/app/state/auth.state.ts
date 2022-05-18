@@ -43,7 +43,7 @@ export class AuthState {
     ctx.setState(state => ({
       ...state,
       user: null
-    }))
+    }));
   }
 
   @Action(RefreshAccessToken)
@@ -76,8 +76,8 @@ export class AuthState {
             user: state.user
               ? {
                 ...state.user,
-                accessToken: accessToken,
-                expires: expires
+                accessToken,
+                expires
               }
               : null
           }));

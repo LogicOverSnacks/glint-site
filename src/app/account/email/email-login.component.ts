@@ -84,7 +84,7 @@ import { UserVm } from 'src/app/state/user.vm';
 
           <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Login</button>
 
-          <p>Forgot your password? Click <a [routerLink]="['/account/email/lost-password']" class="link">here</a> to reset it.</p>
+          <p>Forgot your password? Click <a [routerLink]="['/account/email/lost-password']">here</a> to reset it.</p>
           <p>Don't have an account? Click <a [routerLink]="['/account/email/register']">here</a> to register.</p>
         </form>
 
