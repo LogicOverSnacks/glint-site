@@ -36,9 +36,6 @@
           >Upgrade</button>
         </div>
 
-        <!-- <div class="errors">
-          <mat-icon inline>warning</mat-icon> There was a problem processing the request. Please email support at help@glint.info quoting code 400PA
-        </div> -->
         <div class="errors" *ngIf="purchaseError | async as error">
           <mat-icon inline>warning</mat-icon> {{ error }}
         </div>
@@ -57,9 +54,6 @@
         >Manage payments</button>
       </h1>
 
-      <!-- <div class="manage-payments-errors">
-        <mat-icon inline>warning</mat-icon> There was a problem processing the request. Please email support at help@glint.info quoting code 400PA
-      </div> -->
       <div class="manage-payments-errors" *ngIf="manageError | async as error">
         <mat-icon inline>warning</mat-icon> {{ error }}
       </div>
@@ -161,6 +155,7 @@
           </mat-error>
         </mat-form-field>
         <button type="button"
+          *ngIf="totalPurchased > assigned.length"
           mat-icon-button
           matTooltip="Assign a subscription to this user"
           [disabled]="!assignEmailControl.value || assignEmailControl.invalid"

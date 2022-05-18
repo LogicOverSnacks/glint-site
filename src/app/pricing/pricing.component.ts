@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, finalize, throwError } from 'rxjs';
 
 import { ApiService } from '../shared/api.service';
-import { AuthState } from '../state/auth.state';
+import { AuthState, Logout } from '../state/auth.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -129,7 +129,7 @@ import { AuthState } from '../state/auth.state';
 
     <div class="enquire-panel">
       <h2>Questions?</h2>
-      <div class="price"><a href="mailto:sales@glint.info" class="link">Enquire</a></div>
+      <div class="price"><a href="mailto:sales@glint.info" class="link">Click here to enquire</a></div>
     </div>
   `
 })
@@ -147,10 +147,25 @@ export class PricingComponent {
   buyLicense() {
     const user = this.store.selectSnapshot(AuthState.user);
     if (!user) {
-      this.router.navigate(['/download']);
+      this.router.navigate(['/account']);
       return;
     }
 
+    this.api.getSubscriptions()
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 403) this.store.dispatch(new Logout()).subscribe(() => this.router.navigate(['/account']));
+
+          return throwError(() => response);
+        })
+      )
+      .subscribe(({ using }) => {
+        if (using.length > 0) this.router.navigate(['/account']);
+        else this.purchase();
+      });
+  }
+
+  private purchase() {
     if (this.processing) return;
 
     this.processing = true;
