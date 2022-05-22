@@ -6,9 +6,9 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
-import { ApiBaseUrl } from 'src/app/shared';
 import { UpdateUser } from 'src/app/state/auth.state';
 import { UserVm } from 'src/app/state/user.vm';
+import { environment } from 'src/environments/environment';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -123,7 +123,7 @@ export class EmailLoginComponent {
     this.processing = true;
 
     this.http
-      .post<{ user: UserVm; }>(`${ApiBaseUrl}/auth/email/login`, {
+      .post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/email/login`, {
         email: this.emailControl.value,
         password: this.passwordControl.value
       })
@@ -134,11 +134,10 @@ export class EmailLoginComponent {
             const passwordErrors: string[] = [];
 
             for (const error of response.error.errors) {
-              if (error.param === 'email') {
+              if (error.param === 'email')
                 emailErrors.push(error.msg);
-              } else if (error.param === 'password') {
+              else if (error.param === 'password')
                 passwordErrors.push(error.msg);
-              }
             }
 
             this.emailControl.setErrors(emailErrors.length > 0 ? { server: emailErrors } : null);

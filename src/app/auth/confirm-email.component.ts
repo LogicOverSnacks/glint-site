@@ -5,7 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { ApiBaseUrl, BaseComponent } from '../shared';
+import { environment } from 'src/environments/environment';
+import { BaseComponent } from '../shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -123,11 +124,11 @@ export class ConfirmEmailComponent extends BaseComponent implements OnInit {
     this.route.queryParams
       .pipe(takeUntil(this.destroyed$))
       .subscribe(params => {
-        if (params['code'])
-          this.codeControl.setValue(params['code']);
+        if (params.code)
+          this.codeControl.setValue(params.code);
 
-        if (params['email'])
-          this.emailControl.setValue(params['email']);
+        if (params.email)
+          this.emailControl.setValue(params.email);
 
         if (this.emailControl.invalid)
           this.view.next('invalid');
@@ -144,7 +145,7 @@ export class ConfirmEmailComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`${ApiBaseUrl}/auth/email/confirm`, {
+      .post(`${environment.apiBaseUrl}/auth/email/confirm`, {
         email: this.emailControl.value,
         code: (this.codeControl.value as string).toLowerCase()
       })
@@ -169,7 +170,7 @@ export class ConfirmEmailComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`${ApiBaseUrl}/auth/email/request-confirm`, {
+      .post(`${environment.apiBaseUrl}/auth/email/request-confirm`, {
         email: this.emailControl.value
       })
       .pipe(

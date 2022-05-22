@@ -5,7 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
 
-import { ApiBaseUrl, BaseComponent } from '../../shared';
+import { environment } from 'src/environments/environment';
+import { BaseComponent } from '../../shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -89,8 +90,8 @@ export class EmailLostPasswordComponent extends BaseComponent implements OnInit 
     this.route.queryParams
       .pipe(takeUntil(this.destroyed$))
       .subscribe(params => {
-        if (params['email'])
-          this.emailControl.setValue(params['email']);
+        if (params.email)
+          this.emailControl.setValue(params.email);
       });
   }
 
@@ -101,14 +102,13 @@ export class EmailLostPasswordComponent extends BaseComponent implements OnInit 
     this.view.next('processing');
 
     this.http
-      .post(`${ApiBaseUrl}/auth/email/lost-password`, { email: this.emailControl.value })
+      .post(`${environment.apiBaseUrl}/auth/email/lost-password`, { email: this.emailControl.value })
       .pipe(
         catchError(error => {
-          if (error.reason === 'validation') {
+          if (error.reason === 'validation')
             this.emailControl.setErrors({ server: error.message });
-          } else {
+          else
             this.view.next('error');
-          }
 
           return EMPTY;
         })

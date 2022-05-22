@@ -5,5 +5,5 @@
     @import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:wght@500');
  </style>
 </defs>
-<text x="0" y="16" font-family="Alegreya Sans SC" font-size="18px">Glint</text>
+<text x="0" y="16" font-family="Alegreya Sans SC" font-size="18px" fill="#607d8b">Glint</text>
 </svg>

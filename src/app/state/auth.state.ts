@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
 import { catchError, tap, throwError } from 'rxjs';
 
-import { ApiBaseUrl } from '../shared';
+import { environment } from 'src/environments/environment';
 import { UserVm } from './user.vm';
 
 export class Logout {
@@ -55,7 +55,7 @@ export class AuthState {
     }
 
     return this.http
-      .post<{ accessToken: string; expires: string; }>(`${ApiBaseUrl}/auth/email/refresh-token`, {
+      .post<{ accessToken: string; expires: string; }>(`${environment.apiBaseUrl}/auth/email/refresh-token`, {
         refreshToken: user.refreshToken
       })
       .pipe(

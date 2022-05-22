@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, catchError, EMPTY, finalize } from 'rxjs';
 
-import { ApiBaseUrl } from 'src/app/shared';
+import { environment } from 'src/environments/environment';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -112,11 +112,11 @@ export class EmailRegisterComponent {
 
     this.processing = true;
 
-    const email = this.form.controls['email'].value;
-    const password = this.form.controls['password'].value;
+    const email = this.form.controls.email.value;
+    const password = this.form.controls.password.value;
 
     this.http
-      .post(`${ApiBaseUrl}/auth/email/register`, { email, password })
+      .post(`${environment.apiBaseUrl}/auth/email/register`, { email, password })
       .pipe(
         catchError((response: HttpErrorResponse) => {
           if (response.status === 400 && response.error.reason === 'validation') {
@@ -124,15 +124,14 @@ export class EmailRegisterComponent {
             const passwordErrors: string[] = [];
 
             for (const error of response.error.errors) {
-              if (error.param === 'email') {
+              if (error.param === 'email')
                 emailErrors.push(error.msg);
-              } else if (error.param === 'password') {
+              else if (error.param === 'password')
                 passwordErrors.push(error.msg);
-              }
             }
 
-            this.form.controls['email'].setErrors(emailErrors.length > 0 ? { server: emailErrors } : null);
-            this.form.controls['password'].setErrors(passwordErrors.length > 0 ? { server: passwordErrors } : null);
+            this.form.controls.email.setErrors(emailErrors.length > 0 ? { server: emailErrors } : null);
+            this.form.controls.password.setErrors(passwordErrors.length > 0 ? { server: passwordErrors } : null);
           } else {
             this.view.next('error');
           }

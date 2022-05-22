@@ -67,11 +67,10 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         this.cdr.markForCheck();
       });
 
-    if (this.store.selectSnapshot(AuthState.user)) {
+    if (this.store.selectSnapshot(AuthState.user))
       this.refresh$.next();
-    } else {
+    else
       this.router.navigate(['/account/login']);
-    }
   }
 
   purchase(quantity: number, forSelf: boolean) {
@@ -100,6 +99,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       .subscribe(url => {
         this.purchaseError.next(null);
         if (url) window.location.href = url;
+        // TODO: after successful purchase, tell the user that they need to log out and back in again
       });
   }
 
@@ -154,6 +154,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             this.assignEmailControl.setErrors(errors.length > 0 ? { server: errors } : null);
           } else if (response.status === 403) {
             this.assignEmailControl.setErrors({
+              // eslint-disable-next-line max-len
               server: ['Unable to find available subscriptions, please check your payment settings are in working order by clicking the Manage Payments button above. If the problem persists email help@glint.info for support.']
             });
           }
