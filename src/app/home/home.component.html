@@ -1,33 +1,56 @@
 <div class="banner">
   <app-container>
-    <h1 class="mat-display-3">Test</h1>
-    Screen
+    <h1 class="main-title" ngClass.gt-xs="mat-display-4" ngClass.lt-sm="mat-display-3">Glint</h1>
+    <h2 class="sub-title">A Graphical interface for Git</h2>
+    <div class="download-links" *ngIf="release | async as releaseData">
+      <a [href]="releaseData.link">
+        <button mat-flat-button class="download-button" color="accent">
+          Download{{ releaseData.platform === 'Other' ? '' : ' for ' + releaseData.platform }}
+          <mat-icon>file_download</mat-icon>
+        </button>
+      </a>
+      <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other">Other downloads</a>
+    </div>
+
+    <a fxShow fxHide.lt-md="true" routerLink="/playground"><img class="screenshot" src="/assets/screenshot.png"></a>
+    <img fxHide fxShow.lt-md="true" class="screenshot" src="/assets/screenshot.png">
   </app-container>
 </div>
 
 <div class="banner">
   <app-container>
-    <h2 class="mat-display-1">Clean, Intuitive Interface</h2>
+    <h2 class="mat-display-2">Clean, Intuitive Interface</h2>
+  </app-container>
+</div>
+
+<div class="banner">
+  <app-container fxLayout="row" fxLayout.lt-sm="column">
+    <div fxFlex="50">
+      <h2 class="mat-display-2 title">Sleek &amp; Powerful</h2>
+      <p class="text">Perform complex git tasks visually</p>
+    </div>
+    <div fxFlex="50">
+      <ul>
+        <li><mat-icon>edit</mat-icon>Rewrite commit history</li>
+        <li><mat-icon>compress</mat-icon>Squash commits</li>
+        <li><mat-icon>merge_type</mat-icon>Merge branches without checking them out</li>
+        <li><mat-icon>move_up</mat-icon>Move branches manually</li>
+        <li><mat-icon>build</mat-icon>Resolve merge conflicts</li>
+      </ul>
+    </div>
   </app-container>
 </div>
 
 <div class="banner">
   <app-container>
-    <h2 class="mat-display-1">Powerful Features</h2>
-    <p>Perform complex git tasks visually</p>
-  </app-container>
-</div>
-
-<div class="banner">
-  <app-container>
-    <h2 class="mat-display-1">In-memory merges</h2>
+    <h2 class="mat-display-2">In-memory merges</h2>
     <p>Merge into a branch without checking it out</p>
   </app-container>
 </div>
 
 <div class="banner">
   <app-container>
-    <h2 class="mat-display-1">Cross Platform</h2>
+    <h2 class="mat-display-2">Cross Platform</h2>
     <p>Runs on Windows, Mac &amp; Linux</p>
   </app-container>
 </div>

@@ -19,6 +19,9 @@
     "lib": [
       "dom",
       "es2020"
+    ],
+    "types": [
+      "./node_modules/user-agent-data-types"
     ]
   },
   "angularCompilerOptions": {

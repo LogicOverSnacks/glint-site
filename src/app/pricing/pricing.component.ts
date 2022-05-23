@@ -75,6 +75,10 @@ import { AuthState, Logout } from '../state/auth.state';
 
       .enquire-panel {
         margin-top: 20px;
+
+        .title {
+          margin-bottom: 40px;
+        }
       }
     `
   ],
@@ -96,12 +100,16 @@ import { AuthState, Logout } from '../state/auth.state';
           <li class="item"><mat-icon>tab</mat-icon>One tab</li>
           <li class="item"><mat-icon>public</mat-icon>Work with local &amp; public repositories</li>
           <li class="item"><mat-icon>difference</mat-icon>View diffs</li>
+          <li class="item"><mat-icon>code</mat-icon>Full syntax highlighting</li>
           <li class="item"><mat-icon>build</mat-icon>Resolve merge conflicts</li>
           <li class="item"><mat-icon>layers</mat-icon>Work with submodules</li>
           <li class="item"><mat-icon>edit</mat-icon>Rewrite commit history</li>
+          <li class="item"><mat-icon>compress</mat-icon>Squash commits</li>
           <li class="item"><mat-icon>search</mat-icon>Search files &amp; commits</li>
           <li class="item"><mat-icon>visibility_off</mat-icon>Show/hide branches</li>
           <li class="item"><mat-icon>merge_type</mat-icon>Merge non-checked-out branches</li>
+          <li class="item"><mat-icon>key</mat-icon>Manage credentials</li>
+          <li class="item"><mat-icon>group</mat-icon>Multiple profiles</li>
         </ul>
       </mat-card>
       <mat-card class="premium" fxFlex="45">
@@ -128,7 +136,7 @@ import { AuthState, Logout } from '../state/auth.state';
     </app-container>
 
     <div class="enquire-panel">
-      <h2>Questions?</h2>
+      <h1 class="title mat-display-2">Questions?</h1>
       <div class="price"><a href="mailto:sales@glint.info" class="link">Click here to enquire</a></div>
     </div>
   `

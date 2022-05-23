@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SharedModule } from '../shared/shared.module';
@@ -15,6 +16,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
 @NgModule({
   imports: [
     FlexLayoutModule,
+    MatProgressSpinnerModule,
     MatTooltipModule,
 
     SharedModule,

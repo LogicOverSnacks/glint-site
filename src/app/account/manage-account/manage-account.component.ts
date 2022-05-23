@@ -4,6 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
@@ -25,7 +26,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   using: string[] = [];
   yourSubscription: string | null = null;
 
-  processing = false;
+  processing = new BehaviorSubject(true);
   quantityControl = new FormControl(null, [Validators.min(1), Validators.max(99)]);
   assignEmailControl = new FormControl(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
@@ -49,8 +50,12 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
     combineLatest([this.user, this.refresh$])
       .pipe(
+        tap(() => {
+          this.processing.next(true);
+        }),
         switchMap(() => this.api.getSubscriptions()),
         catchError((response: HttpErrorResponse) => {
+          this.processing.next(false);
           if (response.status === 403) this.logout();
 
           return throwError(() => response);
@@ -58,6 +63,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         takeUntil(this.destroyed$)
       )
       .subscribe(({ totalPurchased, assigned, using }) => {
+        this.processing.next(false);
         this.totalPurchased = totalPurchased;
 
         const now = new Date();
@@ -74,9 +80,9 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   }
 
   purchase(quantity: number, forSelf: boolean) {
-    if (this.processing) return;
+    if (this.processing.value) return;
 
-    this.processing = true;
+    this.processing.next(true);
 
     this.api.purchaseSubscriptions(quantity, forSelf)
       .pipe(
@@ -88,25 +94,23 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
           this.purchaseError.next(
             `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
           );
+          this.processing.next(false);
 
           return throwError(() => response);
-        }),
-        finalize(() => {
-          this.processing = false;
-          this.cdr.markForCheck();
         })
       )
       .subscribe(url => {
         this.purchaseError.next(null);
         if (url) window.location.href = url;
+        else this.processing.next(false);
         // TODO: after successful purchase, tell the user that they need to log out and back in again
       });
   }
 
   manage() {
-    if (this.processing) return;
+    if (this.processing.value) return;
 
-    this.processing = true;
+    this.processing.next(true);
 
     this.api.manageSubscriptions()
       .pipe(
@@ -123,24 +127,22 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
           this.manageError.next(
             `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
           );
+          this.processing.next(false);
 
           return throwError(() => response);
-        }),
-        finalize(() => {
-          this.processing = false;
-          this.cdr.markForCheck();
         })
       )
       .subscribe(url => {
         this.manageError.next(null);
         if (url) window.location.href = url;
+        else this.processing.next(false);
       });
   }
 
   assign(email: string) {
-    if (this.processing) return;
+    if (this.processing.value) return;
 
-    this.processing = true;
+    this.processing.next(true);
 
     this.api.assignSubscription(email)
       .pipe(
@@ -162,8 +164,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
           return throwError(() => response);
         }),
         finalize(() => {
-          this.processing = false;
-          this.cdr.markForCheck();
+          this.processing.next(false);
         })
       )
       .subscribe(() => {
@@ -172,13 +173,13 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   }
 
   unassign(subscription: AuthSubscription) {
-    if (this.processing) return;
+    if (this.processing.value) return;
 
-    this.processing = true;
+    this.processing.next(true);
 
     this.api.unassignSubscription(subscription.email)
       .pipe(finalize(() => {
-        this.processing = false;
+        this.processing.next(false);
       }))
       .subscribe(() => {
         this.refresh$.next();

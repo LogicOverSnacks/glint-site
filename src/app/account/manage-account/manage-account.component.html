@@ -1,4 +1,6 @@
-<app-container>
+<mat-spinner *ngIf="processing | async"></mat-spinner>
+
+<app-container *ngIf="(processing | async) === false">
   <header>
     <div class="mat-display-2 title">Your account</div>
     <h3>You are logged in as: {{ (user | async)?.email }}</h3>

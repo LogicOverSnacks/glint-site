@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { Select } from '@ngxs/store';
-import { filter, map, Observable } from 'rxjs';
+import { Select, Store } from '@ngxs/store';
+import { catchError, filter, map, Observable, takeUntil } from 'rxjs';
 
 import { BaseComponent } from './shared/base.component';
+import { GithubService } from './shared/github.service';
+import { Release } from './shared/models/release';
 import { AuthState } from './state/auth.state';
+import { Update } from './state/releases.state';
 import { UserVm } from './state/user.vm';
 
 @Component({
@@ -15,7 +19,7 @@ import { UserVm } from './state/user.vm';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent extends BaseComponent {
+export class AppComponent extends BaseComponent implements OnInit {
   @Select(AuthState.user)
   user!: Observable<UserVm | null>;
 
@@ -24,10 +28,13 @@ export class AppComponent extends BaseComponent {
 
   constructor(
     sanitizer: DomSanitizer,
+    private http: HttpClient,
     iconRegistry: MatIconRegistry,
     private media: MediaObserver,
     router: Router,
-    titleService: Title
+    titleService: Title,
+    private store: Store,
+    private githubService: GithubService
   ) {
     super();
 
@@ -37,14 +44,25 @@ export class AppComponent extends BaseComponent {
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
         let snapshot = router.routerState.snapshot.root;
-        let title: string = snapshot.data?.['title'] ?? '';
+        let title: string = snapshot.data?.title ?? '';
 
         while (snapshot.firstChild) {
           snapshot = snapshot.firstChild;
-          title = snapshot.data?.['title'] ?? title;
+          title = snapshot.data?.title ?? title;
         }
 
         titleService.setTitle(`Glint${title ? ' - ' + title : ''}`);
+      });
+  }
+
+  ngOnInit() {
+    this.http.get<Release[]>('/assets/releases.json')
+      .pipe(
+        catchError(() => this.githubService.getReleases()),
+        takeUntil(this.destroyed$)
+      )
+      .subscribe(releases => {
+        this.store.dispatch(new Update(releases));
       });
   }
 }

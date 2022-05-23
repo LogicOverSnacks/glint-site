@@ -29,6 +29,7 @@ import { PricingComponent } from './pricing/pricing.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './state/auth.state';
 import { migrations } from './state/migrations';
+import { ReleasesState } from './state/releases.state';
 
 @NgModule({
   imports: [
@@ -44,7 +45,7 @@ import { migrations } from './state/migrations';
     MatSidenavModule,
     MatToolbarModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot([AuthState], {
+    NgxsModule.forRoot([AuthState, ReleasesState], {
       developmentMode: !environment.production,
       selectorOptions: {
         injectContainerState: false,
