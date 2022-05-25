@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent, data: { title: 'Frequently Asked Questions' } },
   { path: 'playground', component: PlaygroundComponent, data: { title: 'Playground' } },
   { path: 'pricing', component: PricingComponent, data: { title: 'Pricing' } },
+  { path: 'privacy', component: PrivacyComponent, data: { title: 'Privacy Policy' } },
   { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
   { path: 'auth/confirm-email', component: ConfirmEmailComponent, data: { title: 'Confirm Email' } },
   { path: 'auth/reset-password', component: ResetPasswordComponent, data: { title: 'Reset Password' } },

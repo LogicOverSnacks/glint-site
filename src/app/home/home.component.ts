@@ -1,16 +1,37 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, filter, map, Observable, shareReplay } from 'rxjs';
 
 import { ReleasesState } from '../state/releases.state';
 
 @Component({
+  animations: [
+    trigger('fade', [
+      state('none', style({
+        height: 0,
+        opacity: 0
+      })),
+      state('*', style({
+        height: '*',
+        opacity: 1
+      })),
+      transition('* <=> *', [
+        animate('225ms ease-in-out')
+      ])
+    ])
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
   release!: Observable<{ platform: 'Windows' | 'Mac' | 'Linux' | 'Other'; name: string; link: string; }>;
+  currentFeature = new BehaviorSubject<'edit' | 'merge' | 'none'>('none');
+  lastFeature = this.currentFeature.pipe(
+    filter(feature => feature !== 'none'),
+    shareReplay(1)
+  );
 
   constructor(private store: Store) {}
 

@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
@@ -26,6 +27,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './state/auth.state';
 import { migrations } from './state/migrations';
@@ -44,6 +46,7 @@ import { ReleasesState } from './state/releases.state';
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([AuthState, ReleasesState], {
       developmentMode: !environment.production,
@@ -70,6 +73,7 @@ import { ReleasesState } from './state/releases.state';
     PageNotFoundComponent,
     PlaygroundComponent,
     PricingComponent,
+    PrivacyComponent,
     ResetPasswordComponent
   ],
   providers: [

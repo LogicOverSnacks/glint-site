@@ -87,7 +87,7 @@ import { AuthState, Logout } from '../state/auth.state';
       <mat-card class="free" fxFlex="45">
         <div class="mat-display-1">Basic</div>
 
-        <div class="price">Free</div>
+        <h3 class="price">Free</h3>
 
         <a class="purchase-btn" routerLink="/download">
           <button mat-stroked-button>
@@ -99,23 +99,46 @@ import { AuthState, Logout } from '../state/auth.state';
           <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
           <li class="item"><mat-icon>tab</mat-icon>One tab</li>
           <li class="item"><mat-icon>public</mat-icon>Work with local &amp; public repositories</li>
-          <li class="item"><mat-icon>difference</mat-icon>View diffs</li>
+          <li class="item"><mat-icon>difference</mat-icon>View diffs with full syntax highlighting</li>
           <li class="item"><mat-icon>code</mat-icon>Full syntax highlighting</li>
           <li class="item"><mat-icon>build</mat-icon>Resolve merge conflicts</li>
           <li class="item"><mat-icon>layers</mat-icon>Work with submodules</li>
           <li class="item"><mat-icon>edit</mat-icon>Rewrite commit history</li>
-          <li class="item"><mat-icon>compress</mat-icon>Squash commits</li>
           <li class="item"><mat-icon>search</mat-icon>Search files &amp; commits</li>
           <li class="item"><mat-icon>visibility_off</mat-icon>Show/hide branches</li>
-          <li class="item"><mat-icon>merge_type</mat-icon>Merge non-checked-out branches</li>
+          <li class="item"><mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously</li>
           <li class="item"><mat-icon>key</mat-icon>Manage credentials</li>
-          <li class="item"><mat-icon>group</mat-icon>Multiple profiles</li>
+          <li class="item"><mat-icon>group</mat-icon>Quickly switch profiles</li>
+          <li class="item">
+            <span matTooltip="Feature not yet available">
+              <mat-icon>compress</mat-icon>
+              <del>Squash commits</del>
+            </span>
+          </li>
+          <li class="item">
+            <span matTooltip="Feature not yet available">
+              <mat-icon>description</mat-icon>
+              <del>Blame files</del>
+            </span>
+          </li>
+          <li class="item">
+            <span matTooltip="Feature not yet available">
+              <mat-icon>undo</mat-icon>
+              <del>Undo actions</del>
+            </span>
+          </li>
+          <li class="item">
+            <span matTooltip="Feature not yet available">
+              <mat-icon>touch_app</mat-icon>
+              <del>Drag &amp; Drop</del>
+            </span>
+          </li>
         </ul>
       </mat-card>
       <mat-card class="premium" fxFlex="45">
         <div class="mat-display-1">Premium</div>
 
-        <div class="price">£4 / user / month</div>
+        <h3 class="price">£4 / user / month</h3>
 
         <button class="purchase-btn" mat-stroked-button color="accent" (click)="buyLicense()">
           Buy License
@@ -127,7 +150,7 @@ import { AuthState, Logout } from '../state/auth.state';
 
         <ul class="features">
           <li class="item highlight">
-            <mat-icon>check</mat-icon>All free features
+            <mat-icon>check</mat-icon>All basic features
           </li>
           <li class="item"><mat-icon>tab</mat-icon>Unlimited tabs</li>
           <li class="item"><mat-icon>lock</mat-icon>Work with private repositories</li>
@@ -136,8 +159,8 @@ import { AuthState, Logout } from '../state/auth.state';
     </app-container>
 
     <div class="enquire-panel">
-      <h1 class="title mat-display-2">Questions?</h1>
-      <div class="price"><a href="mailto:sales@glint.info" class="link">Click here to enquire</a></div>
+      <h1 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Questions?</h1>
+      <a href="mailto:sales@glint.info" class="link">Click here to enquire</a>
     </div>
   `
 })
