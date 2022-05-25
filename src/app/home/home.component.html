@@ -13,8 +13,8 @@
     </div>
 
     <!-- TODO: change to a gif showing the diff view, merging -->
-    <a fxShow fxHide.lt-md="true" routerLink="/playground"><img class="screenshot" src="/assets/screenshot.png"></a>
-    <img fxHide fxShow.lt-md="true" class="screenshot" src="/assets/screenshot.png">
+    <a fxShow fxHide.lt-md="true" routerLink="/playground" class="screenshot"><img src="/assets/screenshot.png" alt="Screenshot of Glint"></a>
+    <img fxHide fxShow.lt-md="true" class="screenshot" src="/assets/screenshot.png" alt="Screenshot of Glint">
   </app-container>
 </div>
 
@@ -24,8 +24,8 @@
       <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Sleek &amp; Powerful</h2>
       <p class="text" [ngStyle.gt-xs]="{ 'margin-bottom': '40px' }">Perform complex tasks without breaking a sweat.</p>
       <div class="feature-image" [@fade]="currentFeature | async">
-        <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png">
-        <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png">
+        <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="">
+        <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="">
       </div>
     </div>
     <div fxFlex="50">

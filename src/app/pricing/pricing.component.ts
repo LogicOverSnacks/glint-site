@@ -133,6 +133,12 @@ import { AuthState, Logout } from '../state/auth.state';
               <del>Drag &amp; Drop</del>
             </span>
           </li>
+          <li class="item">
+            <span matTooltip="Feature not yet available">
+              <mat-icon>verified</mat-icon>
+              <del>Commit signing</del>
+            </span>
+          </li>
         </ul>
       </mat-card>
       <mat-card class="premium" fxFlex="45">

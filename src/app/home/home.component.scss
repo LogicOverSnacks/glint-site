@@ -12,12 +12,7 @@
   font-size: 18px;
 
   &:nth-child(even) {
-    // background: mat.get-color-from-palette(map.get(map.get(theme.$app-theme, color), background), app-bar);
     background: mat.get-color-from-palette(map.get(map.get(theme.$app-theme, color), background), background);
-  }
-
-  &:nth-child(2n+3) {
-    // text-align: right;
   }
 
   .main-title {
@@ -53,15 +48,21 @@
   }
 
   .download-other {
-    // color: mat.get-color-from-palette(theme.$app-accent-palette, 300);
     color: mat.get-color-from-palette(theme.$app-primary-palette, 800);
     font-size: 16px;
     font-weight: 600;
   }
 
   .screenshot {
+    display: inline-block;
     width: 100%;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+    font-size: 0;
+
+    img {
+      display: block;
+      width: 100%;
+    }
   }
 
   .feature-image {

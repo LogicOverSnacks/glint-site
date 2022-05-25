@@ -126,6 +126,7 @@
               mat-icon-button
               color="primary"
               matTooltip="Reinstate subscription"
+              aria-label="Reinstate subscription"
               (click)="assign(subscription.email)"
             ><mat-icon class="nudge-up">restart_alt</mat-icon></button>
             <button type="button"
@@ -133,6 +134,7 @@
               mat-icon-button
               color="warn"
               [matTooltip]="subscription.activated ? 'Unassign subscription at the end of the billing period' : 'Unassign subscription'"
+              aria-label="Unassign subscription"
               (click)="unassign(subscription)"
             >
               <mat-icon [class.nudge-right]="subscription.activated">
@@ -160,6 +162,7 @@
           *ngIf="totalPurchased > assigned.length"
           mat-icon-button
           matTooltip="Assign a subscription to this user"
+          aria-label="Assign a subscription to this user"
           [disabled]="!assignEmailControl.value || assignEmailControl.invalid"
           (click)="assign(assignEmailControl.value); assignEmailControl.reset()"
         >
