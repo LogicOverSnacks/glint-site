@@ -55,7 +55,7 @@ export class AuthState {
     }
 
     return this.http
-      .post<{ accessToken: string; expires: string; }>(`${environment.apiBaseUrl}/auth/email/refresh-token`, {
+      .post<{ accessToken: string; expires: string; confirmed: boolean; }>(`${environment.apiBaseUrl}/auth/email/refresh-token`, {
         refreshToken: user.refreshToken
       })
       .pipe(
@@ -70,14 +70,15 @@ export class AuthState {
 
           return throwError(() => error);
         }),
-        tap(({ accessToken, expires }) => {
+        tap(({ accessToken, expires, confirmed }) => {
           ctx.setState(state => ({
             ...state,
             user: state.user
               ? {
                 ...state.user,
                 accessToken,
-                expires
+                expires,
+                confirmed
               }
               : null
           }));

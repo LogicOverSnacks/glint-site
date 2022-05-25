@@ -97,7 +97,7 @@ import { AuthState, Logout } from '../state/auth.state';
 
         <ul class="features">
           <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
-          <li class="item"><mat-icon>tab</mat-icon>One tab</li>
+          <li class="item"><mat-icon>tab</mat-icon>Two tabs</li>
           <li class="item"><mat-icon>public</mat-icon>Work with local &amp; public repositories</li>
           <li class="item"><mat-icon>difference</mat-icon>View diffs with full syntax highlighting</li>
           <li class="item"><mat-icon>code</mat-icon>Full syntax highlighting</li>
