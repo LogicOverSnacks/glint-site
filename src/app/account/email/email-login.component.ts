@@ -33,7 +33,10 @@ import { environment } from 'src/environments/environment';
     `
       @use '@angular/material' as mat;
       @use 'src/theme' as theme;
-      a, .reset { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+      a, .reset {
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        cursor: pointer;
+      }
     `,
     `.submit-btn {
       margin-top: 10px;

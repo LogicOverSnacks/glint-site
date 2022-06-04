@@ -33,7 +33,10 @@ import { UserVm } from 'src/app/state/user.vm';
     `
       @use '@angular/material' as mat;
       @use 'src/theme' as theme;
-      a, .reset { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+      a, .reset {
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        cursor: pointer;
+      }
     `,
     `.submit-btn {
       margin-top: 10px;
@@ -149,11 +152,10 @@ export class EmailChangePasswordComponent {
             const newPasswordErrors: string[] = [];
 
             for (const error of response.error.errors) {
-              if (error.param === 'password') {
+              if (error.param === 'password')
                 passwordErrors.push(error.msg);
-              } else if (error.param === 'newPassword') {
+              else if (error.param === 'newPassword')
                 newPasswordErrors.push(error.msg);
-              }
             }
 
             this.passwordControl.setErrors(passwordErrors.length > 0 ? { server: passwordErrors } : null);

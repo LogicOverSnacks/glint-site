@@ -98,7 +98,7 @@ import { AuthState, Logout } from '../state/auth.state';
         <ul class="features">
           <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
           <li class="item"><mat-icon>tab</mat-icon>Two tabs</li>
-          <li class="item"><mat-icon>public</mat-icon>Work with local &amp; public repositories</li>
+          <li class="item"><mat-icon>public</mat-icon>Work with public &amp; private repositories</li>
           <li class="item"><mat-icon>difference</mat-icon>View diffs with full syntax highlighting</li>
           <li class="item"><mat-icon>code</mat-icon>Full syntax highlighting</li>
           <li class="item"><mat-icon>build</mat-icon>Resolve merge conflicts</li>
@@ -159,7 +159,6 @@ import { AuthState, Logout } from '../state/auth.state';
             <mat-icon>check</mat-icon>All basic features
           </li>
           <li class="item"><mat-icon>tab</mat-icon>Unlimited tabs</li>
-          <li class="item"><mat-icon>lock</mat-icon>Work with private repositories</li>
         </ul>
       </mat-card>
     </app-container>
