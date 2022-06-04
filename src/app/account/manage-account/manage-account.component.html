@@ -122,7 +122,7 @@
               {{ subscription.pausedUntil | date }}
             </span>
             <button type="button"
-              *ngIf="!subscription.autoRenew"
+              *ngIf="!subscription.autoRenew && !processingAssignedSubscription[subscription.email]"
               mat-icon-button
               color="primary"
               matTooltip="Reinstate subscription"
@@ -130,7 +130,7 @@
               (click)="assign(subscription.email)"
             ><mat-icon class="nudge-up">restart_alt</mat-icon></button>
             <button type="button"
-              *ngIf="subscription.autoRenew"
+              *ngIf="subscription.autoRenew && !processingAssignedSubscription[subscription.email]"
               mat-icon-button
               color="warn"
               [matTooltip]="subscription.activated ? 'Unassign subscription at the end of the billing period' : 'Unassign subscription'"
@@ -141,6 +141,7 @@
                 {{ subscription.activated ? 'auto_delete' : 'delete' }}
               </mat-icon>
             </button>
+            <mat-spinner *ngIf="processingAssignedSubscription[subscription.email]" diameter="24"></mat-spinner>
           </li>
         </ul>
 
@@ -163,7 +164,7 @@
           mat-icon-button
           matTooltip="Assign a subscription to this user"
           aria-label="Assign a subscription to this user"
-          [disabled]="!assignEmailControl.value || assignEmailControl.invalid"
+          [disabled]="!assignEmailControl.value || assignEmailControl.invalid || (processingAssignedSubscription | keyvalue).length > 0"
           (click)="assign(assignEmailControl.value); assignEmailControl.reset()"
         >
           <mat-icon>add</mat-icon>

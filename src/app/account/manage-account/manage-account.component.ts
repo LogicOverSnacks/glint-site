@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
@@ -25,8 +26,10 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   assigned: AuthSubscription[] = [];
   using: string[] = [];
   yourSubscription: string | null = null;
+  initialLoad = true;
 
-  processing = new BehaviorSubject(true);
+  processing = new BehaviorSubject(false);
+  processingAssignedSubscription: Record<string, boolean> = {};
   quantityControl = new FormControl(null, [Validators.min(1), Validators.max(99)]);
   assignEmailControl = new FormControl(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
@@ -37,21 +40,19 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
+    private snackBar: MatSnackBar,
     private store: Store,
     private api: ApiService
   ) { super(); }
 
   ngOnInit() {
-    const assign = this.route.snapshot.queryParamMap.get('assign');
-    if (assign === 'self') {
-      const user = this.store.selectSnapshot(AuthState.user);
-      if (user) this.assign(user.email);
-    }
-
     combineLatest([this.user, this.refresh$])
       .pipe(
         tap(() => {
-          this.processing.next(true);
+          if (this.initialLoad) {
+            this.processing.next(true);
+            this.initialLoad = false;
+          }
         }),
         switchMap(() => this.api.getSubscriptions()),
         catchError((response: HttpErrorResponse) => {
@@ -73,10 +74,18 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         this.cdr.markForCheck();
       });
 
-    if (this.store.selectSnapshot(AuthState.user))
+    const assign = this.route.snapshot.queryParamMap.get('assign');
+    const user = this.store.selectSnapshot(AuthState.user);
+    if (assign === 'self' && user) this.assign(user.email, true);
+
+    if (user && user.confirmed) {
       this.refresh$.next();
-    else
+    } else if (user) {
+      this.store.dispatch(new Logout());
+      this.router.navigate(['/account/email/not-confirmed'], { queryParams: { email: user.email } });
+    } else {
       this.router.navigate(['/account/login']);
+    }
   }
 
   purchase(quantity: number, forSelf: boolean) {
@@ -103,7 +112,6 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         this.purchaseError.next(null);
         if (url) window.location.href = url;
         else this.processing.next(false);
-        // TODO: after successful purchase, tell the user that they need to log out and back in again
       });
   }
 
@@ -139,10 +147,12 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       });
   }
 
-  assign(email: string) {
+  assign(email: string, self = false) {
     if (this.processing.value) return;
+    if (this.processingAssignedSubscription[email]) return;
 
-    this.processing.next(true);
+    this.processingAssignedSubscription[email] = true;
+    this.cdr.markForCheck();
 
     this.api.assignSubscription(email)
       .pipe(
@@ -161,25 +171,42 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             });
           }
 
+          if (this.totalPurchased <= this.assigned.length) {
+            // in this case, the errors are not visible as the assign email part is hidden
+            this.snackBar.open(this.assignEmailControl.getError('server').join(', '), 'Close', { panelClass: 'error' });
+          }
+
+          this.cdr.markForCheck();
           return throwError(() => response);
         }),
         finalize(() => {
-          this.processing.next(false);
+          delete this.processingAssignedSubscription[email];
+          this.cdr.markForCheck();
         })
       )
       .subscribe(() => {
         this.refresh$.next();
+        this.snackBar.open(
+          self
+            ? `Thank you for your purchase! You will need to logout of Glint and back in again to activate.`
+            : `Subscription assigned for '${email}'. The user needs to logout of Glint and back in again to activate.`,
+          'Close',
+          { panelClass: 'success' }
+        );
       });
   }
 
   unassign(subscription: AuthSubscription) {
     if (this.processing.value) return;
+    if (this.processingAssignedSubscription[subscription.email]) return;
 
-    this.processing.next(true);
+    this.processingAssignedSubscription[subscription.email] = true;
+    this.cdr.markForCheck();
 
     this.api.unassignSubscription(subscription.email)
       .pipe(finalize(() => {
-        this.processing.next(false);
+        delete this.processingAssignedSubscription[subscription.email];
+        this.cdr.markForCheck();
       }))
       .subscribe(() => {
         this.refresh$.next();

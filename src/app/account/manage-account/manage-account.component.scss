@@ -153,6 +153,8 @@ main {
         text-overflow: ellipsis;
         overflow-x: hidden;
         white-space: nowrap;
+        height: 40px;
+        line-height: 40px;
 
         .email {
           overflow: hidden;
@@ -172,6 +174,11 @@ main {
               transform: translateX(3.5px);
             }
           }
+        }
+
+        mat-spinner {
+          margin-left: 18px;
+          margin-right: 8px;
         }
 
         .expires-warning {
@@ -198,5 +205,17 @@ main {
         vertical-align: top;
       }
     }
+  }
+}
+
+::ng-deep snack-bar-container {
+  color: #000;
+
+  &.error {
+    background: mat.get-color-from-palette(theme.$app-warn-palette, 300);
+  }
+
+  &.success {
+    background: mat.get-color-from-palette(theme.$app-primary-palette, 300);
   }
 }
