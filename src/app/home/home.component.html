@@ -26,6 +26,8 @@
       <div class="feature-image" [@fade]="currentFeature | async">
         <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="">
         <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="">
+        <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="">
+        <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="">
       </div>
     </div>
     <div fxFlex="50">
@@ -35,8 +37,12 @@
         <li (mouseenter)="currentFeature.next('merge')">
           <mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously
         </li>
-        <li><mat-icon>move_up</mat-icon>Move branches manually</li>
-        <li><mat-icon>build</mat-icon>Resolve merge conflicts</li>
+        <li (mouseenter)="currentFeature.next('move')">
+          <mat-icon>move_up</mat-icon>Move branches manually
+        </li>
+        <li (mouseenter)="currentFeature.next('resolve')">
+          <mat-icon>build</mat-icon>Resolve merge conflicts
+        </li>
       </ul>
     </div>
   </app-container>

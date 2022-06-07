@@ -96,11 +96,10 @@ import { AuthState, Logout } from '../state/auth.state';
         </a>
 
         <ul class="features">
-          <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
-          <li class="item"><mat-icon>tab</mat-icon>Two tabs</li>
           <li class="item"><mat-icon>public</mat-icon>Work with public &amp; private repositories</li>
+          <li class="item"><mat-icon>tab</mat-icon>Two tabs</li>
+          <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
           <li class="item"><mat-icon>difference</mat-icon>View diffs with full syntax highlighting</li>
-          <li class="item"><mat-icon>code</mat-icon>Full syntax highlighting</li>
           <li class="item"><mat-icon>build</mat-icon>Resolve merge conflicts</li>
           <li class="item"><mat-icon>layers</mat-icon>Work with submodules</li>
           <li class="item"><mat-icon>edit</mat-icon>Rewrite commit history</li>
@@ -109,7 +108,8 @@ import { AuthState, Logout } from '../state/auth.state';
           <li class="item"><mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously</li>
           <li class="item"><mat-icon>key</mat-icon>Manage credentials</li>
           <li class="item"><mat-icon>group</mat-icon>Quickly switch profiles</li>
-          <li class="item">
+          <li class="item"><mat-icon>dark_mode</mat-icon>Dark theme</li>
+          <!-- <li class="item">
             <span matTooltip="Feature not yet available">
               <mat-icon>compress</mat-icon>
               <del>Squash commits</del>
@@ -138,7 +138,7 @@ import { AuthState, Logout } from '../state/auth.state';
               <mat-icon>verified</mat-icon>
               <del>Commit signing</del>
             </span>
-          </li>
+          </li> -->
         </ul>
       </mat-card>
       <mat-card class="premium" fxFlex="45">
@@ -159,6 +159,12 @@ import { AuthState, Logout } from '../state/auth.state';
             <mat-icon>check</mat-icon>All basic features
           </li>
           <li class="item"><mat-icon>tab</mat-icon>Unlimited tabs</li>
+          <!-- <li class="item">
+            <span matTooltip="Feature not yet available">
+              <mat-icon>light_mode</mat-icon>
+              <del>Light theme</del>
+            </span>
+          </li> -->
         </ul>
       </mat-card>
     </app-container>
