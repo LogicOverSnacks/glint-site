@@ -2,9 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [],
-  template: ``
+  styleUrls: ['./privacy.component.scss'],
+  templateUrl: './privacy.component.html'
 })
-export class PrivacyComponent {
-
-}
+export class PrivacyComponent {}
