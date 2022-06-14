@@ -20,6 +20,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
+import { CookiesComponent } from './cookies/cookies.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
 import { FaqComponent } from './faq/faq.component';
@@ -66,6 +67,7 @@ import { ReleasesState } from './state/releases.state';
   declarations: [
     AppComponent,
     ConfirmEmailComponent,
+    CookiesComponent,
     DocsComponent,
     DownloadComponent,
     FaqComponent,

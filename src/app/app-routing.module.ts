@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
+import { CookiesComponent } from './cookies/cookies.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
 import { FaqComponent } from './faq/faq.component';
@@ -15,6 +16,7 @@ import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'cookies', component: CookiesComponent, data: { title: 'Cookie Policy' } },
   { path: 'docs', component: DocsComponent, data: { title: 'Documentation' } },
   { path: 'download', component: DownloadComponent, data: { title: 'Download' } },
   { path: 'faq', component: FaqComponent, data: { title: 'Frequently Asked Questions' } },
