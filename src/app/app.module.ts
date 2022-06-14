@@ -20,9 +20,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
-import { CookiesComponent } from './cookies/cookies.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
+import { EulaComponent } from './eula/eula.component';
 import { FaqComponent } from './faq/faq.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
@@ -33,6 +33,7 @@ import { SharedModule } from './shared/shared.module';
 import { AuthState } from './state/auth.state';
 import { migrations } from './state/migrations';
 import { ReleasesState } from './state/releases.state';
+import { TermsComponent } from './terms/terms.component';
 
 @NgModule({
   imports: [
@@ -67,16 +68,17 @@ import { ReleasesState } from './state/releases.state';
   declarations: [
     AppComponent,
     ConfirmEmailComponent,
-    CookiesComponent,
     DocsComponent,
     DownloadComponent,
+    EulaComponent,
     FaqComponent,
     HomeComponent,
     PageNotFoundComponent,
     PlaygroundComponent,
     PricingComponent,
     PrivacyComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    TermsComponent
   ],
   providers: [
     Title

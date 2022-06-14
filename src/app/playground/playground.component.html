@@ -1,23 +1,25 @@
-<main fxShow fxHide.lt-md="true">
-  <header>
-    <div class="mat-display-2 title">Play with Glint below:</div>
+<app-container>
+  <main fxShow fxHide.lt-md="true">
+    <header>
+      <div class="mat-display-2 title">Play with Glint below:</div>
 
+      <p>
+        Note: certain features are disabled and will do nothing - don't worry they will be available in the downloaded app!
+      </p>
+    </header>
+
+    <div class="glint">
+      <div class="spinner" *ngIf="(loaded | async) === false"><mat-spinner></mat-spinner></div>
+      <iframe src="https://playground.glint.info" frameborder="0" (load)="loaded.next(true)"></iframe>
+    </div>
+  </main>
+
+  <main fxHide fxShow.lt-md="true">
     <p>
-      Note: certain features are disabled and will do nothing - don't worry they will be available in the downloaded app!
+      Your device is too small to use the playground.
     </p>
-  </header>
-
-  <div class="glint">
-    <div class="spinner" *ngIf="(loaded | async) === false"><mat-spinner></mat-spinner></div>
-    <iframe src="https://playground.glint.info" frameborder="0" (load)="loaded.next(true)"></iframe>
-  </div>
-</main>
-
-<main fxHide fxShow.lt-md="true">
-  <p>
-    Your device is too small to use the playground.
-  </p>
-  <p>
-    Try opening this page on a desktop computer to play with the demo.
-  </p>
-</main>
+    <p>
+      Try opening this page on a desktop computer to play with the demo.
+    </p>
+  </main>
+</app-container>

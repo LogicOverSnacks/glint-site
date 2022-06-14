@@ -2,9 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [],
-  template: ``
+  styleUrls: ['./terms.component.scss'],
+  templateUrl: './terms.component.html'
 })
-export class TermsComponent {
-
-}
+export class TermsComponent {}

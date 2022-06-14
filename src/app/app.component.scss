@@ -89,4 +89,12 @@ mat-sidenav-container {
 footer {
   text-align: center;
   padding: 40px;
+
+  hr {
+    margin: 20px 0;
+  }
+
+  a {
+    color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+  }
 }

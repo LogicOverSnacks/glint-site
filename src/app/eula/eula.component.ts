@@ -2,9 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [],
-  template: ``
+  styleUrls: ['./eula.component.scss'],
+  templateUrl: './eula.component.html'
 })
-export class CookiesComponent {
-
-}
+export class EulaComponent {}
