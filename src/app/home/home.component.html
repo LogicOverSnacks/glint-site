@@ -1,109 +1,114 @@
-<div class="banner">
-  <app-container>
-    <h1 class="main-title" ngClass.gt-xs="mat-display-4" ngClass.lt-sm="mat-display-3">Glint</h1>
-    <h2 class="sub-title">A Graphical interface for Git</h2>
-    <div class="download-links" *ngIf="release | async as releaseData">
-      <a [href]="releaseData.link">
-        <button mat-flat-button class="download-button" color="accent">
-          Free Download{{ releaseData.platform === 'Other' ? '' : ' for ' + releaseData.platform }}
-          <mat-icon>file_download</mat-icon>
-        </button>
-      </a>
-      <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other">Other platform downloads</a>
-    </div>
-
-    <a fxShow fxHide.lt-md="true" routerLink="/playground" class="screenshot"><img src="/assets/screenshot.png" alt="Screenshot of Glint"></a>
-    <img fxHide fxShow.lt-md="true" class="screenshot" src="/assets/screenshot.png" alt="Screenshot of Glint">
-  </app-container>
-</div>
-
-<div class="banner">
-  <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-    <div fxFlex="50">
-      <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Sleek &amp; Powerful</h2>
-      <p class="text" [ngStyle.gt-xs]="{ 'margin-bottom': '40px' }">Perform complex tasks without breaking a sweat.</p>
-      <!-- TODO: use better images -->
-      <div class="feature-image" [@fade]="currentFeature | async">
-        <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="">
-        <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="">
-        <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="">
-        <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="">
+<main>
+  <article class="banner">
+    <app-container>
+      <h1 class="main-title" ngClass.gt-xs="mat-display-4" ngClass.lt-sm="mat-display-3">Glint</h1>
+      <h2 class="sub-title">A Graphical interface for Git</h2>
+      <div class="download-links" *ngIf="release | async as releaseData">
+        <a [href]="releaseData.link">
+          <button mat-flat-button class="download-button" color="accent">
+            Free Download{{ releaseData.platform === 'Other' ? '' : ' for ' + releaseData.platform }}
+            <mat-icon>file_download</mat-icon>
+          </button>
+        </a>
+        <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other">Other platform downloads</a>
       </div>
-    </div>
-    <div fxFlex="50">
-      <ul (mouseleave)="currentFeature.next('none')">
-        <li (mouseenter)="currentFeature.next('edit')"><mat-icon>edit</mat-icon>Rewrite commit history</li>
-        <!-- <li><mat-icon>compress</mat-icon>Squash commits</li> -->
-        <li (mouseenter)="currentFeature.next('merge')">
-          <mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously
-        </li>
-        <li (mouseenter)="currentFeature.next('move')">
-          <mat-icon>move_up</mat-icon>Move branches manually
-        </li>
-        <li (mouseenter)="currentFeature.next('resolve')">
-          <mat-icon>build</mat-icon>Resolve merge conflicts
-        </li>
-      </ul>
-    </div>
-  </app-container>
-</div>
 
-<div class="banner">
-  <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-    <div fxFlex="50">
-      <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Streamlined for performance</h2>
-      <!-- <p class="text">Work unconstrained. A smooth, drama-free experience.</p> -->
-      <p class="text">Enjoy a smooth, effortless experience built from the ground up to run fast.</p>
-    </div>
-    <div fxFlex="50">
-      <ul>
-        <li><mat-icon>dynamic_feed</mat-icon>Bloat-free</li>
-        <li><mat-icon>hourglass_top</mat-icon>Minimal loading times</li>
-        <li><mat-icon>block</mat-icon>No UI blocking</li>
-      </ul>
-    </div>
-  </app-container>
-</div>
+      <a fxShow fxHide.lt-md="true" routerLink="/playground" class="screenshot"><img src="/assets/screenshot.png" alt="Screenshot of Glint"></a>
+      <img fxHide fxShow.lt-md="true" class="screenshot" src="/assets/screenshot.png" alt="Screenshot of Glint">
+    </app-container>
+  </article>
 
-<div class="banner">
-  <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-    <div fxFlex="50">
-      <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Cross Platform</h2>
-      <p class="text">Works on all desktop platforms.</p>
-    </div>
-    <div fxFlex="50">
-      <ul>
-        <li>
-          <div class="os-icon"><svg><use xlink:href="assets/windows.svg#svg"></use></svg></div>
-          Windows
-        </li>
-        <li>
-          <div class="os-icon"><svg><use xlink:href="assets/mac.svg#svg"></use></svg></div>
-          macOS
-        </li>
-        <li>
-          <div class="os-icon"><svg><use xlink:href="assets/linux.svg#svg"></use></svg></div>
-          Linux
-        </li>
-      </ul>
-    </div>
-  </app-container>
-</div>
+  <article class="banner">
+    <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxFlex="50">
+        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Sleek &amp; Powerful</h2>
+        <p class="text" [ngStyle.gt-xs]="{ 'margin-bottom': '40px' }">Perform complex tasks without breaking a sweat.</p>
+        <div class="feature-image" [@fade]="currentFeature | async">
+          <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" alt="">
+          <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="">
+          <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="">
+          <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="">
+          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="">
+        </div>
+      </div>
+      <div fxFlex="50">
+        <ul (mouseleave)="currentFeature.next('none')">
+          <li (mouseenter)="currentFeature.next('merge')">
+            <mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously
+          </li>
+          <li (mouseenter)="currentFeature.next('search')">
+            <mat-icon>search</mat-icon>Search within files &amp; commits
+          </li>
+          <li (mouseenter)="currentFeature.next('edit')"><mat-icon>edit</mat-icon>Rewrite commit history</li>
+          <li (mouseenter)="currentFeature.next('move')">
+            <mat-icon>move_up</mat-icon>Move branches manually
+          </li>
+          <li (mouseenter)="currentFeature.next('resolve')">
+            <mat-icon>build</mat-icon>Resolve merge conflicts
+          </li>
+          <!-- <li><mat-icon>compress</mat-icon>Squash commits</li> -->
+        </ul>
+      </div>
+    </app-container>
+  </article>
 
-<div class="banner">
-  <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-    <div fxFlex="50">
-      <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Really Cool</h2>
-      <p class="text">This app is actually like, really cool and stuff.</p>
-    </div>
-    <div fxFlex="50">
-      <ul>
-        <li><mat-icon>thumb_up</mat-icon> This app</li>
-      </ul>
-    </div>
-  </app-container>
-</div>
+  <article class="banner">
+    <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxFlex="50">
+        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Streamlined for performance</h2>
+        <!-- <p class="text">Work unconstrained. A smooth, drama-free experience.</p> -->
+        <p class="text">Enjoy a smooth, effortless experience built from the ground up to run fast.</p>
+      </div>
+      <div fxFlex="50">
+        <ul>
+          <li><mat-icon>dynamic_feed</mat-icon>Bloat-free</li>
+          <li><mat-icon>hourglass_top</mat-icon>Minimal loading times</li>
+          <li><mat-icon>block</mat-icon>No UI blocking</li>
+        </ul>
+      </div>
+    </app-container>
+  </article>
 
-<div class="download">
-  <app-download></app-download>
-</div>
+  <article class="banner">
+    <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxFlex="50">
+        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Cross Platform</h2>
+        <p class="text">Works on all desktop platforms.</p>
+      </div>
+      <div fxFlex="50">
+        <ul>
+          <li>
+            <div class="os-icon"><svg><use xlink:href="assets/windows.svg#svg"></use></svg></div>
+            Windows
+          </li>
+          <li>
+            <div class="os-icon"><svg><use xlink:href="assets/mac.svg#svg"></use></svg></div>
+            macOS
+          </li>
+          <li>
+            <div class="os-icon"><svg><use xlink:href="assets/linux.svg#svg"></use></svg></div>
+            Linux
+          </li>
+        </ul>
+      </div>
+    </app-container>
+  </article>
+
+  <article class="banner">
+    <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
+      <div fxFlex="50">
+        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Really Cool</h2>
+        <p class="text">This app is actually like, really cool and stuff.</p>
+      </div>
+      <div fxFlex="50">
+        <ul>
+          <li><mat-icon>thumb_up</mat-icon> This app</li>
+        </ul>
+      </div>
+    </app-container>
+  </article>
+
+  <article class="download">
+    <app-download></app-download>
+  </article>
+</main>

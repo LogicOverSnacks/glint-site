@@ -85,7 +85,7 @@ import { AuthState, Logout } from '../state/auth.state';
   template: `
     <app-container fxLayout="row" fxLayoutAlign="space-between" fxLayout.lt-md="column-reverse">
       <mat-card class="free" fxFlex="45">
-        <div class="mat-display-1">Basic</div>
+        <h2 class="mat-display-1">Basic</h2>
 
         <h3 class="price">Free</h3>
 
@@ -142,7 +142,7 @@ import { AuthState, Logout } from '../state/auth.state';
         </ul>
       </mat-card>
       <mat-card class="premium" fxFlex="45">
-        <div class="mat-display-1">Premium</div>
+        <h2 class="mat-display-1">Premium</h2>
 
         <h3 class="price">£4 / user / month</h3>
 

@@ -1,9 +1,9 @@
 <app-container>
-  <header class="mat-display-2 title">Download Glint for free</header>
+  <h2 class="mat-display-2 title">Download Glint for free</h2>
 
-  <h2 class="latest-release">Latest {{releaseName ? '' : 'beta '}}release: {{releaseName ?? betaReleaseName}}</h2>
+  <h3 class="latest-release">Latest {{releaseName ? '' : 'beta '}}release: {{releaseName ?? betaReleaseName}}</h3>
 
-  <main fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
+  <article fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
     <div class="windows"
       fxFlex="33"
       fxLayout="column"
@@ -68,5 +68,5 @@
         </a>
       </div>
     </div>
-  </main>
+  </article>
 </app-container>

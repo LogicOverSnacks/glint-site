@@ -1,33 +1,35 @@
-<mat-toolbar ngClass.lt-lg="smaller">
-  <a class="home-link" routerLink="/">
-    <mat-icon svgIcon="glint"></mat-icon>
-    <span class="text">Glint</span>
-  </a>
-
-  <ul class="links" fxShow fxHide.lt-md="true">
-    <!-- <li><a routerLink="/docs" routerLinkActive="active">Docs</a></li> -->
-    <!-- <li><a routerLink="/faq" routerLinkActive="active">FAQ</a></li> -->
-    <li><a routerLink="/playground" routerLinkActive="active">Playground</a></li>
-    <li><a routerLink="/pricing" routerLinkActive="active">Pricing</a></li>
-    <li><a href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a></li>
-  </ul>
-
-  <div class="end-links" fxShow fxHide.lt-md="true">
-    <a class="account-link" routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
-    <a routerLink="/download">
-      <button mat-flat-button class="download-button" color="accent">
-        Download
-        <mat-icon>file_download</mat-icon>
-      </button>
+<header>
+  <mat-toolbar ngClass.lt-lg="smaller">
+    <a class="home-link" routerLink="/">
+      <mat-icon svgIcon="glint"></mat-icon>
+      <span class="text">Glint</span>
     </a>
-  </div>
 
-  <div fxHide fxShow.lt-md="true">
-    <button mat-icon-button (click)="sidenav.toggle()">
-      <mat-icon>menu</mat-icon>
-    </button>
-  </div>
-</mat-toolbar>
+    <ul class="links" fxShow fxHide.lt-md="true">
+      <!-- <li><a routerLink="/docs" routerLinkActive="active">Docs</a></li> -->
+      <!-- <li><a routerLink="/faq" routerLinkActive="active">FAQ</a></li> -->
+      <li><a routerLink="/playground" routerLinkActive="active">Playground</a></li>
+      <li><a routerLink="/pricing" routerLinkActive="active">Pricing</a></li>
+      <li><a href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a></li>
+    </ul>
+
+    <div class="end-links" fxShow fxHide.lt-md="true">
+      <a class="account-link" routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
+      <a routerLink="/download">
+        <button mat-flat-button class="download-button" color="accent">
+          Download
+          <mat-icon>file_download</mat-icon>
+        </button>
+      </a>
+    </div>
+
+    <div fxHide fxShow.lt-md="true">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+</header>
 
 <mat-sidenav-container [ngStyle]="{ 'padding-top': '64px' }" [ngStyle.lt-sm]="{ 'padding-top': '56px' }">
   <mat-sidenav

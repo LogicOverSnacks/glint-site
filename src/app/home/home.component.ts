@@ -27,7 +27,7 @@ import { ReleasesState } from '../state/releases.state';
 })
 export class HomeComponent implements OnInit {
   release!: Observable<{ platform: 'Windows' | 'Mac' | 'Linux' | 'Other'; name: string; link: string; }>;
-  currentFeature = new BehaviorSubject<'edit' | 'merge' | 'move' | 'resolve' | 'none'>('none');
+  currentFeature = new BehaviorSubject<'edit' | 'search' | 'merge' | 'move' | 'resolve' | 'none'>('none');
   lastFeature = this.currentFeature.pipe(
     filter(feature => feature !== 'none'),
     shareReplay(1)

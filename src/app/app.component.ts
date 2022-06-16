@@ -51,7 +51,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           title = snapshot.data?.title ?? title;
         }
 
-        titleService.setTitle(`Glint${title ? ' - ' + title : ''}`);
+        titleService.setTitle(`Glint: A Graphical Interface for Git${title ? ' - ' + title : ''}`);
       });
   }
 
