@@ -6,7 +6,7 @@
   display: block;
 }
 
-.banner {
+article {
   padding: 60px 0;
   background: mat.get-color-from-palette(theme.$app-primary-palette, 400);
   font-size: 18px;
@@ -85,6 +85,10 @@
 
   .text {
     margin-bottom: 20px;
+  }
+
+  .link {
+    color: mat.get-color-from-palette(theme.$app-primary-palette, 800);
   }
 
   .os-icon {

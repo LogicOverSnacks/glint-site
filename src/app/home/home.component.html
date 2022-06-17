@@ -1,5 +1,5 @@
 <main>
-  <article class="banner">
+  <article>
     <app-container>
       <h1 class="main-title" ngClass.gt-xs="mat-display-4" ngClass.lt-sm="mat-display-3">Glint</h1>
       <h2 class="sub-title">A Graphical interface for Git</h2>
@@ -18,7 +18,7 @@
     </app-container>
   </article>
 
-  <article class="banner">
+  <article>
     <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
       <div fxFlex="50">
         <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Sleek &amp; Powerful</h2>
@@ -52,7 +52,7 @@
     </app-container>
   </article>
 
-  <article class="banner">
+  <article>
     <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
       <div fxFlex="50">
         <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Streamlined for performance</h2>
@@ -69,7 +69,7 @@
     </app-container>
   </article>
 
-  <article class="banner">
+  <article>
     <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
       <div fxFlex="50">
         <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Cross Platform</h2>
@@ -94,15 +94,19 @@
     </app-container>
   </article>
 
-  <article class="banner">
+  <article>
     <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
       <div fxFlex="50">
-        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Really Cool</h2>
-        <p class="text">This app is actually like, really cool and stuff.</p>
+        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Free to use</h2>
+        <p class="text">
+          See the <a routerLink="/pricing" class="link">pricing</a> page for more details.
+        </p>
       </div>
       <div fxFlex="50">
         <ul>
-          <li><mat-icon>thumb_up</mat-icon> This app</li>
+          <li><mat-icon>money_off</mat-icon>All essential features completely free</li>
+          <li><mat-icon fontSet="material-icons-outlined">timer_off</mat-icon>No time limits</li>
+          <li><mat-icon>attach_money</mat-icon>Upgrade to Premium for bonus features</li>
         </ul>
       </div>
     </app-container>

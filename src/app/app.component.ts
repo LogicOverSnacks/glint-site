@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatIconRegistry } from '@angular/material/icon';
+import { MatSidenavContent } from '@angular/material/sidenav';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -22,6 +23,9 @@ import { UserVm } from './state/user.vm';
 export class AppComponent extends BaseComponent implements OnInit {
   @Select(AuthState.user)
   user!: Observable<UserVm | null>;
+
+  @ViewChild(MatSidenavContent)
+  matSidenavContent!: MatSidenavContent;
 
   currentYear = new Date().getFullYear();
   xsQuery = this.media.asObservable().pipe(map(changes => changes.some(change => change.mqAlias === 'xs' && change.matches)));
@@ -52,6 +56,9 @@ export class AppComponent extends BaseComponent implements OnInit {
         }
 
         titleService.setTitle(`Glint: A Graphical Interface for Git${title ? ' - ' + title : ''}`);
+
+        // manually scroll to top on route change due to https://github.com/angular/components/issues/4280
+        this.matSidenavContent.scrollTo({ top: 0 });
       });
   }
 
