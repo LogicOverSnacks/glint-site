@@ -31,11 +31,15 @@ export class ApiService {
     ));
   }
 
-  purchaseSubscriptions(quantity: number, forSelf: boolean): Observable<string | null> {
+  purchaseSubscriptions(quantity: number, forSelf: boolean, currency: 'GBP' | 'EUR' | 'USD'): Observable<string | null> {
+    const priceId = currency === 'GBP' ? 'price_1L8jX9DHQ0P4M2Jef54yz8Vf'
+      : currency === 'EUR' ? 'price_1LBiVnDHQ0P4M2JeF1YU18pY'
+      : 'price_1LBiVPDHQ0P4M2JeZTmkJwdu';
+
     return this.withRetries(() => this.http
       .post<{ url: string; }>(
         `${environment.apiBaseUrl}/subscriptions/purchase`,
-        { quantity, forSelf },
+        { priceId, quantity, forSelf },
         { headers: this.getHeaders() }
       )
       .pipe(map(({ url }) => url))

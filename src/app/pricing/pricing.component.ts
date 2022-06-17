@@ -5,6 +5,7 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, finalize, throwError } from 'rxjs';
 
 import { ApiService } from '../shared/api.service';
+import { CurrencyService } from '../shared/currency.service';
 import { AuthState, Logout } from '../state/auth.state';
 
 @Component({
@@ -144,7 +145,7 @@ import { AuthState, Logout } from '../state/auth.state';
       <mat-card class="premium" fxFlex="45">
         <h2 class="mat-display-1">Premium</h2>
 
-        <h3 class="price">£4 / user / month</h3>
+        <h3 class="price">{{price}} / user / month</h3>
 
         <button class="purchase-btn" mat-stroked-button color="accent" (click)="buyLicense()">
           Buy License
@@ -177,14 +178,22 @@ import { AuthState, Logout } from '../state/auth.state';
 })
 export class PricingComponent {
   purchaseError = new BehaviorSubject<string | null>(null);
+  price: string;
 
   private processing = false;
+  private currency: 'GBP' | 'EUR' | 'USD';
 
   constructor(
     private router: Router,
     private store: Store,
-    private api: ApiService
-  ) {}
+    private api: ApiService,
+    currencyService: CurrencyService
+  ) {
+    this.currency = currencyService.getCurrency();
+    this.price = this.currency === 'GBP' ? '£4'
+      : this.currency === 'EUR' ? '€4.50'
+      : '$4.50';
+  }
 
   buyLicense() {
     const user = this.store.selectSnapshot(AuthState.user);
@@ -212,7 +221,7 @@ export class PricingComponent {
 
     this.processing = true;
 
-    this.api.purchaseSubscriptions(1, true)
+    this.api.purchaseSubscriptions(1, true, this.currency)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'

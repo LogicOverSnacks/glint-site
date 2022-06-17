@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
+import { CurrencyService } from '../../shared/currency.service';
 import { AuthSubscription } from '../../shared/models/subscriptions';
 import { AuthState, Logout } from '../../state/auth.state';
 import { UserVm } from '../../state/user.vm';
@@ -22,6 +23,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   @Select(AuthState.user)
   user!: Observable<UserVm>;
 
+  currency: 'GBP' | 'EUR' | 'USD';
   totalPurchased = 0;
   assigned: AuthSubscription[] = [];
   using: string[] = [];
@@ -42,8 +44,13 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     private router: Router,
     private snackBar: MatSnackBar,
     private store: Store,
-    private api: ApiService
-  ) { super(); }
+    private api: ApiService,
+    currencyService: CurrencyService
+  ) {
+    super();
+
+    this.currency = currencyService.getCurrency();
+  }
 
   ngOnInit() {
     combineLatest([this.user, this.refresh$])
@@ -93,7 +100,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
     this.processing.next(true);
 
-    this.api.purchaseSubscriptions(quantity, forSelf)
+    this.api.purchaseSubscriptions(quantity, forSelf, this.currency)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
