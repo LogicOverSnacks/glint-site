@@ -74,8 +74,28 @@ import { AuthState, Logout } from '../state/auth.state';
         }
       }
 
+      .faq-panel {
+        margin-top: 40px;
+        text-align: left;
+
+        .title {
+          margin-bottom: 40px;
+          text-align: center;
+        }
+
+        h3 {
+          font-size: 28px;
+          color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+          margin-top: 40px;
+        }
+
+        &.small h3 {
+          font-size: 22px;
+        }
+      }
+
       .enquire-panel {
-        margin-top: 20px;
+        margin-top: 60px;
 
         .title {
           margin-bottom: 40px;
@@ -170,10 +190,33 @@ import { AuthState, Logout } from '../state/auth.state';
       </mat-card>
     </app-container>
 
-    <div class="enquire-panel">
-      <h1 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Questions?</h1>
-      <a href="mailto:sales@glint.info" class="link">Click here to enquire</a>
-    </div>
+    <app-container>
+      <div class="faq-panel" ngClass.lt-sm="small">
+        <h2 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">FAQs</h2>
+
+        <h3>Is Glint free to use for commercial projects?</h3>
+        <p>
+          Yes! You only need to pay for the listed premium features.
+        </p>
+
+        <h3>What operating systems does Glint work on?</h3>
+        <p>Windows, macOS, and Linux. Only x64 systems and Apple M1 (arm64) are supported. The application is designed for use on desktop computers, and so there is no version available for mobile devices or web browsers.</p>
+
+        <h3>Can I use Glint on multiple computers?</h3>
+        <p>Yes, you can use a single subscription on multiple devices, just log in with the same account.</p>
+
+        <h3>Do I need to install any dependencies?</h3>
+        <p>No, all dependencies are included in the installation package.</p>
+
+        <h3>What is your refund policy?</h3>
+        <p>All payments are non-refundable, but you can cancel your subscription at any time. Upon cancellation, you will still receive the premium benefits until the end of your billing period.</p>
+      </div>
+
+      <div class="enquire-panel">
+        <h2 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Further Questions?</h2>
+        <a href="mailto:sales@glint.info" class="link">Click here to enquire</a>
+      </div>
+    </app-container>
   `
 })
 export class PricingComponent {
