@@ -6,6 +6,7 @@
       <div class="download-links" *ngIf="release | async as releaseData">
         <a [href]="releaseData.link">
           <button mat-flat-button class="download-button" color="accent">
+            <div class="os-icon" *ngIf="releaseData.icon"><svg><use [attr.xlink:href]="releaseData.icon"></use></svg></div>
             Free Download{{ releaseData.platform === 'Other' ? '' : ' for ' + releaseData.platform }}
             <mat-icon>file_download</mat-icon>
           </button>

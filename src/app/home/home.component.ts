@@ -26,7 +26,7 @@ import { ReleasesState } from '../state/releases.state';
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  release!: Observable<{ platform: 'Windows' | 'Mac' | 'Linux' | 'Other'; name: string; link: string; }>;
+  release!: Observable<{ platform: 'Windows' | 'Mac' | 'Linux' | 'Other'; name: string; icon: string | null; link: string; }>;
   currentFeature = new BehaviorSubject<'edit' | 'search' | 'merge' | 'move' | 'resolve' | 'none'>('none');
   lastFeature = this.currentFeature.pipe(
     filter(feature => feature !== 'none'),
@@ -43,6 +43,7 @@ export class HomeComponent implements OnInit {
           return {
             platform: 'Other',
             name: '',
+            icon: null,
             link: '/download'
           };
         }
@@ -52,6 +53,10 @@ export class HomeComponent implements OnInit {
         return {
           platform: platform,
           name: release.tag_name,
+          icon: platform === 'Windows' ? 'assets/windows.svg#svg'
+            : platform === 'Mac' ? 'assets/mac.svg#svg'
+            : platform === 'Linux' ? 'assets/linux.svg#svg'
+            : null,
           link: platform === 'Windows' ? release.assets.find(a => a.name.endsWith('.exe'))?.browser_download_url ?? '/download'
             : platform === 'Mac' ? release.assets.find(a => a.name.endsWith('.dmg'))?.browser_download_url ?? '/download'
             : platform === 'Linux' ? release.assets.find(a => a.name.endsWith('.AppImage'))?.browser_download_url ?? '/download'
