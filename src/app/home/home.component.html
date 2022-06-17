@@ -6,9 +6,13 @@
       <div class="download-links" *ngIf="release | async as releaseData">
         <a [href]="releaseData.link">
           <button mat-flat-button class="download-button" color="accent">
-            <div class="os-icon" *ngIf="releaseData.icon"><svg><use [attr.xlink:href]="releaseData.icon"></use></svg></div>
+            <div class="os-icon" *ngIf="releaseData.platform === 'Windows'"><svg><use xlink:href="assets/windows.svg#svg"></use></svg></div>
+            <div class="os-icon" *ngIf="releaseData.platform === 'Mac'" [style.margin-top.px]="-4">
+              <svg><use xlink:href="assets/mac.svg#svg"></use></svg>
+            </div>
+            <div class="os-icon" *ngIf="releaseData.platform === 'Linux'"><svg><use xlink:href="assets/linux.svg#svg"></use></svg></div>
+            <div class="os-icon" *ngIf="releaseData.platform === 'Other'"><mat-icon>file_download</mat-icon></div>
             Free Download{{ releaseData.platform === 'Other' ? '' : ' for ' + releaseData.platform }}
-            <mat-icon>file_download</mat-icon>
           </button>
         </a>
         <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other">Other platform downloads</a>

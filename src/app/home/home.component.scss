@@ -44,7 +44,7 @@ article {
   .download-button {
     background-color: mat.get-color-from-palette(theme.$app-accent-palette, 300);
     margin-bottom: 15px;
-    line-height: 50px;
+    padding: 5px 16px;
   }
 
   .download-other {
