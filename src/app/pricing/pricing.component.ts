@@ -208,6 +208,9 @@ import { AuthState, Logout } from '../state/auth.state';
         <h3>Do I need to install any dependencies?</h3>
         <p>No, all dependencies are included in the installation package.</p>
 
+        <h3>Can I purchase subscriptions for team members?</h3>
+        <p>Yes, you can purchase multiple subscriptions and assign them to other users on the <a routerLink="/account" class="link">account</a> page. You don't need to have your own subscription to do this.</p>
+
         <h3>What is your refund policy?</h3>
         <p>All payments are non-refundable, but you can cancel your subscription at any time. Upon cancellation, you will still receive the premium benefits until the end of your billing period.</p>
       </div>
