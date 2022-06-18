@@ -3,6 +3,7 @@
 .env
 
 # Compiled output
+/docs
 /dist
 /tmp
 /out-tsc
