@@ -18,9 +18,8 @@ jobs:
           npm run build
 
       - name: Deploy
-        uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: w9jds/firebase-action@v2.2.2
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLINT_SITE }}'
-          projectId: glint-site
-          channelId: preview
+          args: deploy --only hosting
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLINT_SITE }}
