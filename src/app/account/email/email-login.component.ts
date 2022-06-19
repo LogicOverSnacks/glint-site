@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY } from 'rxjs';
@@ -107,8 +107,8 @@ import { environment } from 'src/environments/environment';
   `
 })
 export class EmailLoginComponent {
-  emailControl = new FormControl(null, [Validators.required, Validators.email]);
-  passwordControl = new FormControl(null, [Validators.required, Validators.minLength(10)]);
+  emailControl = new UntypedFormControl(null, [Validators.required, Validators.email]);
+  passwordControl = new UntypedFormControl(null, [Validators.required, Validators.minLength(10)]);
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
   processing = false;

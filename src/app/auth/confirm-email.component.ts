@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
@@ -111,11 +111,11 @@ import { BaseComponent } from '../shared';
   `
 })
 export class ConfirmEmailComponent extends BaseComponent implements OnInit {
-  codeControl = new FormControl(null, [
+  codeControl = new UntypedFormControl(null, [
     Validators.pattern(/^[a-fA-F0-9]{8}$/),
     Validators.required
   ]);
-  emailControl = new FormControl(null, [Validators.email, Validators.required]);
+  emailControl = new UntypedFormControl(null, [Validators.email, Validators.required]);
   view = new BehaviorSubject<'init' | 'processing' | 'success' | 'expired' | 'invalid' | 'error'>('init');
 
   constructor(

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Select } from '@ngxs/store';
 import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
@@ -126,8 +126,8 @@ export class EmailChangePasswordComponent {
   @Select(AuthState.user)
   user!: Observable<UserVm>;
 
-  passwordControl = new FormControl(null, [Validators.required, Validators.minLength(10)]);
-  newPasswordControl = new FormControl(null, [Validators.required, Validators.minLength(10)]);
+  passwordControl = new UntypedFormControl(null, [Validators.required, Validators.minLength(10)]);
+  newPasswordControl = new UntypedFormControl(null, [Validators.required, Validators.minLength(10)]);
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
   newPasswordHidden = new BehaviorSubject(true);

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -32,8 +32,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
   processing = new BehaviorSubject(false);
   processingAssignedSubscription: Record<string, boolean> = {};
-  quantityControl = new FormControl(null, [Validators.min(1), Validators.max(99)]);
-  assignEmailControl = new FormControl(null, Validators.email);
+  quantityControl = new UntypedFormControl(null, [Validators.min(1), Validators.max(99)]);
+  assignEmailControl = new UntypedFormControl(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
   manageError = new BehaviorSubject<string | null>(null);
   refresh$ = new Subject<void>();
