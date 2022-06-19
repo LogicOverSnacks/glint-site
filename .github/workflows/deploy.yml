@@ -23,3 +23,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLINT_SITE }}'
           projectId: glint-site
+          channelId: preview
