@@ -17,7 +17,7 @@ import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'contact', component: ContactComponent, data: { title: 'Contact Us' } },
+  { path: 'contact', component: ContactComponent, data: { title: 'Contact' } },
   { path: 'docs', component: DocsComponent, data: { title: 'Documentation' } },
   { path: 'download', component: DownloadComponent, data: { title: 'Download' } },
   { path: 'eula', component: EulaComponent, data: { title: 'End User License Agreement' } },

@@ -27,7 +27,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   ],
   template: `
   <app-container>
-    <h1 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Contact Us</h1>
+    <h1 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Contact</h1>
 
     <h2>Sales Enquiries</h2>
     Email: <a href="mailto:sales@glint.info">sales@glint.info</a>

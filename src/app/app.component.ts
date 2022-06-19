@@ -55,7 +55,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           title = snapshot.data?.title ?? title;
         }
 
-        titleService.setTitle(`Glint: A Graphical Interface for Git${title ? ' - ' + title : ''}`);
+        titleService.setTitle(`${title ? title + ' - ' : ''}Glint: A Graphical Interface for Git`);
 
         // manually scroll to top on route change due to https://github.com/angular/components/issues/4280
         this.matSidenavContent.scrollTo({ top: 0 });
