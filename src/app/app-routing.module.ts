@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'pricing', component: PricingComponent, data: { title: 'Pricing' } },
   { path: 'privacy', component: PrivacyComponent, data: { title: 'Privacy Policy' } },
   { path: 'terms', component: TermsComponent, data: { title: 'Terms and Conditions' } },
-  { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule) },
+  { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule), data: { title: 'Account' } },
   { path: 'auth/confirm-email', component: ConfirmEmailComponent, data: { title: 'Confirm Email' } },
   { path: 'auth/reset-password', component: ResetPasswordComponent, data: { title: 'Reset Password' } },
   { path: '**', component: PageNotFoundComponent, data: { title: 'Page Not Found' } }
