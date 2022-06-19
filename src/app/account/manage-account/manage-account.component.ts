@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
@@ -32,8 +32,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
   processing = new BehaviorSubject(false);
   processingAssignedSubscription: Record<string, boolean> = {};
-  quantityControl = new UntypedFormControl(null, [Validators.min(1), Validators.max(99)]);
-  assignEmailControl = new UntypedFormControl(null, Validators.email);
+  quantityControl = new FormControl<number | null>(null, [Validators.min(1), Validators.max(99)]);
+  assignEmailControl = new FormControl<string | null>(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
   manageError = new BehaviorSubject<string | null>(null);
   refresh$ = new Subject<void>();
@@ -95,8 +95,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     }
   }
 
-  purchase(quantity: number, forSelf: boolean) {
-    if (this.processing.value) return;
+  purchase(quantity: number | null, forSelf: boolean) {
+    if (this.processing.value || !quantity) return;
 
     this.processing.next(true);
 
@@ -154,8 +154,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       });
   }
 
-  assign(email: string, self = false) {
-    if (this.processing.value) return;
+  assign(email: string | null, self = false) {
+    if (this.processing.value || !email) return;
     if (this.processingAssignedSubscription[email]) return;
 
     this.processingAssignedSubscription[email] = true;

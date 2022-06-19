@@ -23,9 +23,9 @@
     "@angular/platform-browser": "^14.0.2",
     "@angular/platform-browser-dynamic": "^14.0.2",
     "@angular/router": "^14.0.2",
-    "@ngxs/devtools-plugin": "~3.7.3",
-    "@ngxs/storage-plugin": "~3.7.3",
-    "@ngxs/store": "~3.7.3",
+    "@ngxs/devtools-plugin": "~3.7.4",
+    "@ngxs/storage-plugin": "~3.7.4",
+    "@ngxs/store": "~3.7.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
@@ -34,19 +34,19 @@
     "@angular-devkit/build-angular": "^14.0.2",
     "@angular/cli": "^14.0.2",
     "@angular/compiler-cli": "^14.0.2",
-    "@angular-eslint/builder": "~13.0.1",
-    "@angular-eslint/eslint-plugin": "~13.0.1",
-    "@angular-eslint/eslint-plugin-template": "~13.0.1",
-    "@angular-eslint/schematics": "~13.0.1",
-    "@angular-eslint/template-parser": "~13.0.1",
-    "@types/jasmine": "~3.10.0",
-    "@types/node": "^12.11.1",
-    "@typescript-eslint/eslint-plugin": "^5.4.0",
-    "@typescript-eslint/parser": "^5.4.0",
+    "@angular-eslint/builder": "~13.5.0",
+    "@angular-eslint/eslint-plugin": "~13.5.0",
+    "@angular-eslint/eslint-plugin-template": "~13.5.0",
+    "@angular-eslint/schematics": "~13.5.0",
+    "@angular-eslint/template-parser": "~13.5.0",
+    "@types/jasmine": "~4.0.3",
+    "@types/node": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
     "env-cmd": "^10.1.0",
-    "eslint": "^8.2.0",
-    "eslint-plugin-import": "^2.25.3",
-    "eslint-plugin-jsdoc": "^37.0.3",
+    "eslint": "^8.18.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsdoc": "^39.3.3",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
@@ -55,6 +55,17 @@
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.6.2",
-    "user-agent-data-types": "~0.2.0"
+    "user-agent-data-types": "~0.3.0"
+  },
+  "overrides": {
+    "@angular/flex-layout": {
+      "@angular/cdk": "^14.0.2",
+      "@angular/common": "^14.0.2",
+      "@angular/core": "^14.0.2",
+      "@angular/platform-browser": "^14.0.2"
+    },
+    "@angular-eslint/schematics": {
+      "@angular/cli": "^14.0.2"
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
@@ -81,7 +81,7 @@ import { BaseComponent } from '../../shared';
   `
 })
 export class EmailLostPasswordComponent extends BaseComponent implements OnInit {
-  emailControl = new UntypedFormControl(null, [Validators.email, Validators.required]);
+  emailControl = new FormControl<string | null>(null, [Validators.email, Validators.required]);
   view = new BehaviorSubject<'init' | 'processing' | 'success' | 'error'>('init');
 
   constructor(

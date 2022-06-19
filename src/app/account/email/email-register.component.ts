@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, catchError, EMPTY, finalize } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -97,9 +97,9 @@ import { environment } from 'src/environments/environment';
   `
 })
 export class EmailRegisterComponent {
-  form = new UntypedFormGroup({
-    email: new UntypedFormControl(null, [Validators.required, Validators.email]),
-    password: new UntypedFormControl(null, [Validators.required, Validators.minLength(10)])
+  form = new FormGroup({
+    email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
+    password: new FormControl<string | null>(null, [Validators.required, Validators.minLength(10)])
   });
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);

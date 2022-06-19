@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { UntypedFormControl, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
@@ -119,15 +119,15 @@ import { BaseComponent } from '../shared';
   `
 })
 export class ResetPasswordComponent extends BaseComponent implements OnInit {
-  codeControl = new UntypedFormControl(null, [
+  codeControl = new FormControl<string | null>(null, [
     Validators.pattern(/^[a-fA-F0-9]{8}$/),
     Validators.required
   ]);
-  emailControl = new UntypedFormControl(null, [
+  emailControl = new FormControl<string | null>(null, [
     Validators.email,
     Validators.required
   ]);
-  passwordControl = new UntypedFormControl(null, [
+  passwordControl = new FormControl<string | null>(null, [
     Validators.pattern(/password/),
     Validators.required
   ]);
