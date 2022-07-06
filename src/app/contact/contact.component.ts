@@ -25,7 +25,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       }
 
       .discord-btn {
-        text-align: center;
+        // text-align: center;
         margin-bottom: 40px;
 
         > a {
@@ -47,6 +47,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         }
       }
 
+      h3 {
+        margin-bottom: 0;
+      }
+
       a {
         color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
       }
@@ -61,6 +65,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         <img src="assets/discord.svg"> <span class="white">|</span> Join
       </a>
     </div>
+
+    <h2>Alternatively:</h2>
 
     <h3>General Help: <a href="mailto:help@glint.info">help@glint.info</a></h3>
     <h3>Legal Questions: <a href="mailto:legal@glint.info">legal@glint.info</a></h3>
