@@ -217,7 +217,7 @@ import { AuthState, Logout } from '../state/auth.state';
 
       <div class="enquire-panel">
         <h2 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Further Questions?</h2>
-        <a href="mailto:sales@glint.info" class="link">Click here to enquire</a>
+        <a routerLink="/contact" class="link">Click here to enquire</a>
       </div>
     </app-container>
   `
