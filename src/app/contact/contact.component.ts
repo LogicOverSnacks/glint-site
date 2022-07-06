@@ -24,10 +24,27 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         line-height: 25px;
       }
 
-      .banner {
-        height: 20px;
-        display: inline-block;
-        vertical-align: text-top;
+      .discord-btn {
+        text-align: center;
+        margin-bottom: 40px;
+
+        > a {
+          font-size: 24px;
+          line-height: 40px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+
+          img {
+            margin-right: 5px;
+            height: 40px;
+            vertical-align: top;
+          }
+
+          .white {
+            color: #fff;
+            margin: 0 10px;
+          }
+        }
       }
 
       a {
@@ -39,29 +56,15 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   <app-container>
     <h1 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Contact</h1>
 
-    <h2>General Help</h2>
-    <ul>
-      <li>
-        Web chat: <a class="banner" target="_blank" href="https://gitter.im/git-glint/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img src="https://badges.gitter.im/git-glint/community.svg"></a>
-      </li>
-      <li>
-        Email: <a href="mailto:help@glint.info">help@glint.info</a>
-      </li>
-    </ul>
+    <div class="discord-btn">
+      <a target="_blank" href="https://discord.gg/wXv8WUeFYZ" mat-stroked-button>
+        <img src="assets/discord.svg"> <span class="white">|</span> Join
+      </a>
+    </div>
 
-    <h2>Legal Questions</h2>
-    <ul>
-      <li>
-        Email: <a href="mailto:legal@glint.info">legal@glint.info</a>
-      </li>
-    </ul>
-
-    <h2>Sales Enquiries</h2>
-    <ul>
-      <li>
-        Email: <a href="mailto:sales@glint.info">sales@glint.info</a>
-      </li>
-    </ul>
+    <h3>General Help: <a href="mailto:help@glint.info">help@glint.info</a></h3>
+    <h3>Legal Questions: <a href="mailto:legal@glint.info">legal@glint.info</a></h3>
+    <h3>Sales Enquiries: <a href="mailto:sales@glint.info">sales@glint.info</a></h3>
   </app-container>
   `
 })
