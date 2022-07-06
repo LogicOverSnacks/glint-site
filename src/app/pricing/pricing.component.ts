@@ -200,10 +200,16 @@ import { AuthState, Logout } from '../state/auth.state';
         </p>
 
         <h3>What operating systems does Glint work on?</h3>
-        <p>Windows, macOS, and Linux. Only x64 systems and Apple M1 (arm64) are supported. The application is designed for use on desktop computers, and so there is no version available for mobile devices or web browsers.</p>
+        <p>
+          Windows, macOS, and Linux. Only x64 systems and Apple M1 (arm64) are supported.
+          The application is designed for use on desktop computers,
+          and so there is no version available for mobile devices or web browsers.
+          The <a routerLink="/playground" class="link">playground</a> is a partially working online version that you can try without
+          downloading the app.
+        </p>
 
         <h3>Can I use Glint on multiple computers?</h3>
-        <p>Yes, you can use a single subscription on multiple devices, just log in with the same account.</p>
+        <p>Yes, licenses are per user so you can use a single subscription on multiple devices, just log in with the same account.</p>
 
         <h3>Do I need to install any dependencies?</h3>
         <p>No, all dependencies are included in the installation package.</p>
