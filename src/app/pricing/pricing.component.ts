@@ -89,6 +89,13 @@ import { AuthState, Logout } from '../state/auth.state';
           margin-top: 40px;
         }
 
+        h4 {
+          font-size: 18px;
+          color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
+          margin-top: 15px;
+          margin-bottom: 10px;
+        }
+
         &.small h3 {
           font-size: 22px;
         }
@@ -212,7 +219,14 @@ import { AuthState, Logout } from '../state/auth.state';
         <p>Yes, licenses are per user so you can use a single subscription on multiple devices, just log in with the same account.</p>
 
         <h3>Do I need to install any dependencies?</h3>
-        <p>No, all dependencies are included in the installation package.</p>
+        <h4>Windows</h4>
+        <p>The VC++ runtime is required, but this is included in the installer package and should be installed automatically.</p>
+
+        <h4>Mac</h4>
+        <p>No dependencies are required.</p>
+
+        <h4>Linux</h4>
+        <p>If using the AppImage, then fuse2 is required. If not already installed on your distribution, e.g. Ubuntu 22.04, you will need to run <strong>apt install libfuse2</strong>.</p>
 
         <h3>Can I purchase subscriptions for team members?</h3>
         <p>Yes, you can purchase multiple subscriptions and assign them to other users on the <a routerLink="/account" class="link">account</a> page. You don't need to have your own subscription to do this.</p>
