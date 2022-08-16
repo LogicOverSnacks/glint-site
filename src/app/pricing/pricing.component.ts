@@ -210,11 +210,16 @@ export class PricingComponent {
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
             : response.status === 400 ? '400PB'
+            : response.status === 403 && response.error.reason === 'unverified' ? '403PA'
             : '500PA';
 
-          this.purchaseError.next(
-            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
-          );
+          if (code === '403PA') {
+            this.router.navigate(['/account/email/not-confirmed']);
+          } else {
+            this.purchaseError.next(
+              `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
+            );
+          }
 
           return throwError(() => response);
         }),
