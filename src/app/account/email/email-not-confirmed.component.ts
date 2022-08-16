@@ -15,16 +15,23 @@ import { BaseComponent } from '../../shared';
       padding-top: 40px;
       text-align: center;
     }`,
-    `.title { margin-bottom: 50px; }`,
     `
       @use '@angular/material' as mat;
       @use 'src/theme' as theme;
+
+      .title { margin-bottom: 50px; }
+
       a, .reset {
         color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
         cursor: pointer;
       }
-    `,
-    `.error-icon { font-size: 48px; }`
+
+      .error-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+      }
+    `
   ],
   template: `
     <app-container>
