@@ -34,7 +34,11 @@ import { environment } from 'src/environments/environment';
       }
     `,
     `.submit-btn { margin-top: 10px; }`,
-    `.error-icon { font-size: 48px; }`
+    `.error-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }`
   ],
   template: `
     <app-container>

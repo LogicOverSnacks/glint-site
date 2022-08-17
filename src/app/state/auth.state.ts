@@ -20,15 +20,22 @@ export class UpdateUser {
   constructor(public user: UserVm | null) {}
 }
 
+export class UpdateGithubState {
+  static readonly type = '[Auth] UpdateGithubState';
+  constructor(public state: string | null) {}
+}
+
 export interface IAuthStateModel {
   user: UserVm | null;
+  githubState: string | null;
 }
 
 /* eslint-disable @typescript-eslint/member-ordering */
 @State<IAuthStateModel>({
   name: 'auth',
   defaults: {
-    user: null
+    user: null,
+    githubState: null
   }
 })
 @Injectable()
@@ -36,6 +43,11 @@ export class AuthState {
   @Selector()
   static user(state: IAuthStateModel) {
     return state.user;
+  }
+
+  @Selector()
+  static githubState(state: IAuthStateModel) {
+    return state.githubState;
   }
 
   @Action(Logout)
@@ -92,6 +104,14 @@ export class AuthState {
     ctx.setState(state => ({
       ...state,
       user: action.user
+    }));
+  }
+
+  @Action(UpdateGithubState)
+  updateGithubState(ctx: StateContext<IAuthStateModel>, action: UpdateGithubState) {
+    ctx.setState(state => ({
+      ...state,
+      githubState: action.state
     }));
   }
 

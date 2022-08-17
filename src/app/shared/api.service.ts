@@ -4,7 +4,8 @@ import { Store } from '@ngxs/store';
 import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
-import { AuthState, RefreshAccessToken } from '../state/auth.state';
+import { AuthState, RefreshAccessToken } from 'src/app/state/auth.state';
+import { UserVm } from 'src/app/state/user.vm';
 import { GetSubscriptionsResponse } from './models/subscriptions';
 
 @Injectable({ providedIn: 'root' })
@@ -71,6 +72,10 @@ export class ApiService {
       { email: userEmail },
       { headers: this.getHeaders() }
     ));
+  }
+
+  githubLogin(code: string): Observable<{ githubToken: string; user: UserVm; }> {
+    return this.http.post<{ githubToken: string; user: UserVm; }>(`${environment.apiBaseUrl}/auth/github/login`, { code });
   }
 
   private withRetries = <T>(method: () => Observable<T>) => {

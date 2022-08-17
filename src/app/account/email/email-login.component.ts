@@ -42,7 +42,11 @@ import { environment } from 'src/environments/environment';
       margin-top: 10px;
       margin-bottom: 40px;
     }`,
-    `.error-icon { font-size: 48px; }`
+    `.error-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }`
   ],
   template: `
     <app-container>
