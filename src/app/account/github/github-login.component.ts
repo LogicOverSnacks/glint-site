@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
+import { BehaviorSubject } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
 import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.state';
@@ -12,11 +13,42 @@ import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.sta
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`
+    }`,
+    `
+      @use '@angular/material' as mat;
+      @use 'src/theme' as theme;
+
+      .title { margin-bottom: 50px; }
+
+      .link {
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        cursor: pointer;
+      }
+
+      .success-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+      }
+    `
   ],
-  template: `<app-container>Loading...</app-container>`
+  template: `
+    <app-container>
+      <ng-container *ngIf="(success | async) === false">Loading...</ng-container>
+      <ng-container *ngIf="success | async">
+        <header class="mat-display-2 title">Login Succeeded!</header>
+
+        <h3>
+          <mat-icon color="primary" class="success-icon">done</mat-icon><br>
+          You should now be logged into Glint.<br>
+        </h3>
+      </ng-container>
+    </app-container>
+  `
 })
 export class GithubLoginComponent implements OnInit {
+  success = new BehaviorSubject(false);
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -50,8 +82,8 @@ export class GithubLoginComponent implements OnInit {
             expires: user.expires
           };
           /* eslint-enable @typescript-eslint/naming-convention */
+          this.success.next(true);
           window.open(`git-glint://oauth/github?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`);
-          // TODO: redirect to open glint page?
         } else {
           this.store.dispatch(new UpdateUser(user)).subscribe(() => {
             this.router.navigate(['/account']);
@@ -63,7 +95,7 @@ export class GithubLoginComponent implements OnInit {
       /* eslint-disable @typescript-eslint/naming-convention */
       const queryParams = {
         client_id: '57f2729610ec48a1d787',
-        redirect_uri: encodeURIComponent(`http://localhost:4200/account/github/login?glint=${fromGlint}`),
+        redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=${fromGlint}`),
         scope: encodeURIComponent('repo user:email'),
         state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
       };
