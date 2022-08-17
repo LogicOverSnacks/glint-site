@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  // apiBaseUrl: 'http://localhost:8082',
-  apiBaseUrl: 'https://api.glint.info',
+  apiBaseUrl: 'http://localhost:8082',
+  // apiBaseUrl: 'https://api.glint.info',
   production: false
 };
 
