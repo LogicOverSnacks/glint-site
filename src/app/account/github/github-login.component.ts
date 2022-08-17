@@ -40,7 +40,7 @@ import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.sta
 
         <h3>
           <mat-icon color="primary" class="success-icon">done</mat-icon><br>
-          You should now be logged into Glint.<br>
+          You should now be logged in and redirected back to Glint. Ensure that your browser is not blocking the popup.<br>
         </h3>
       </ng-container>
     </app-container>
