@@ -120,7 +120,7 @@ export class GithubLoginComponent implements OnInit {
       const queryParams = {
         client_id: '57f2729610ec48a1d787',
         redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=${fromGlint}`),
-        scope: encodeURIComponent('repo user:email'),
+        scope: encodeURIComponent(fromGlint ? 'repo user:email' : 'user:email'),
         state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
       };
       /* eslint-enable @typescript-eslint/naming-convention */
