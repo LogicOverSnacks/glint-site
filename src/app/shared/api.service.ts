@@ -74,12 +74,28 @@ export class ApiService {
     ));
   }
 
-  githubLogin(code: string): Observable<{ githubToken: string; user: UserVm; }> {
-    return this.http.post<{ githubToken: string; user: UserVm; }>(`${environment.apiBaseUrl}/auth/github/login`, { code });
+  githubLogin(code: string) {
+    return this.http.post<{
+      githubToken: string;
+      githubId: number;
+      githubAvatarUrl: string;
+      githubProfileUrl: string;
+      user: UserVm;
+    }>(`${environment.apiBaseUrl}/auth/github/login`, { code });
   }
 
-  googleLogin(code: string, redirectUri: string): Observable<{ user: UserVm; }> {
+  googleLogin(code: string, redirectUri: string) {
     return this.http.post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/google/login`, { code, redirectUri });
+  }
+
+  githubIntegration(code: string) {
+    return this.http.post<{
+      token: string;
+      id: number;
+      email: string | null;
+      avatarUrl: string;
+      profileUrl: string;
+    }>(`${environment.apiBaseUrl}/auth/github/integration`, { code });
   }
 
   private withRetries = <T>(method: () => Observable<T>) => {

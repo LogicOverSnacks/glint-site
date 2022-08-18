@@ -6,6 +6,7 @@ import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
 import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.state';
+import { environment } from 'src/environments/environment';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -70,6 +71,7 @@ export class GithubLoginComponent implements OnInit {
 
   ngOnInit() {
     const fromGlint = this.route.snapshot.queryParams.glint === 'true';
+    const integration = this.route.snapshot.queryParams.integration === 'true';
     const code = this.route.snapshot.queryParams.code;
 
     if (code) {
@@ -81,53 +83,113 @@ export class GithubLoginComponent implements OnInit {
         return;
       }
 
-      this.api.githubLogin(code)
-        .pipe(
-          catchError((response: HttpErrorResponse) => {
-            if (response.status === 403)
-              this.error.next(response.error.message);
-            else
-              this.error.next('Sorry! Something went wrong.');
-
-            this.view.next('error');
-            return EMPTY;
-          })
-        )
-        .subscribe(({ githubToken, user }) => {
-          if (fromGlint) {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            const queryParams = {
-              github_token: githubToken,
-              email: user.email,
-              created_at: user.createdAt,
-              confirmed: user.confirmed,
-              access_token: user.accessToken,
-              refresh_token: user.refreshToken,
-              expires: user.expires
-            };
-            /* eslint-enable @typescript-eslint/naming-convention */
-            this.view.next('success');
-            window.open(`git-glint://oauth/github?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`);
-          } else {
-            this.store.dispatch(new UpdateUser(user)).subscribe(() => {
-              this.router.navigate(['/account']);
-            });
-          }
-        });
+      if (integration) this.integrated(code);
+      else this.loggedIn(code, fromGlint);
     } else {
-      const baseUrl = 'https://github.com/login/oauth/authorize';
-      /* eslint-disable @typescript-eslint/naming-convention */
-      const queryParams = {
-        client_id: '57f2729610ec48a1d787',
-        redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=${fromGlint}`),
-        scope: encodeURIComponent(fromGlint ? 'repo user:email' : 'user:email'),
-        state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
-      };
-      /* eslint-enable @typescript-eslint/naming-convention */
-
-      this.store.dispatch(new UpdateGithubState(queryParams.state)).subscribe(() => {
-        window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
-      });
+      if (integration) this.integration();
+      else this.login(fromGlint);
     }
+  }
+
+  private login(fromGlint: boolean) {
+    const baseUrl = 'https://github.com/login/oauth/authorize';
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const queryParams = {
+      client_id: environment.githubClientId,
+      redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=${fromGlint}`),
+      scope: encodeURIComponent(fromGlint ? 'repo user:email' : 'user:email'),
+      state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
+    };
+    /* eslint-enable @typescript-eslint/naming-convention */
+
+    this.store.dispatch(new UpdateGithubState(queryParams.state)).subscribe(() => {
+      window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
+    });
+  }
+
+  private loggedIn(code: string, fromGlint: boolean) {
+    this.api.githubLogin(code)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 403)
+            this.error.next(response.error.message);
+          else
+            this.error.next('Sorry! Something went wrong.');
+
+          this.view.next('error');
+          return EMPTY;
+        })
+      )
+      .subscribe(({ githubToken, githubId, githubAvatarUrl, githubProfileUrl, user }) => {
+        if (fromGlint) {
+          /* eslint-disable @typescript-eslint/naming-convention */
+          const queryParams = {
+            github_token: githubToken,
+            github_id: githubId,
+            github_avatar_url: githubAvatarUrl,
+            github_profile_url: githubProfileUrl,
+            email: user.email,
+            created_at: user.createdAt,
+            confirmed: user.confirmed,
+            access_token: user.accessToken,
+            refresh_token: user.refreshToken,
+            expires: user.expires
+          };
+          /* eslint-enable @typescript-eslint/naming-convention */
+          this.view.next('success');
+          window.open(`git-glint://oauth/github?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`);
+        } else {
+          this.store.dispatch(new UpdateUser(user)).subscribe(() => {
+            this.router.navigate(['/account']);
+          });
+        }
+      });
+  }
+
+  private integration() {
+    const baseUrl = 'https://github.com/login/oauth/authorize';
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const queryParams = {
+      client_id: environment.githubClientId,
+      redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=true&integration=true`),
+      scope: encodeURIComponent('repo user:email'),
+      state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
+    };
+    /* eslint-enable @typescript-eslint/naming-convention */
+
+    this.store.dispatch(new UpdateGithubState(queryParams.state)).subscribe(() => {
+      window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
+    });
+  }
+
+  private integrated(code: string) {
+    this.api.githubIntegration(code)
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          if (response.status === 403)
+            this.error.next(response.error.message);
+          else
+            this.error.next('Sorry! Something went wrong.');
+
+          this.view.next('error');
+          return EMPTY;
+        })
+      )
+      .subscribe(({ token, id, email, avatarUrl, profileUrl }) => {
+        /* eslint-disable @typescript-eslint/naming-convention */
+        const queryParams = {
+          token: token,
+          id: id,
+          email: email,
+          avatar_url: avatarUrl,
+          profile_url: profileUrl
+        };
+        const queryString = Object.entries(queryParams)
+          .filter(([key, value]) => value)
+          .map(([key, value]) => `${key}=${value}`).join('&');
+        /* eslint-enable @typescript-eslint/naming-convention */
+        this.view.next('success');
+        window.open(`git-glint://integration/github?${queryString}`);
+      });
   }
 }
