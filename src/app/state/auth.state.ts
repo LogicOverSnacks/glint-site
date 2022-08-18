@@ -25,9 +25,15 @@ export class UpdateGithubState {
   constructor(public state: string | null) {}
 }
 
+export class UpdateGoogleState {
+  static readonly type = '[Auth] UpdateGoogleState';
+  constructor(public state: string | null) {}
+}
+
 export interface IAuthStateModel {
   user: UserVm | null;
   githubState: string | null;
+  googleState: string | null;
 }
 
 /* eslint-disable @typescript-eslint/member-ordering */
@@ -35,7 +41,8 @@ export interface IAuthStateModel {
   name: 'auth',
   defaults: {
     user: null,
-    githubState: null
+    githubState: null,
+    googleState: null
   }
 })
 @Injectable()
@@ -48,6 +55,11 @@ export class AuthState {
   @Selector()
   static githubState(state: IAuthStateModel) {
     return state.githubState;
+  }
+
+  @Selector()
+  static googleState(state: IAuthStateModel) {
+    return state.googleState;
   }
 
   @Action(Logout)
@@ -112,6 +124,14 @@ export class AuthState {
     ctx.setState(state => ({
       ...state,
       githubState: action.state
+    }));
+  }
+
+  @Action(UpdateGoogleState)
+  updateGoogleState(ctx: StateContext<IAuthStateModel>, action: UpdateGoogleState) {
+    ctx.setState(state => ({
+      ...state,
+      googleState: action.state
     }));
   }
 

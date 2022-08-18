@@ -78,6 +78,10 @@ export class ApiService {
     return this.http.post<{ githubToken: string; user: UserVm; }>(`${environment.apiBaseUrl}/auth/github/login`, { code });
   }
 
+  googleLogin(code: string, redirectUri: string): Observable<{ user: UserVm; }> {
+    return this.http.post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/google/login`, { code, redirectUri });
+  }
+
   private withRetries = <T>(method: () => Observable<T>) => {
     const retry = (retries: number): Observable<T> => method().pipe(
       catchError((error: HttpErrorResponse) => {

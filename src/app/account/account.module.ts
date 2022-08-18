@@ -13,6 +13,8 @@ import { EmailNotConfirmedComponent } from './email/email-not-confirmed.componen
 import { EmailRegisterComponent } from './email/email-register.component';
 import { GithubInvalidComponent } from './github/github-invalid.component';
 import { GithubLoginComponent } from './github/github-login.component';
+import { GoogleInvalidComponent } from './google/google-invalid.component';
+import { GoogleLoginComponent } from './google/google-login.component';
 import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { UnauthorizedComponent } from './unauthorized.component';
@@ -35,6 +37,8 @@ import { UnauthorizedComponent } from './unauthorized.component';
     EmailRegisterComponent,
     GithubInvalidComponent,
     GithubLoginComponent,
+    GoogleInvalidComponent,
+    GoogleLoginComponent,
     LoginComponent,
     ManageAccountComponent,
     UnauthorizedComponent

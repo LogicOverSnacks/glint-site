@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
-import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.state';
+import { AuthState, UpdateGoogleState, UpdateUser } from 'src/app/state/auth.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,9 +21,8 @@ import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.sta
 
       .title { margin-bottom: 50px; }
 
-      .link {
+      a {
         color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
       }
 
       .error-icon, .success-icon {
@@ -35,7 +34,7 @@ import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.sta
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Login with GitHub</header>
+      <header class="mat-display-2 title">Login with Google</header>
 
       <ng-container [ngSwitch]="view | async">
         <h3 *ngSwitchCase="'init'">Loading...</h3>
@@ -50,14 +49,14 @@ import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.sta
         <h3 *ngSwitchCase="'error'">
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
           {{error | async}}<br>
-          Please click <a class="link" routerLink="/account/login">here</a> to try again.<br>
+          Please click <a routerLink="/account/login">here</a> to try again.<br>
           If the problem persists please <a routerLink="/contact">contact us</a>.
         </h3>
       </ng-container>
     </app-container>
   `
 })
-export class GithubLoginComponent implements OnInit {
+export class GoogleLoginComponent implements OnInit {
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   error = new BehaviorSubject('Sorry! Something went wrong.');
 
@@ -74,14 +73,14 @@ export class GithubLoginComponent implements OnInit {
 
     if (code) {
       const actualState = this.route.snapshot.queryParams.state;
-      const expectedState = this.store.selectSnapshot(AuthState.githubState);
+      const expectedState = this.store.selectSnapshot(AuthState.googleState);
 
       if (actualState !== expectedState) {
-        this.router.navigate(['/account/github/invalid']);
+        this.router.navigate(['/account/google/invalid']);
         return;
       }
 
-      this.api.githubLogin(code)
+      this.api.googleLogin(code, `${location.origin}/account/google/login?glint=${fromGlint}`)
         .pipe(
           catchError((response: HttpErrorResponse) => {
             if (response.status === 403)
@@ -93,11 +92,10 @@ export class GithubLoginComponent implements OnInit {
             return EMPTY;
           })
         )
-        .subscribe(({ githubToken, user }) => {
+        .subscribe(({ user }) => {
           if (fromGlint) {
             /* eslint-disable @typescript-eslint/naming-convention */
             const queryParams = {
-              github_token: githubToken,
               email: user.email,
               created_at: user.createdAt,
               confirmed: user.confirmed,
@@ -107,7 +105,7 @@ export class GithubLoginComponent implements OnInit {
             };
             /* eslint-enable @typescript-eslint/naming-convention */
             this.view.next('success');
-            window.open(`git-glint://oauth/github?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`);
+            window.open(`git-glint://oauth/google?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`);
           } else {
             this.store.dispatch(new UpdateUser(user)).subscribe(() => {
               this.router.navigate(['/account']);
@@ -115,17 +113,19 @@ export class GithubLoginComponent implements OnInit {
           }
         });
     } else {
-      const baseUrl = 'https://github.com/login/oauth/authorize';
+      const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
       /* eslint-disable @typescript-eslint/naming-convention */
       const queryParams = {
-        client_id: '57f2729610ec48a1d787',
-        redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=${fromGlint}`),
-        scope: encodeURIComponent('repo user:email'),
-        state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
+        client_id: '101399034999-nv17li8hq9qj71atv70aaovsehtvivbd.apps.googleusercontent.com',
+        response_type: 'code',
+        scope: encodeURIComponent('openid email'),
+        redirect_uri: encodeURIComponent(`${location.origin}/account/google/login?glint=${fromGlint}`),
+        state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join(''),
+        nonce: ''
       };
       /* eslint-enable @typescript-eslint/naming-convention */
 
-      this.store.dispatch(new UpdateGithubState(queryParams.state)).subscribe(() => {
+      this.store.dispatch(new UpdateGoogleState(queryParams.state)).subscribe(() => {
         window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
       });
     }

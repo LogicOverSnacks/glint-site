@@ -93,6 +93,4 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     </app-container>
   `
 })
-export class FaqComponent {
-
-}
+export class FaqComponent {}

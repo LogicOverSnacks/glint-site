@@ -8,6 +8,8 @@ import { EmailNotConfirmedComponent } from './email/email-not-confirmed.componen
 import { EmailRegisterComponent } from './email/email-register.component';
 import { GithubInvalidComponent } from './github/github-invalid.component';
 import { GithubLoginComponent } from './github/github-login.component';
+import { GoogleInvalidComponent } from './google/google-invalid.component';
+import { GoogleLoginComponent } from './google/google-login.component';
 import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { UnauthorizedComponent } from './unauthorized.component';
@@ -21,6 +23,8 @@ const routes: Routes = [
   { path: 'email/register', component: EmailRegisterComponent, data: { title: 'Register' } },
   { path: 'github/login', component: GithubLoginComponent, data: { title: 'Login with GitHub' } },
   { path: 'github/invalid', component: GithubInvalidComponent, data: { title: 'Invalid Login' } },
+  { path: 'google/login', component: GoogleLoginComponent, data: { title: 'Login with Google' } },
+  { path: 'google/invalid', component: GoogleInvalidComponent, data: { title: 'Invalid Login' } },
   { path: 'unauthorized', component: UnauthorizedComponent, data: { title: 'Unauthorized' } },
   { path: '', component: ManageAccountComponent }
 ];
