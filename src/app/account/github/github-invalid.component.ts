@@ -14,9 +14,8 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
       .title { margin-bottom: 50px; }
 
-      .link {
+      a {
         color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
       }
 
       .error-icon {
@@ -33,7 +32,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       <h3>
         <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
         There was a problem authenticating with GitHub.<br>
-        Please click <a routerLink="/account/login" class="link">here</a> to try again.
+        Please click <a routerLink="/account/login">here</a> to try again.
       </h3>
     </app-container>
   `

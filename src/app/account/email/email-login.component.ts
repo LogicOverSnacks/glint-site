@@ -41,6 +41,11 @@ import { environment } from 'src/environments/environment';
     `.submit-btn {
       margin-top: 10px;
       margin-bottom: 40px;
+
+      mat-spinner {
+        display: inline-block;
+        margin-right: 5px;
+      }
     }`,
     `.error-icon {
       font-size: 48px;
@@ -89,10 +94,12 @@ import { environment } from 'src/environments/environment';
             </mat-error>
           </mat-form-field>
 
-          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Login</button>
+          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">
+            <mat-spinner *ngIf="processing" diameter="18"></mat-spinner> Login
+          </button>
 
-          <p>Forgot your password? Click <a [routerLink]="['/account/email/lost-password']">here</a> to reset it.</p>
-          <p>Don't have an account? Click <a [routerLink]="['/account/email/register']">here</a> to register.</p>
+          <p>Forgot your password? Click <a routerLink="/account/email/lost-password">here</a> to reset it.</p>
+          <p>Don't have an account? Click <a routerLink="/account/email/register">here</a> to register.</p>
         </form>
 
         <h3 *ngSwitchCase="'success'">
@@ -104,7 +111,7 @@ import { environment } from 'src/environments/environment';
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
           Sorry! Something went wrong.<br>
           Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
-          If the problem persists please contact support at <a href="mailto:help@glint.info">help@glint.info</a>.
+          If the problem persists please <a routerLink="/contact">contact us</a>.
         </h3>
       </ng-container>
     </app-container>

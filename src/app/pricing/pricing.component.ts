@@ -141,7 +141,9 @@ import { AuthState, Logout } from '../state/auth.state';
         </button>
 
         <div class="errors" *ngIf="purchaseError | async as error">
-          <mat-icon inline>warning</mat-icon> {{ error }}
+          <mat-icon inline>warning</mat-icon>
+          There was a problem processing the request.
+          Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ error }}.
         </div>
 
         <ul class="features">
@@ -213,13 +215,10 @@ export class PricingComponent {
             : response.status === 403 && response.error.reason === 'unverified' ? '403PA'
             : '500PA';
 
-          if (code === '403PA') {
+          if (code === '403PA')
             this.router.navigate(['/account/email/not-confirmed']);
-          } else {
-            this.purchaseError.next(
-              `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
-            );
-          }
+          else
+            this.purchaseError.next(code);
 
           return throwError(() => response);
         }),

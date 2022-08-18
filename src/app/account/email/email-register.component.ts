@@ -94,7 +94,7 @@ import { environment } from 'src/environments/environment';
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
           Sorry! Something went wrong.<br>
           Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
-          If the problem persists please contact support at <a href="mailto:help@glint.info">help@glint.info</a>.
+          If the problem persists please <a routerLink="/contact">contact us</a>.
         </h3>
       </ng-container>
     </app-container>
