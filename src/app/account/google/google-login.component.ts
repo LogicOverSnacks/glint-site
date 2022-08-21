@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
-import { AuthState, UpdateGoogleState, UpdateUser } from 'src/app/state/auth.state';
+import { UpdateUser } from 'src/app/state/auth.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -73,7 +73,7 @@ export class GoogleLoginComponent implements OnInit {
 
     if (code) {
       const actualState = this.route.snapshot.queryParams.state;
-      const expectedState = this.store.selectSnapshot(AuthState.googleState);
+      const expectedState = sessionStorage.getItem('googleState');;
 
       if (actualState !== expectedState) {
         this.router.navigate(['/account/google/invalid']);
@@ -120,14 +120,13 @@ export class GoogleLoginComponent implements OnInit {
         response_type: 'code',
         scope: encodeURIComponent('openid email'),
         redirect_uri: encodeURIComponent(`${location.origin}/account/google/login?glint=${fromGlint}`),
-        state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join(''),
+        state: window.crypto.randomUUID(),
         nonce: ''
       };
       /* eslint-enable @typescript-eslint/naming-convention */
 
-      this.store.dispatch(new UpdateGoogleState(queryParams.state)).subscribe(() => {
-        window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
-      });
+      sessionStorage.setItem('googleState', queryParams.state);
+      window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
     }
   }
 }

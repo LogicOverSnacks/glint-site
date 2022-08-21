@@ -5,7 +5,7 @@ import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
-import { AuthState, UpdateGithubState, UpdateUser } from 'src/app/state/auth.state';
+import { UpdateUser } from 'src/app/state/auth.state';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -76,7 +76,7 @@ export class GithubLoginComponent implements OnInit {
 
     if (code) {
       const actualState = this.route.snapshot.queryParams.state;
-      const expectedState = this.store.selectSnapshot(AuthState.githubState);
+      const expectedState = sessionStorage.getItem('gitHubState');
 
       if (actualState !== expectedState) {
         this.router.navigate(['/account/github/invalid']);
@@ -98,13 +98,12 @@ export class GithubLoginComponent implements OnInit {
       client_id: environment.githubClientId,
       redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=${fromGlint}`),
       scope: encodeURIComponent(fromGlint ? 'repo user:email' : 'user:email'),
-      state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
+      state: window.crypto.randomUUID()
     };
     /* eslint-enable @typescript-eslint/naming-convention */
 
-    this.store.dispatch(new UpdateGithubState(queryParams.state)).subscribe(() => {
-      window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
-    });
+    sessionStorage.setItem('gitHubState', queryParams.state);
+    window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
   }
 
   private loggedIn(code: string, fromGlint: boolean) {
@@ -153,13 +152,12 @@ export class GithubLoginComponent implements OnInit {
       client_id: environment.githubClientId,
       redirect_uri: encodeURIComponent(`${location.origin}/account/github/login?glint=true&integration=true`),
       scope: encodeURIComponent('repo user:email'),
-      state: [...Array(30)].map(() => Math.random().toString(36)[2] || '0').join('')
+      state: window.crypto.randomUUID()
     };
     /* eslint-enable @typescript-eslint/naming-convention */
 
-    this.store.dispatch(new UpdateGithubState(queryParams.state)).subscribe(() => {
-      window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
-    });
+    sessionStorage.setItem('gitHubState', queryParams.state);
+    window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
   }
 
   private integrated(code: string) {

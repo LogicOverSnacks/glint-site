@@ -20,29 +20,15 @@ export class UpdateUser {
   constructor(public user: UserVm | null) {}
 }
 
-export class UpdateGithubState {
-  static readonly type = '[Auth] UpdateGithubState';
-  constructor(public state: string | null) {}
-}
-
-export class UpdateGoogleState {
-  static readonly type = '[Auth] UpdateGoogleState';
-  constructor(public state: string | null) {}
-}
-
 export interface IAuthStateModel {
   user: UserVm | null;
-  githubState: string | null;
-  googleState: string | null;
 }
 
 /* eslint-disable @typescript-eslint/member-ordering */
 @State<IAuthStateModel>({
   name: 'auth',
   defaults: {
-    user: null,
-    githubState: null,
-    googleState: null
+    user: null
   }
 })
 @Injectable()
@@ -50,16 +36,6 @@ export class AuthState {
   @Selector()
   static user(state: IAuthStateModel) {
     return state.user;
-  }
-
-  @Selector()
-  static githubState(state: IAuthStateModel) {
-    return state.githubState;
-  }
-
-  @Selector()
-  static googleState(state: IAuthStateModel) {
-    return state.googleState;
   }
 
   @Action(Logout)
@@ -116,22 +92,6 @@ export class AuthState {
     ctx.setState(state => ({
       ...state,
       user: action.user
-    }));
-  }
-
-  @Action(UpdateGithubState)
-  updateGithubState(ctx: StateContext<IAuthStateModel>, action: UpdateGithubState) {
-    ctx.setState(state => ({
-      ...state,
-      githubState: action.state
-    }));
-  }
-
-  @Action(UpdateGoogleState)
-  updateGoogleState(ctx: StateContext<IAuthStateModel>, action: UpdateGoogleState) {
-    ctx.setState(state => ({
-      ...state,
-      googleState: action.state
     }));
   }
 
