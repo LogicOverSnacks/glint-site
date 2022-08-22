@@ -4,8 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
 
+import { toQueryParamsString } from 'src/app/shared';
 import { ApiService } from 'src/app/shared/api.service';
+import { CryptoService } from 'src/app/shared/crypto.service';
 import { UpdateUser } from 'src/app/state/auth.state';
+
+interface IState {
+  glint: boolean;
+  random: string;
+}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,6 +64,11 @@ import { UpdateUser } from 'src/app/state/auth.state';
   `
 })
 export class GoogleLoginComponent implements OnInit {
+  private static readonly oauthClientId = '101399034999-nv17li8hq9qj71atv70aaovsehtvivbd.apps.googleusercontent.com';
+  private static readonly oauthUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
+  private static readonly redirectUri = `${location.origin}/account/google/login`;
+  private static readonly storageKey = 'googleState';
+
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   error = new BehaviorSubject('Sorry! Something went wrong.');
 
@@ -64,26 +76,78 @@ export class GoogleLoginComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private store: Store,
-    private api: ApiService
+    private api: ApiService,
+    private cryptoService: CryptoService
   ) {}
 
   ngOnInit() {
-    const fromGlint = this.route.snapshot.queryParams.glint === 'true';
     const code = this.route.snapshot.queryParams.code;
+    const error = this.route.snapshot.queryParams.error;
+
+    if (error) {
+      this.error.next(decodeURIComponent(error));
+      this.view.next('error');
+      return;
+    }
 
     if (code) {
-      const actualState = this.route.snapshot.queryParams.state;
-      const expectedState = sessionStorage.getItem('googleState');;
+      const actualStateHash = decodeURIComponent(this.route.snapshot.queryParams.state);
+      const expectedState = sessionStorage.getItem(GoogleLoginComponent.storageKey);
 
-      if (actualState !== expectedState) {
-        this.router.navigate(['/account/google/invalid']);
-        return;
-      }
+      this.cryptoService.digest(expectedState ?? undefined).then(expectedStateHash => {
+        if (!expectedState || actualStateHash !== expectedStateHash) {
+          this.router.navigate(['/account/invalid/google']);
+          return;
+        }
 
-      this.api.googleLogin(code, `${location.origin}/account/google/login?glint=${fromGlint}`)
+        const state = JSON.parse(expectedState) as IState;
+        sessionStorage.removeItem(GoogleLoginComponent.storageKey);
+
+        this.loggedIn(decodeURIComponent(code), state.glint);
+      });
+    } else {
+      this.login(!!this.route.snapshot.queryParams.glint);
+    }
+  }
+
+  private login(glint: boolean) {
+    const state = {
+      glint: glint,
+      random: this.cryptoService.generateUUID()
+    } as IState;
+    const stateString = JSON.stringify(state);
+    this.cryptoService.digest(stateString).then(stateHash => {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      const queryParams = {
+        client_id: GoogleLoginComponent.oauthClientId,
+        prompt: 'consent select_account',
+        redirect_uri: GoogleLoginComponent.redirectUri,
+        response_type: 'code',
+        scope: 'openid email',
+        state: stateHash
+      };
+      /* eslint-enable @typescript-eslint/naming-convention */
+
+      sessionStorage.setItem(GoogleLoginComponent.storageKey, stateString);
+      window.open(`${GoogleLoginComponent.oauthUrl}?${toQueryParamsString(queryParams)}`, '_self');
+    });
+  }
+
+  private loggedIn(code: string, glint: boolean) {
+    if (glint) {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      const queryParams = {
+        code: code,
+        redirect_uri: GoogleLoginComponent.redirectUri
+      };
+      /* eslint-enable @typescript-eslint/naming-convention */
+      window.open(`git-glint://oauth/google?${toQueryParamsString(queryParams)}`);
+      this.view.next('success');
+    } else {
+      this.api.googleLogin(code, GoogleLoginComponent.redirectUri)
         .pipe(
           catchError((response: HttpErrorResponse) => {
-            if (response.status === 403)
+            if (response.status === 400 || response.status === 403)
               this.error.next(response.error.message);
             else
               this.error.next('Sorry! Something went wrong.');
@@ -93,40 +157,10 @@ export class GoogleLoginComponent implements OnInit {
           })
         )
         .subscribe(({ user }) => {
-          if (fromGlint) {
-            /* eslint-disable @typescript-eslint/naming-convention */
-            const queryParams = {
-              email: user.email,
-              created_at: user.createdAt,
-              confirmed: user.confirmed,
-              access_token: user.accessToken,
-              refresh_token: user.refreshToken,
-              expires: user.expires
-            };
-            /* eslint-enable @typescript-eslint/naming-convention */
-            this.view.next('success');
-            window.open(`git-glint://oauth/google?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`);
-          } else {
-            this.store.dispatch(new UpdateUser(user)).subscribe(() => {
-              this.router.navigate(['/account']);
-            });
-          }
+          this.store.dispatch(new UpdateUser(user)).subscribe(() => {
+            this.router.navigate(['/account']);
+          });
         });
-    } else {
-      const baseUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
-      /* eslint-disable @typescript-eslint/naming-convention */
-      const queryParams = {
-        client_id: '101399034999-nv17li8hq9qj71atv70aaovsehtvivbd.apps.googleusercontent.com',
-        response_type: 'code',
-        scope: encodeURIComponent('openid email'),
-        redirect_uri: encodeURIComponent(`${location.origin}/account/google/login?glint=${fromGlint}`),
-        state: window.crypto.randomUUID(),
-        nonce: ''
-      };
-      /* eslint-enable @typescript-eslint/naming-convention */
-
-      sessionStorage.setItem('googleState', queryParams.state);
-      window.open(`${baseUrl}?${Object.entries(queryParams).map(([key, value]) => `${key}=${value}`).join('&')}`, '_self');
     }
   }
 }

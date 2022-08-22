@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -31,10 +32,32 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
       <h3>
         <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-        There was a problem authenticating with GitHub.<br>
+        There was a problem authenticating {{message}}.<br>
         Please click <a routerLink="/account/login">here</a> to try again.
       </h3>
     </app-container>
   `
 })
-export class GithubInvalidComponent {}
+export class InvalidLoginComponent {
+  message: string;
+
+  constructor(route: ActivatedRoute) {
+    switch (route.snapshot.params.type) {
+      case 'google':
+        this.message = 'with Google';
+        break;
+      case 'github':
+        this.message = 'with GitHub';
+        break;
+      case 'gitlab':
+        this.message = 'with GitLab';
+        break;
+      case 'bitbucket':
+        this.message = 'with Bitbucket';
+        break;
+      default:
+        this.message = '';
+        break;
+    }
+  }
+}
