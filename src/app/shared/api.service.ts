@@ -74,28 +74,30 @@ export class ApiService {
     ));
   }
 
-  githubLogin(code: string) {
+  gitHubLogin(code: string, redirectUri: string) {
     return this.http.post<{
-      githubToken: string;
-      githubId: number;
-      githubAvatarUrl: string;
-      githubProfileUrl: string;
+      gitHubToken: string;
+      gitHubId: number;
+      gitHubAvatarUrl: string;
+      gitHubProfileUrl: string;
       user: UserVm;
-    }>(`${environment.apiBaseUrl}/auth/github/login`, { code });
+    }>(`${environment.apiBaseUrl}/auth/github/login`, { code, redirectUri });
+  }
+
+  gitLabLogin(code: string, redirectUri: string) {
+    return this.http.post<{
+      gitLabAccessToken: string;
+      gitLabAccessTokenExpires: number;
+      gitLabRefreshToken: string;
+      gitLabId: number;
+      gitLabAvatarUrl: string;
+      gitLabProfileUrl: string;
+      user: UserVm;
+    }>(`${environment.apiBaseUrl}/auth/gitlab/login`, { code, redirectUri });
   }
 
   googleLogin(code: string, redirectUri: string) {
     return this.http.post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/google/login`, { code, redirectUri });
-  }
-
-  githubIntegration(code: string) {
-    return this.http.post<{
-      token: string;
-      id: number;
-      email: string | null;
-      avatarUrl: string;
-      profileUrl: string;
-    }>(`${environment.apiBaseUrl}/auth/github/integration`, { code });
   }
 
   private withRetries = <T>(method: () => Observable<T>) => {

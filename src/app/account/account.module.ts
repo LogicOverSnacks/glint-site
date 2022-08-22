@@ -12,6 +12,7 @@ import { EmailLostPasswordComponent } from './email/email-lost-password.componen
 import { EmailNotConfirmedComponent } from './email/email-not-confirmed.component';
 import { EmailRegisterComponent } from './email/email-register.component';
 import { GitHubLoginComponent } from './github/github-login.component';
+import { GitLabLoginComponent } from './gitlab/gitlab-login.component';
 import { GoogleLoginComponent } from './google/google-login.component';
 import { InvalidLoginComponent } from './invalid-login.component';
 import { LoginComponent } from './login.component';
@@ -35,6 +36,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
     EmailNotConfirmedComponent,
     EmailRegisterComponent,
     GitHubLoginComponent,
+    GitLabLoginComponent,
     GoogleLoginComponent,
     InvalidLoginComponent,
     LoginComponent,
