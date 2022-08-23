@@ -167,7 +167,13 @@ export class GitHubLoginComponent implements OnInit {
   }
 
   private integrated(code: string) {
-    window.open(`git-glint://integration/github?${toQueryParamsString({ code })}`, '_self');
+    /* eslint-disable @typescript-eslint/naming-convention */
+    const queryParams = {
+      code: code,
+      redirect_uri: GitHubLoginComponent.redirectUri
+    };
+    /* eslint-enable @typescript-eslint/naming-convention */
+    window.open(`git-glint://integration/github?${toQueryParamsString(queryParams)}`, '_self');
     this.view.next('success');
   }
 }

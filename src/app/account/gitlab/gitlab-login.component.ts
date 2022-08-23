@@ -126,7 +126,7 @@ export class GitLabLoginComponent implements OnInit {
         client_id: GitLabLoginComponent.oauthClientId,
         redirect_uri: GitLabLoginComponent.redirectUri,
         response_type: 'code',
-        scope: glint ? 'api email openid read_user write_repository' : 'email openid',
+        scope: glint ? 'api email openid read_user write_repository' : 'email openid read_user',
         state: stateHash
       };
       /* eslint-enable @typescript-eslint/naming-convention */
