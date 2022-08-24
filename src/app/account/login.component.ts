@@ -19,28 +19,19 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       .login-methods {
         display: inline-block;
         margin-bottom: 40px;
+        width: 180px;
 
         a {
           display: block;
           margin-bottom: 10px;
-
-          mat-icon {
-            margin-left: -11px;
-          }
+          text-align: left;
 
           mat-icon, svg {
-            margin-right: 10px;
+            margin-right: 15px;
           }
 
           span {
             font-size: 14px;
-          }
-
-          &.gitlab {
-            svg {
-              margin-left: -3px;
-              margin-right: 12px;
-            }
           }
         }
       }
@@ -58,11 +49,18 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         </svg>
         <span>with GitHub</span>
       </a>
-      <a [routerLink]="['/account/gitlab/login']" mat-stroked-button class="gitlab">
+      <a [routerLink]="['/account/gitlab/login']" mat-stroked-button>
         <svg version="1.1" width="22" height="22" aria-hidden="true" viewBox="0 0 380 380" fill="currentColor">
-          <g transform="scale(1.97) translate(-95, -100)"><path d="M282.83,170.73l-.27-.69-26.14-68.22a6.81,6.81,0,0,0-2.69-3.24,7,7,0,0,0-8,.43,7,7,0,0,0-2.32,3.52l-17.65,54H154.29l-17.65-54A6.86,6.86,0,0,0,134.32,99a7,7,0,0,0-8-.43,6.87,6.87,0,0,0-2.69,3.24L97.44,170l-.26.69a48.54,48.54,0,0,0,16.1,56.1l.09.07.24.17,39.82,29.82,19.7,14.91,12,9.06a8.07,8.07,0,0,0,9.76,0l12-9.06,19.7-14.91,40.06-30,.1-.08A48.56,48.56,0,0,0,282.83,170.73Z"></path></g>
+          <g transform="scale(1.97) translate(-93, -90)"><path d="M282.83,170.73l-.27-.69-26.14-68.22a6.81,6.81,0,0,0-2.69-3.24,7,7,0,0,0-8,.43,7,7,0,0,0-2.32,3.52l-17.65,54H154.29l-17.65-54A6.86,6.86,0,0,0,134.32,99a7,7,0,0,0-8-.43,6.87,6.87,0,0,0-2.69,3.24L97.44,170l-.26.69a48.54,48.54,0,0,0,16.1,56.1l.09.07.24.17,39.82,29.82,19.7,14.91,12,9.06a8.07,8.07,0,0,0,9.76,0l12-9.06,19.7-14.91,40.06-30,.1-.08A48.56,48.56,0,0,0,282.83,170.73Z"></path></g>
         </svg>
         <span>with GitLab</span>
+      </a>
+      <a [routerLink]="['/account/bitbucket/login']" mat-stroked-button>
+        <svg version="1.1" width="22" height="22" aria-hidden="true" viewBox="0 0 32 32" fill="currentColor">
+          <g transform="scale(1.2, 1.2) translate(-3, -3)"><path d="M26.9496 12.2332H19.7564L18.5575 19.3066H13.5622L7.68774 26.3C7.68774 26.3 7.96746 26.5398 8.36709 26.5398H24.0324C24.3921 26.5398 24.7118 26.2601 24.7917 25.9004L26.9496 12.2332Z" fill="url(#paint0_linear)"/><path d="M4.77041 5C4.29085 5 3.93123 5.43959 4.01115 5.87918L7.24813 25.7007C7.28809 25.9405 7.40799 26.1803 7.60781 26.3401C7.60781 26.3401 7.88753 26.5799 8.28716 26.5799L14.3615 19.3067H13.5223L12.2035 12.2333H19.7565H26.9498L27.9888 5.87918C28.0688 5.39963 27.7091 5 27.2295 5H4.77041Z" fill="currentColor"/><defs><linearGradient id="paint0_linear" x1="27.8984" y1="15.3873" x2="16.6183" y2="23.0226" gradientUnits="userSpaceOnUse"><stop offset="0.0718327" stop-color="currentColor" stop-opacity="0.4"/><stop offset="1" stop-color="currentColor"/></linearGradient></defs></g>
+        </svg>
+
+        <span>with Bitbucket</span>
       </a>
       <a [routerLink]="['/account/google/login']" mat-stroked-button>
         <svg version="1.1" width="22" height="22" aria-hidden="true" viewBox="0 0 32 32" fill="currentColor">

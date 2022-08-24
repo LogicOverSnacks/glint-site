@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { BitbucketLoginComponent } from './bitbucket/bitbucket-login.component';
 import { EmailChangePasswordComponent } from './email/email-change-password.component';
 import { EmailLoginComponent } from './email/email-login.component';
 import { EmailLostPasswordComponent } from './email/email-lost-password.component';
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'email/lost-password', component: EmailLostPasswordComponent, data: { title: 'Reset Password' } },
   { path: 'email/not-confirmed', component: EmailNotConfirmedComponent, data: { title: 'Email Not Confirmed' } },
   { path: 'email/register', component: EmailRegisterComponent, data: { title: 'Register' } },
+  { path: 'bitbucket/login', component: BitbucketLoginComponent, data: { title: 'Login with Bitbucket' } },
   { path: 'github/login', component: GitHubLoginComponent, data: { title: 'Login with GitHub' } },
   { path: 'gitlab/login', component: GitLabLoginComponent, data: { title: 'Login with GitLab' } },
   { path: 'google/login', component: GoogleLoginComponent, data: { title: 'Login with Google' } },

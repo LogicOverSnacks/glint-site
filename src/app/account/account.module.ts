@@ -6,6 +6,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SharedModule } from '../shared/shared.module';
 import { AccountRoutingModule } from './account-routing.module';
+import { BitbucketLoginComponent } from './bitbucket/bitbucket-login.component';
 import { EmailChangePasswordComponent } from './email/email-change-password.component';
 import { EmailLoginComponent } from './email/email-login.component';
 import { EmailLostPasswordComponent } from './email/email-lost-password.component';
@@ -30,6 +31,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
     AccountRoutingModule
   ],
   declarations: [
+    BitbucketLoginComponent,
     EmailChangePasswordComponent,
     EmailLoginComponent,
     EmailLostPasswordComponent,

@@ -8,6 +8,7 @@ import { toQueryParamsString } from 'src/app/shared';
 import { ApiService } from 'src/app/shared/api.service';
 import { CryptoService } from 'src/app/shared/crypto.service';
 import { UpdateUser } from 'src/app/state/auth.state';
+import { environment } from 'src/environments/environment';
 
 interface IState {
   glint: boolean;
@@ -43,7 +44,7 @@ interface IState {
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Login with GitLab</header>
+      <header class="mat-display-2 title">Login with Bitbucket</header>
 
       <ng-container [ngSwitch]="view | async">
         <h3 *ngSwitchCase="'init'">Loading...</h3>
@@ -65,11 +66,10 @@ interface IState {
     </app-container>
   `
 })
-export class GitLabLoginComponent implements OnInit {
-  private static readonly oauthClientId = '80ac91b1642437dd6793c05ad60615c0f3d15161703008d7c508d4042d408db5';
-  private static readonly oauthUrl = 'https://gitlab.com/oauth/authorize';
-  private static readonly redirectUri = `${location.origin}/account/gitlab/login`;
-  private static readonly storageKey = 'gitLabState';
+export class BitbucketLoginComponent implements OnInit {
+  private static readonly oauthUrl = 'https://bitbucket.org/site/oauth2/authorize';
+  private static readonly redirectUri = `${location.origin}/account/bitbucket/login`;
+  private static readonly storageKey = 'bitbucketState';
 
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   error = new BehaviorSubject('Sorry! Something went wrong.');
@@ -94,16 +94,16 @@ export class GitLabLoginComponent implements OnInit {
 
     if (code) {
       const actualStateHash = decodeURIComponent(this.route.snapshot.queryParams.state);
-      const expectedState = sessionStorage.getItem(GitLabLoginComponent.storageKey);
+      const expectedState = sessionStorage.getItem(BitbucketLoginComponent.storageKey);
 
       this.cryptoService.digest(expectedState ?? undefined).then(expectedStateHash => {
         if (!expectedState || actualStateHash !== expectedStateHash) {
-          this.router.navigate(['/account/invalid/gitlab']);
+          this.router.navigate(['/account/invalid/bitbucket']);
           return;
         }
 
         const state = JSON.parse(expectedState) as IState;
-        sessionStorage.removeItem(GitLabLoginComponent.storageKey);
+        sessionStorage.removeItem(BitbucketLoginComponent.storageKey);
 
         if (state.integration) this.integrated(decodeURIComponent(code));
         else this.loggedIn(decodeURIComponent(code), state.glint);
@@ -123,18 +123,18 @@ export class GitLabLoginComponent implements OnInit {
     this.cryptoService.digest(stateString).then(stateHash => {
       /* eslint-disable @typescript-eslint/naming-convention */
       const queryParams = {
-        client_id: GitLabLoginComponent.oauthClientId,
-        redirect_uri: GitLabLoginComponent.redirectUri,
+        client_id: environment.bitbucketClientId,
+        redirect_uri: BitbucketLoginComponent.redirectUri,
         response_type: 'code',
         scope: glint
-          ? 'api email openid read_user write_repository'
-          : 'email openid read_user',
+          ? 'account email pullrequest:write repository:admin repository:write'
+          : 'account email',
         state: stateHash
       };
       /* eslint-enable @typescript-eslint/naming-convention */
 
-      sessionStorage.setItem(GitLabLoginComponent.storageKey, stateString);
-      window.open(`${GitLabLoginComponent.oauthUrl}?${toQueryParamsString(queryParams)}`, '_self');
+      sessionStorage.setItem(BitbucketLoginComponent.storageKey, stateString);
+      window.open(`${BitbucketLoginComponent.oauthUrl}?${toQueryParamsString(queryParams)}`, '_self');
     });
   }
 
@@ -143,13 +143,13 @@ export class GitLabLoginComponent implements OnInit {
       /* eslint-disable @typescript-eslint/naming-convention */
       const queryParams = {
         code: code,
-        redirect_uri: GitLabLoginComponent.redirectUri
+        redirect_uri: BitbucketLoginComponent.redirectUri
       };
       /* eslint-enable @typescript-eslint/naming-convention */
-      window.open(`git-glint://oauth/gitlab?${toQueryParamsString(queryParams)}`, '_self');
+      window.open(`git-glint://oauth/bitbucket?${toQueryParamsString(queryParams)}`, '_self');
       this.view.next('success');
     } else {
-      this.api.gitLabLogin(code, GitLabLoginComponent.redirectUri)
+      this.api.bitbucketLogin(code, BitbucketLoginComponent.redirectUri)
         .pipe(
           catchError((response: HttpErrorResponse) => {
             if (response.status === 400 || response.status === 403)
@@ -173,10 +173,10 @@ export class GitLabLoginComponent implements OnInit {
     /* eslint-disable @typescript-eslint/naming-convention */
     const queryParams = {
       code: code,
-      redirect_uri: GitLabLoginComponent.redirectUri
+      redirect_uri: BitbucketLoginComponent.redirectUri
     };
     /* eslint-enable @typescript-eslint/naming-convention */
-    window.open(`git-glint://integration/gitlab?${toQueryParamsString(queryParams)}`, '_self');
+    window.open(`git-glint://integration/bitbucket?${toQueryParamsString(queryParams)}`, '_self');
     this.view.next('success');
   }
 }

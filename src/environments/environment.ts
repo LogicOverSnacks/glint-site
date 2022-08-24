@@ -5,6 +5,7 @@
 export const environment = {
   apiBaseUrl: 'http://localhost:8082',
   // apiBaseUrl: 'https://api.glint.info',
+  bitbucketClientId: 'e7MPMawmwdL9cyEesg',
   githubClientId: '59c4c02cc28713de691c',
   production: false
 };

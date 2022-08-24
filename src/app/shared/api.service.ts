@@ -74,6 +74,16 @@ export class ApiService {
     ));
   }
 
+  bitbucketLogin(code: string, redirectUri: string) {
+    return this.http.post<{
+      gitHubToken: string;
+      gitHubId: number;
+      gitHubAvatarUrl: string;
+      gitHubProfileUrl: string;
+      user: UserVm;
+    }>(`${environment.apiBaseUrl}/auth/bitbucket/login`, { code, redirectUri });
+  }
+
   gitHubLogin(code: string, redirectUri: string) {
     return this.http.post<{
       gitHubToken: string;
