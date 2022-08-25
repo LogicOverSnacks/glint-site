@@ -74,27 +74,27 @@ export class ApiService {
     ));
   }
 
-  bitbucketLogin(code: string, redirectUri: string) {
+  bitbucketLogin(code: string) {
     return this.http.post<{
       gitHubToken: string;
       gitHubId: number;
       gitHubAvatarUrl: string;
       gitHubProfileUrl: string;
       user: UserVm;
-    }>(`${environment.apiBaseUrl}/auth/bitbucket/login`, { code, redirectUri });
+    }>(`${environment.apiBaseUrl}/auth/bitbucket/login`, { code });
   }
 
-  gitHubLogin(code: string, redirectUri: string) {
+  gitHubLogin(code: string) {
     return this.http.post<{
       gitHubToken: string;
       gitHubId: number;
       gitHubAvatarUrl: string;
       gitHubProfileUrl: string;
       user: UserVm;
-    }>(`${environment.apiBaseUrl}/auth/github/login`, { code, redirectUri });
+    }>(`${environment.apiBaseUrl}/auth/github/login`, { code });
   }
 
-  gitLabLogin(code: string, redirectUri: string) {
+  gitLabLogin(code: string) {
     return this.http.post<{
       gitLabAccessToken: string;
       gitLabAccessTokenExpires: number;
@@ -103,11 +103,11 @@ export class ApiService {
       gitLabAvatarUrl: string;
       gitLabProfileUrl: string;
       user: UserVm;
-    }>(`${environment.apiBaseUrl}/auth/gitlab/login`, { code, redirectUri });
+    }>(`${environment.apiBaseUrl}/auth/gitlab/login`, { code });
   }
 
-  googleLogin(code: string, redirectUri: string) {
-    return this.http.post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/google/login`, { code, redirectUri });
+  googleLogin(code: string) {
+    return this.http.post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/google/login`, { code });
   }
 
   private withRetries = <T>(method: () => Observable<T>) => {

@@ -1,28 +1,29 @@
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { SharedModule } from '../shared/shared.module';
 import { AccountRoutingModule } from './account-routing.module';
-import { BitbucketLoginComponent } from './bitbucket/bitbucket-login.component';
 import { EmailChangePasswordComponent } from './email/email-change-password.component';
 import { EmailLoginComponent } from './email/email-login.component';
 import { EmailLostPasswordComponent } from './email/email-lost-password.component';
 import { EmailNotConfirmedComponent } from './email/email-not-confirmed.component';
 import { EmailRegisterComponent } from './email/email-register.component';
-import { GitHubLoginComponent } from './github/github-login.component';
-import { GitLabLoginComponent } from './gitlab/gitlab-login.component';
-import { GoogleLoginComponent } from './google/google-login.component';
 import { InvalidLoginComponent } from './invalid-login.component';
 import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
+import { OAuthLoginComponent } from './oauth-login.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
 @NgModule({
   imports: [
     FlexLayoutModule,
+    MatFormFieldModule,
+    MatInputModule,
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatTooltipModule,
@@ -31,18 +32,15 @@ import { UnauthorizedComponent } from './unauthorized.component';
     AccountRoutingModule
   ],
   declarations: [
-    BitbucketLoginComponent,
     EmailChangePasswordComponent,
     EmailLoginComponent,
     EmailLostPasswordComponent,
     EmailNotConfirmedComponent,
     EmailRegisterComponent,
-    GitHubLoginComponent,
-    GitLabLoginComponent,
-    GoogleLoginComponent,
     InvalidLoginComponent,
     LoginComponent,
     ManageAccountComponent,
+    OAuthLoginComponent,
     UnauthorizedComponent
   ]
 })

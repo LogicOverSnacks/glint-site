@@ -49,11 +49,15 @@ export class AppComponent extends BaseComponent implements OnInit {
       .subscribe(() => {
         let snapshot = router.routerState.snapshot.root;
         let title: string = snapshot.data?.title ?? '';
+        let params = snapshot.params;
 
         while (snapshot.firstChild) {
           snapshot = snapshot.firstChild;
           title = snapshot.data?.title ?? title;
+          params = { ...params, ...snapshot.params };
         }
+
+        title = Object.entries(params).reduce((acc, [key, value]) => acc.replace(`\${${key}}`, value), title);
 
         titleService.setTitle(title
           ? `${title} - Glint`
