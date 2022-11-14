@@ -12,17 +12,17 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^14.0.2",
-    "@angular/cdk": "^14.0.2",
-    "@angular/common": "^14.0.2",
-    "@angular/compiler": "^14.0.2",
-    "@angular/core": "^14.0.2",
-    "@angular/flex-layout": "^13.0.0-beta.38",
-    "@angular/forms": "^14.0.2",
-    "@angular/material": "^14.0.2",
-    "@angular/platform-browser": "^14.0.2",
-    "@angular/platform-browser-dynamic": "^14.0.2",
-    "@angular/router": "^14.0.2",
+    "@angular/animations": "^14.2.10",
+    "@angular/cdk": "^14.2.7",
+    "@angular/common": "^14.2.10",
+    "@angular/compiler": "^14.2.10",
+    "@angular/core": "^14.2.10",
+    "@angular/flex-layout": "^14.0.0-beta.41",
+    "@angular/forms": "^14.2.10",
+    "@angular/material": "^14.2.7",
+    "@angular/platform-browser": "^14.2.10",
+    "@angular/platform-browser-dynamic": "^14.2.10",
+    "@angular/router": "^14.2.10",
     "@ngxs/devtools-plugin": "~3.7.4",
     "@ngxs/storage-plugin": "~3.7.4",
     "@ngxs/store": "~3.7.4",
@@ -31,20 +31,20 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^14.0.2",
-    "@angular/cli": "^14.0.2",
-    "@angular/compiler-cli": "^14.0.2",
-    "@angular-eslint/builder": "~13.5.0",
-    "@angular-eslint/eslint-plugin": "~13.5.0",
-    "@angular-eslint/eslint-plugin-template": "~13.5.0",
-    "@angular-eslint/schematics": "~13.5.0",
-    "@angular-eslint/template-parser": "~13.5.0",
+    "@angular-devkit/build-angular": "^14.2.9",
+    "@angular/cli": "^14.2.9",
+    "@angular/compiler-cli": "^14.2.10",
+    "@angular-eslint/builder": "~14.1.2",
+    "@angular-eslint/eslint-plugin": "~14.1.2",
+    "@angular-eslint/eslint-plugin-template": "~14.1.2",
+    "@angular-eslint/schematics": "~14.1.2",
+    "@angular-eslint/template-parser": "~14.1.2",
     "@types/jasmine": "~4.0.3",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.28.0",
-    "@typescript-eslint/parser": "^5.28.0",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.36.2",
     "env-cmd": "^10.1.0",
-    "eslint": "^8.18.0",
+    "eslint": "^8.23.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.3.3",
     "eslint-plugin-prefer-arrow": "^1.2.3",
@@ -56,16 +56,5 @@
     "karma-jasmine-html-reporter": "~1.7.0",
     "typescript": "~4.6.2",
     "user-agent-data-types": "~0.3.0"
-  },
-  "overrides": {
-    "@angular/flex-layout": {
-      "@angular/cdk": "^14.0.2",
-      "@angular/common": "^14.0.2",
-      "@angular/core": "^14.0.2",
-      "@angular/platform-browser": "^14.0.2"
-    },
-    "@angular-eslint/schematics": {
-      "@angular/cli": "^14.0.2"
-    }
   }
 }
