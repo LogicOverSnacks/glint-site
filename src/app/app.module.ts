@@ -14,6 +14,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { MarkdownModule } from 'ngx-markdown';
 
 import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -62,6 +63,7 @@ import { TermsComponent } from './terms/terms.component';
     NgxsReduxDevtoolsPluginModule.forRoot({
       disabled: environment.production
     }),
+    MarkdownModule.forRoot(),
 
     AppRoutingModule,
     SharedModule
