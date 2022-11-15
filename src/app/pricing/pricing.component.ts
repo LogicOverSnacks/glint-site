@@ -87,7 +87,7 @@ import { AuthState, Logout } from '../state/auth.state';
 
         <ul class="features">
           <li class="item"><mat-icon>public</mat-icon>Work with public &amp; private repositories</li>
-          <li class="item"><mat-icon>tab</mat-icon>Two tabs</li>
+          <li class="item"><mat-icon>tab</mat-icon>Use up to two tabs simultaneously</li>
           <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
           <li class="item"><mat-icon>difference</mat-icon>View diffs with full syntax highlighting</li>
           <li class="item"><mat-icon>build</mat-icon>Resolve merge conflicts</li>
@@ -99,19 +99,9 @@ import { AuthState, Logout } from '../state/auth.state';
           <li class="item"><mat-icon>key</mat-icon>Manage credentials</li>
           <li class="item"><mat-icon>group</mat-icon>Quickly switch profiles</li>
           <li class="item"><mat-icon>dark_mode</mat-icon>Dark theme</li>
+          <li class="item"><mat-icon>compress</mat-icon>Squash commits</li>
+          <li class="item"><mat-icon>description</mat-icon>Blame files</li>
           <!-- <li class="item">
-            <span matTooltip="Feature not yet available">
-              <mat-icon>compress</mat-icon>
-              <del>Squash commits</del>
-            </span>
-          </li>
-          <li class="item">
-            <span matTooltip="Feature not yet available">
-              <mat-icon>description</mat-icon>
-              <del>Blame files</del>
-            </span>
-          </li>
-          <li class="item">
             <span matTooltip="Feature not yet available">
               <mat-icon>undo</mat-icon>
               <del>Undo actions</del>
