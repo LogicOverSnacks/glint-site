@@ -57,7 +57,12 @@ export class AppComponent extends BaseComponent implements OnInit {
           params = { ...params, ...snapshot.params };
         }
 
-        title = Object.entries(params).reduce((acc, [key, value]) => acc.replace(`\${${key}}`, value), title);
+        title = Object.entries(params).reduce(
+          (acc, [key, value]) => acc
+            .replace(`\${toTitle(${key})}`, this.toTitle(value))
+            .replace(`\${${key}}`, value),
+          title
+        );
 
         titleService.setTitle(title
           ? `${title} - Glint`
@@ -79,4 +84,6 @@ export class AppComponent extends BaseComponent implements OnInit {
         this.store.dispatch(new Update(releases));
       });
   }
+
+  private toTitle = (value: string) => value.split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
 }

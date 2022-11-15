@@ -22,6 +22,7 @@ import { AppComponent } from './app.component';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
 import { ContactComponent } from './contact/contact.component';
+import { DocComponent } from './docs/doc.component';
 import { DocsComponent } from './docs/docs.component';
 import { DownloadComponent } from './download/download.component';
 import { EulaComponent } from './eula/eula.component';
@@ -72,6 +73,7 @@ import { TermsComponent } from './terms/terms.component';
     AppComponent,
     ConfirmEmailComponent,
     ContactComponent,
+    DocComponent,
     DocsComponent,
     DownloadComponent,
     EulaComponent,
