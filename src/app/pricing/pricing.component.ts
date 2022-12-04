@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, catchError, finalize, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, map, Observable, startWith, throwError } from 'rxjs';
 
 import { ApiService } from '../shared/api.service';
 import { CurrencyService } from '../shared/currency.service';
@@ -35,6 +36,24 @@ import { AuthState, Logout } from '../state/auth.state';
         margin-bottom: 20px;
         font-family: 'Alegreya Sans SC', sans-serif;
         letter-spacing: 0.1rem;
+      }
+
+      .price {
+        line-height: 32px;
+
+        mat-form-field {
+          width: 75px;
+
+          ::ng-deep {
+            .mat-form-field-wrapper {
+              margin-bottom: -1.25em;
+            }
+
+            .mat-form-field-infix {
+              border-top: none;
+            }
+          }
+        }
       }
 
       .purchase-btn {
@@ -124,7 +143,15 @@ import { AuthState, Logout } from '../state/auth.state';
       <mat-card class="premium" fxFlex="45">
         <h2 class="mat-display-1">Premium</h2>
 
-        <h3 class="price">{{price}} / user / month</h3>
+        <h3 class="price">
+          {{price | async}} /
+          <mat-form-field>
+            <mat-select [formControl]="frequencyControl">
+              <mat-option value="month">Month</mat-option>
+              <mat-option value="year">Year</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </h3>
 
         <button class="purchase-btn" mat-stroked-button color="accent" (click)="buyLicense()">
           Buy License
@@ -154,7 +181,8 @@ import { AuthState, Logout } from '../state/auth.state';
 })
 export class PricingComponent {
   purchaseError = new BehaviorSubject<string | null>(null);
-  price: string;
+  price: Observable<string>;
+  frequencyControl = new FormControl<'month' | 'year'>('year', { nonNullable: true });
 
   private processing = false;
   private currency: 'GBP' | 'EUR' | 'USD';
@@ -166,9 +194,14 @@ export class PricingComponent {
     currencyService: CurrencyService
   ) {
     this.currency = currencyService.getCurrency();
-    this.price = this.currency === 'GBP' ? '£4'
-      : this.currency === 'EUR' ? '€4.50'
-      : '$4.50';
+    this.price = this.frequencyControl.valueChanges.pipe(
+      startWith(this.frequencyControl.value),
+      map(frequency =>
+        this.currency === 'GBP' ? frequency === 'month' ? '£4' : '£35'
+        : this.currency === 'EUR' ? frequency === 'month' ? '€4' : '€35'
+        : frequency === 'month' ? '$4' : '$35'
+      )
+    );
   }
 
   buyLicense() {
@@ -197,7 +230,7 @@ export class PricingComponent {
 
     this.processing = true;
 
-    this.api.purchaseSubscriptions(1, true, this.currency)
+    this.api.purchaseSubscriptions(1, true, this.currency, this.frequencyControl.value)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'

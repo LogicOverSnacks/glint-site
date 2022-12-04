@@ -85,5 +85,13 @@ export class AppComponent extends BaseComponent implements OnInit {
       });
   }
 
-  private toTitle = (value: string) => value.split('-').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+  private toTitle = (value: string) => value
+    .split('-')
+    .map(text => text
+      .split('_')
+      .map(word => word[0].toUpperCase() + word.slice(1))
+      .join(' ')
+    )
+    .reverse()
+    .join(' - ');
 }

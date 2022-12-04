@@ -29,12 +29,12 @@
           </span>
 
           <button type="button"
-            *ngIf="false || !yourSubscription"
+            *ngIf="!yourSubscription"
             mat-stroked-button
             class="upgrade-btn"
             color="accent"
             matTooltip="Click to purchase a subscription"
-            (click)="purchase(1, true)"
+            (click)="purchase(1, 'year', true)"
           >Upgrade</button>
         </div>
 
@@ -65,8 +65,8 @@
           Subscriptions purchased: <span class="highlight">{{totalPurchased}}</span>
         </h3>
 
-        <div class="right" [ngStyle.gt-xs]="{ 'margin-left': '10px' }">
-          <mat-form-field>
+        <div class="right">
+          <mat-form-field class="quantity-form-field">
             <mat-label>Quantity</mat-label>
             <input matInput
               type="number"
@@ -89,13 +89,20 @@
               Must be less than 100
             </mat-error>
           </mat-form-field>
+          <mat-form-field class="renew-form-field">
+            <mat-label>Renew</mat-label>
+            <mat-select [formControl]="frequencyControl">
+              <mat-option value="month">Monthly</mat-option>
+              <mat-option value="year">Yearly</mat-option>
+            </mat-select>
+          </mat-form-field>
           <button type="button"
             mat-stroked-button
             class="teammate-purchase-btn"
             color="accent"
             matTooltip="Click to purchase subscriptions that can be assigned to other users"
             [disabled]="!quantityControl.value || quantityControl.invalid"
-            (click)="purchase(quantityControl.value, false)"
+            (click)="purchase(quantityControl.value, frequencyControl.value, false)"
           >Purchase</button>
         </div>
       </div>

@@ -3,6 +3,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
@@ -25,6 +26,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
     MatSnackBarModule,
     MatTooltipModule,
 

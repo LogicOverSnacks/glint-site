@@ -32,10 +32,15 @@ export class ApiService {
     ));
   }
 
-  purchaseSubscriptions(quantity: number, forSelf: boolean, currency: 'GBP' | 'EUR' | 'USD'): Observable<string | null> {
-    const priceId = currency === 'GBP' ? 'price_1L8jX9DHQ0P4M2Jef54yz8Vf'
-      : currency === 'EUR' ? 'price_1LBiVnDHQ0P4M2JeF1YU18pY'
-      : 'price_1LBiVPDHQ0P4M2JeZTmkJwdu';
+  purchaseSubscriptions(
+    quantity: number,
+    forSelf: boolean,
+    currency: 'GBP' | 'EUR' | 'USD',
+    frequency: 'month' | 'year' = 'month'
+  ): Observable<string | null> {
+    const priceId = currency === 'GBP' ? frequency === 'month' ? 'price_1L8jX9DHQ0P4M2Jef54yz8Vf' : 'price_1MADpLDHQ0P4M2JeYpMnekbG'
+      : currency === 'EUR' ? frequency === 'month' ? 'price_1LBiVnDHQ0P4M2JeF1YU18pY' : 'price_1MAFDnDHQ0P4M2Jekbgap1ci'
+      : frequency === 'month' ? 'price_1LBiVPDHQ0P4M2JeZTmkJwdu' : 'price_1MAFDdDHQ0P4M2Je55BFMpnA';
 
     return this.withRetries(() => this.http
       .post<{ url: string; }>(

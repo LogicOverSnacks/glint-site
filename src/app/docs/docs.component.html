@@ -1,0 +1,47 @@
+<app-container fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="40px" fxLayoutGap.lt-xl="20px">
+  <div class="side-menu" [ngStyle.gt-sm]="{ width: '200px' }">
+    <div class="fixed-container" [ngStyle.gt-sm]="{ position: 'fixed', width: '200px' }">
+      <mat-expansion-panel fxHide fxShow.lt-md [expanded]="false">
+        <mat-expansion-panel-header>Topics</mat-expansion-panel-header>
+        <ng-container *ngTemplateOutlet="topicsTemplate"></ng-container>
+      </mat-expansion-panel>
+      <div fxHide.lt-md fxShow>
+        <ng-container *ngTemplateOutlet="topicsTemplate"></ng-container>
+      </div>
+
+      <ng-template #topicsTemplate>
+        <mat-accordion displayMode="flat" @null>
+          <mat-expansion-panel *ngFor="let topic of topics; let first = first" [expanded]="first" routerLinkActive="active">
+            <mat-expansion-panel-header>{{topic.title}}</mat-expansion-panel-header>
+            <ul class="articles-list">
+              <li *ngFor="let article of topic.articles">
+                <a [routerLink]="'/docs/' + article.file" routerLinkActive="active">{{article.title}}</a>
+                <ul *ngIf="(route.paramMap | async)?.get('file') === article.file" class="toc">
+                  <li *ngFor="let heading of headings | async; trackBy: trackByHeading">
+                    <a routerLink="." [fragment]="heading.id" [class.active]="heading.active">{{heading.title}}</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </ng-template>
+    </div>
+  </div>
+  <article>
+    <mat-spinner *ngIf="loading | async"></mat-spinner>
+    <markdown #markdown [data]="(article | async) ?? undefined" (ready)="loaded()" (click)="markdownClicked($event)"></markdown>
+  </article>
+</app-container>
+<!-- <mat-form-field floatLabel="always">
+  <mat-label>Search</mat-label>
+  <input type="text" matInput [formControl]="search" placeholder="Search...">
+  <button type="button"
+    matSuffix
+    mat-icon-button
+    (click)="search.setValue(null)"
+    matTooltip="Clear"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field> -->

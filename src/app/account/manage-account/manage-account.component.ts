@@ -33,6 +33,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   processing = new BehaviorSubject(false);
   processingAssignedSubscription: Record<string, boolean> = {};
   quantityControl = new FormControl<number | null>(null, [Validators.min(1), Validators.max(99)]);
+  frequencyControl = new FormControl<'month' | 'year'>('year', { nonNullable: true });
   assignEmailControl = new FormControl<string | null>(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
   manageError = new BehaviorSubject<string | null>(null);
@@ -95,12 +96,12 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     }
   }
 
-  purchase(quantity: number | null, forSelf: boolean) {
+  purchase(quantity: number | null, frequency: 'month' | 'year', forSelf: boolean) {
     if (this.processing.value || !quantity) return;
 
     this.processing.next(true);
 
-    this.api.purchaseSubscriptions(quantity, forSelf, this.currency)
+    this.api.purchaseSubscriptions(quantity, forSelf, this.currency, frequency)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'

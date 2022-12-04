@@ -108,18 +108,32 @@ main {
     justify-content: space-between;
     align-items: baseline;
     margin-bottom: 20px;
+    column-gap: 40px;
+
+    .left {
+      flex: 0 0 auto;
+    }
 
     .right {
-      flex-shrink: 0;
+      width: 100%;
+      flex: 1 1 auto;
+      max-width: 440px;
+      display: flex;
+      gap: 10px;
     }
 
     .highlight {
       color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
     }
 
-    mat-form-field {
-      margin: 0 5px;
-      width: 160px;
+    .quantity-form-field {
+      width: 75px;
+      flex: 5 1 auto;
+    }
+
+    .renew-form-field {
+      width: 80px;
+      flex: 1 1 auto;
     }
 
     .info-icon {
@@ -128,7 +142,8 @@ main {
     }
 
     .teammate-purchase-btn {
-      margin-left: 10px;
+      flex: 0 0 auto;
+      height: 36px;
     }
   }
 

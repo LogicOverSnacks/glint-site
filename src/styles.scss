@@ -9,3 +9,8 @@ a { color: unset; text-decoration: unset; }
 @include mat.core(theme.$app-typography);
 @include mat.core-theme(theme.$app-theme);
 @include mat.all-component-themes(theme.$app-theme);
+
+// TODO: remove this when https://github.com/angular/components/issues/15326 is fixed
+html .mat-expansion-indicator::after {
+  transform: translateY(-2.8284px) rotate(45deg);
+}
