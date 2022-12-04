@@ -38,14 +38,10 @@
               }
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/prismjs/themes/prism-okaidia.css",
-              "node_modules/prismjs/plugins/command-line/prism-command-line.css"
+              "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/marked/marked.min.js",
-              "node_modules/prismjs/prism.js",
-              "node_modules/prismjs/plugins/command-line/prism-command-line.js"
+              "node_modules/marked/marked.min.js"
             ]
           },
           "configurations": {

@@ -4,8 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
 import { ContactComponent } from './contact/contact.component';
-import { DocsComponent } from './docs/docs.component';
-import { DocsResolver } from './docs/docs.resolver';
 import { DownloadComponent } from './download/download.component';
 import { EulaComponent } from './eula/eula.component';
 import { FaqComponent } from './faq/faq.component';
@@ -20,12 +18,7 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent, data: { title: 'Contact' } },
   { path: 'docs', pathMatch: 'full', redirectTo: 'docs/get_started' },
-  {
-    path: 'docs/:file',
-    component: DocsComponent,
-    data: { title: '${toTitle(file)} - Docs' },
-    resolve: { doc: DocsResolver }
-  },
+  { path: 'docs', loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule), data: { title: '${toTitle(file)} - Docs' } },
   { path: 'download', component: DownloadComponent, data: { title: 'Download' } },
   { path: 'eula', component: EulaComponent, data: { title: 'End User License Agreement' } },
   { path: 'faq', component: FaqComponent, data: { title: 'Frequently Asked Questions' } },

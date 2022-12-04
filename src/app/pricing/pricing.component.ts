@@ -121,19 +121,19 @@ import { AuthState, Logout } from '../state/auth.state';
           <li class="item"><mat-icon>compress</mat-icon>Squash commits</li>
           <li class="item"><mat-icon>description</mat-icon>Blame files</li>
           <!-- <li class="item">
-            <span matTooltip="Feature not yet available">
+            <span>
               <mat-icon>undo</mat-icon>
               <del>Undo actions</del>
             </span>
           </li>
           <li class="item">
-            <span matTooltip="Feature not yet available">
+            <span>
               <mat-icon>touch_app</mat-icon>
               <del>Drag &amp; Drop</del>
             </span>
           </li>
           <li class="item">
-            <span matTooltip="Feature not yet available">
+            <span>
               <mat-icon>verified</mat-icon>
               <del>Commit signing</del>
             </span>
@@ -169,7 +169,7 @@ import { AuthState, Logout } from '../state/auth.state';
           </li>
           <li class="item"><mat-icon>tab</mat-icon>Unlimited tabs</li>
           <!-- <li class="item">
-            <span matTooltip="Feature not yet available">
+            <span>
               <mat-icon>light_mode</mat-icon>
               <del>Light theme</del>
             </span>

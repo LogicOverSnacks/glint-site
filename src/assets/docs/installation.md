@@ -7,11 +7,11 @@ By downloading and using Glint, you agree to the [license agreement](/eula), [te
 
 ### AppImage
 After downloading, the AppImage file must be given the executable flag:
-```
+```bash
 chmod +x Glint-v1.0.0.AppImage
 ```
 Additionally, the `libfuse2` package is required to run AppImage files. If not already installed on your distribution (e.g. Ubuntu 22.04) then install it with this command:
-```
+```bash
 apt install libfuse2
 ```
 After these steps have been completed, the AppImage should run.

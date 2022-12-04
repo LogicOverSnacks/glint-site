@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenavContent } from '@angular/material/sidenav';
@@ -16,9 +16,10 @@ import { Update } from './state/releases.state';
 import { UserVm } from './state/user.vm';
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  templateUrl: './app.component.html'
 })
 export class AppComponent extends BaseComponent implements OnInit {
   @Select(AuthState.user)
