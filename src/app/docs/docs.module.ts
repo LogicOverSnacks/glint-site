@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -11,7 +10,6 @@ import { DocsComponent } from './docs.component';
 
 @NgModule({
   imports: [
-    FlexLayoutModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatTooltipModule,

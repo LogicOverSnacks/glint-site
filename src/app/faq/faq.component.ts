@@ -1,56 +1,57 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { map } from 'rxjs';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
+    }
 
-      .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+    .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
 
-      .faq-panel {
-        .title {
-          margin-bottom: 40px;
-          text-align: center;
-        }
-
-        h3 {
-          font-size: 28px;
-          color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-          margin-top: 40px;
-        }
-
-        h4 {
-          font-size: 18px;
-          color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
-          margin-top: 15px;
-          margin-bottom: 10px;
-        }
-
-        &.small h3 {
-          font-size: 22px;
-        }
-      }
-
-      .enquire-panel {
-        margin-top: 60px;
+    .faq-panel {
+      .title {
+        margin-bottom: 40px;
         text-align: center;
-
-        .title {
-          margin-bottom: 40px;
-        }
       }
-    `
-  ],
+
+      h3 {
+        font-size: 28px;
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        margin-top: 40px;
+      }
+
+      h4 {
+        font-size: 18px;
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
+        margin-top: 15px;
+        margin-bottom: 10px;
+      }
+
+      &.small h3 {
+        font-size: 22px;
+      }
+    }
+
+    .enquire-panel {
+      margin-top: 60px;
+      text-align: center;
+
+      .title {
+        margin-bottom: 40px;
+      }
+    }
+  `],
   template: `
     <app-container>
-      <div class="faq-panel" ngClass.lt-sm="small">
-        <h2 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">FAQ</h2>
+      <div class="faq-panel" [class.small]="isXs | async">
+        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-display-1' : 'mat-display-2'">FAQ</h2>
 
         <h3>Is Glint free to use for commercial projects?</h3>
         <p>
@@ -80,10 +81,14 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
       </div>
 
       <div class="enquire-panel">
-        <h2 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Further Questions?</h2>
+        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-display-1' : 'mat-display-2'">Further Questions?</h2>
         <a routerLink="/contact" class="link">Click here to enquire</a>
       </div>
     </app-container>
   `
 })
-export class FaqComponent {}
+export class FaqComponent {
+  isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(({ matches }) => matches));
+
+  constructor(private breakpointObserver: BreakpointObserver) {}
+}

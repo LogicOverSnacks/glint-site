@@ -1,6 +1,6 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenavContent } from '@angular/material/sidenav';
 import { DomSanitizer, Title } from '@angular/platform-browser';
@@ -29,13 +29,16 @@ export class AppComponent extends BaseComponent implements OnInit {
   matSidenavContent!: MatSidenavContent;
 
   currentYear = new Date().getFullYear();
-  xsQuery = this.media.asObservable().pipe(map(changes => changes.some(change => change.mqAlias === 'xs' && change.matches)));
+
+  isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(({ matches }) => matches));
+  ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
+  ltLg = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium]).pipe(map(({ matches }) => matches));
 
   constructor(
     sanitizer: DomSanitizer,
     private http: HttpClient,
     iconRegistry: MatIconRegistry,
-    private media: MediaObserver,
+    private breakpointObserver: BreakpointObserver,
     router: Router,
     titleService: Title,
     private store: Store,

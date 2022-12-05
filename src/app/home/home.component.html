@@ -1,7 +1,7 @@
-<main>
+<main [class.xs]="isXs | async">
   <article>
     <app-container>
-      <h1 class="main-title" ngClass.gt-xs="mat-display-4" ngClass.lt-sm="mat-display-3">Glint</h1>
+      <h1 class="main-title" [ngClass]="(isXs | async) ? 'mat-display-3' : 'mat-display-4'">Glint</h1>
       <h2 class="sub-title">A Graphical interface for Git</h2>
       <div class="download-links" *ngIf="release | async as releaseData">
         <a [href]="releaseData.link">
@@ -18,16 +18,18 @@
         <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other">Other platform downloads</a>
       </div>
 
-      <a fxShow fxHide.lt-md="true" routerLink="/playground" class="screenshot"><img src="/assets/screenshot.png" alt="Screenshot of Glint"></a>
-      <img fxHide fxShow.lt-md="true" class="screenshot" src="/assets/screenshot.png" alt="Screenshot of Glint">
+      <a *ngIf="(ltMd | async) === false" routerLink="/playground" class="screenshot">
+        <img src="/assets/screenshot.png" alt="Screenshot of Glint">
+      </a>
+      <img *ngIf="ltMd | async" class="screenshot" src="/assets/screenshot.png" alt="Screenshot of Glint">
     </app-container>
   </article>
 
-  <article>
-    <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-      <div fxFlex="50">
-        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Sleek &amp; Powerful</h2>
-        <p class="text" [ngStyle.gt-xs]="{ 'margin-bottom': '40px' }">Perform complex tasks without breaking a sweat.</p>
+  <article class="banner">
+    <app-container>
+      <div>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Sleek &amp; Powerful</h2>
+        <p class="text" [style.margin-bottom.px]="(isXs | async) ? 20 : 40">Perform complex tasks without breaking a sweat.</p>
         <div class="feature-image" [@fade]="currentFeature | async">
           <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" alt="">
           <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="">
@@ -36,7 +38,7 @@
           <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="">
         </div>
       </div>
-      <div fxFlex="50">
+      <div>
         <ul (mouseleave)="currentFeature.next('none')">
           <li (mouseenter)="currentFeature.next('merge')">
             <mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously
@@ -57,14 +59,14 @@
     </app-container>
   </article>
 
-  <article>
-    <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-      <div fxFlex="50">
-        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Streamlined for performance</h2>
+  <article class="banner">
+    <app-container>
+      <div>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Streamlined for performance</h2>
         <!-- <p class="text">Work unconstrained. A smooth, drama-free experience.</p> -->
         <p class="text">Enjoy a smooth, effortless experience built from the ground up to run fast.</p>
       </div>
-      <div fxFlex="50">
+      <div>
         <ul>
           <li><mat-icon>dynamic_feed</mat-icon>Bloat-free</li>
           <li><mat-icon>hourglass_top</mat-icon>Minimal loading times</li>
@@ -74,13 +76,13 @@
     </app-container>
   </article>
 
-  <article>
-    <app-container fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-      <div fxFlex="50">
-        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Cross Platform</h2>
+  <article class="banner">
+    <app-container>
+      <div>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Cross Platform</h2>
         <p class="text">Works on all desktop platforms.</p>
       </div>
-      <div fxFlex="50">
+      <div>
         <ul>
           <li>
             <div class="os-icon"><svg><use xlink:href="assets/windows.svg#svg"></use></svg></div>
@@ -99,15 +101,15 @@
     </app-container>
   </article>
 
-  <article>
-    <app-container fxLayout="row-reverse" fxLayout.lt-sm="column" fxLayoutAlign="space-between" fxLayoutGap="20px">
-      <div fxFlex="50">
-        <h2 class="title" ngClass.gt-sm="mat-display-2" ngClass.lt-md="mat-display-1">Free to use</h2>
+  <article class="banner">
+    <app-container>
+      <div>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Free to use</h2>
         <p class="text">
           See the <a routerLink="/pricing" class="link">pricing</a> page for more details.
         </p>
       </div>
-      <div fxFlex="50">
+      <div>
         <ul>
           <li><mat-icon>money_off</mat-icon>All essential features completely free</li>
           <li><mat-icon fontSet="material-icons-outlined">timer_off</mat-icon>No time limits or trial periods</li>
@@ -117,7 +119,7 @@
     </app-container>
   </article>
 
-  <article class="download-section" [ngStyle.gt-xs]="{ 'padding-top': '30px' }">
+  <article class="download-section" [style.padding-top.px]="(isXs | async) ? 0 : 30">
     <app-download></app-download>
   </article>
 </main>

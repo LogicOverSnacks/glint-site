@@ -1,6 +1,7 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
-import { takeUntil } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
 
 import { BaseComponent } from '../shared';
 import { ReleasesState } from '../state/releases.state';
@@ -17,8 +18,12 @@ export class DownloadComponent extends BaseComponent implements OnInit {
   releaseLinkMac: string | undefined;
   releaseLinkLinux: string | undefined;
 
+  isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(({ matches }) => matches));
+  ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
+
   constructor(
     private cdr: ChangeDetectorRef,
+    private breakpointObserver: BreakpointObserver,
     private store: Store
   ) { super(); }
 

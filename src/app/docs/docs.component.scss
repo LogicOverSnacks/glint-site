@@ -7,8 +7,27 @@
   padding-top: 40px;
 }
 
+app-container {
+  display: flex;
+}
+
 .side-menu {
   flex: 0 0 auto;
+  width: 200px;
+
+  .fixed-container {
+    position: fixed;
+    width: 200px;
+  }
+
+  &.lt-md {
+    width: auto;
+
+    .fixed-container {
+      position: relative;
+      width: auto;
+    }
+  }
 
   mat-expansion-panel {
     &.active {

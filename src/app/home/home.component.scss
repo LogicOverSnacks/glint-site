@@ -11,8 +11,27 @@ article {
   background: mat.get-color-from-palette(theme.$app-primary-palette, 400);
   font-size: 18px;
 
+  &.banner {
+    app-container {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+      gap: 20px;
+
+      > div {
+        flex: 1 1 50%;
+      }
+    }
+  }
+
   &:nth-child(even) {
     background: mat.get-color-from-palette(map.get(map.get(theme.$app-theme, color), background), background);
+
+    &.banner {
+      app-container {
+        flex-direction: row;
+      }
+    }
   }
 
   .main-title {
@@ -128,4 +147,12 @@ article {
 
 .download-section {
   padding: 0;
+}
+
+main.xs {
+  .banner {
+    app-container {
+      flex-direction: column;
+    }
+  }
 }

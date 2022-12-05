@@ -1,11 +1,19 @@
 <header>
-  <mat-toolbar ngClass.lt-lg="smaller">
+  <mat-toolbar [class.smaller]="ltLg | async">
     <a class="home-link" routerLink="/">
       <mat-icon svgIcon="glint"></mat-icon>
       <span class="text">Glint</span>
     </a>
 
-    <ul class="links" fxShow fxHide.lt-md="true">
+    <div *ngIf="ltMd | async; else links">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <ng-template #links>
+    <ul class="links">
       <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
       <li><a routerLink="/docs" routerLinkActive="active">Docs</a></li>
       <li><a routerLink="/faq" routerLinkActive="active">FAQ</a></li>
@@ -14,7 +22,7 @@
       <li><a href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a></li>
     </ul>
 
-    <div class="end-links" fxShow fxHide.lt-md="true">
+    <div class="end-links">
       <a class="account-link" routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
       <a routerLink="/download">
         <button mat-flat-button class="download-button" color="accent">
@@ -23,23 +31,16 @@
         </button>
       </a>
     </div>
-
-    <div fxHide fxShow.lt-md="true">
-      <button mat-icon-button (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon>
-      </button>
-    </div>
-  </mat-toolbar>
+  </ng-template>
 </header>
 
-<mat-sidenav-container [ngStyle]="{ 'padding-top': '64px' }" [ngStyle.lt-sm]="{ 'padding-top': '56px' }">
+<mat-sidenav-container [style.padding-top.px]="(isXs | async) ? 56 : 64">
   <mat-sidenav
-    [fixedTopGap]="(xsQuery | async) ? 56 : 64"
+    [style.visible]="ltMd | async"
+    [fixedTopGap]="(isXs | async) ? 56 : 64"
     fixedInViewport
     position="end"
     mode="over"
-    fxHide
-    fxShow.lt-md="true"
     #sidenav
   >
     <mat-nav-list>

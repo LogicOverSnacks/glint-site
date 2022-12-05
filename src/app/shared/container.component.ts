@@ -1,5 +1,5 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding } from '@angular/core';
-import { MediaObserver } from '@angular/flex-layout';
 import { takeUntil } from 'rxjs';
 
 import { BaseComponent } from './base.component';
@@ -24,48 +24,46 @@ export class ContainerComponent extends BaseComponent {
 
   constructor(
     cdr: ChangeDetectorRef,
-    media: MediaObserver
+    breakpointObserver: BreakpointObserver
   ) {
     super();
 
-    media.asObservable()
+    breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge
+      ])
       .pipe(takeUntil(this.destroyed$))
-      .subscribe(changes => {
+      .subscribe(state => {
         this.hostMargin = '0 16px';
         this.hostWidth = 'auto';
 
-        for (const change of changes.reverse()) {
-          if (change.matches) {
-            switch (change.mqAlias) {
-              case 'lt-sm':
-              case 'xs':
-                this.hostMargin = '0 16px';
-                this.hostWidth = 'auto';
-                break;
-              case 'gt-xs':
-              case 'lt-md':
-              case 'sm':
-                this.hostMargin = '0 32px';
-                this.hostWidth = 'auto';
-                break;
-              case 'gt-sm':
-              case 'lt-lg':
-              case 'md':
-                this.hostMargin = '0 auto';
-                this.hostWidth = '895px';
-                break;
-              case 'gt-md':
-              case 'lt-xl':
-              case 'lg':
-                this.hostMargin = '0 192px';
-                this.hostWidth = 'auto';
-                break;
-              case 'gt-lg':
-              case 'xl':
-                this.hostMargin = '0 auto';
-                this.hostWidth = '1536px';
-                break;
-            }
+        const matched = Object.entries(state.breakpoints).find(([, matches]) => matches);
+        if (matched) {
+          switch (matched[0]) {
+            case Breakpoints.XSmall:
+              this.hostMargin = '0 16px';
+              this.hostWidth = 'auto';
+              break;
+            case Breakpoints.Small:
+              this.hostMargin = '0 32px';
+              this.hostWidth = 'auto';
+              break;
+            case Breakpoints.Medium:
+              this.hostMargin = '0 auto';
+              this.hostWidth = '895px';
+              break;
+            case Breakpoints.Large:
+              this.hostMargin = '0 192px';
+              this.hostWidth = 'auto';
+              break;
+            case Breakpoints.XLarge:
+              this.hostMargin = '0 auto';
+              this.hostWidth = '1536px';
+              break;
           }
         }
 

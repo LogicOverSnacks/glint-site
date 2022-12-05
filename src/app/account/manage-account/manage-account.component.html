@@ -12,9 +12,9 @@
     <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
   </header>
 
-  <main *ngIf="user | async as userData" fxLayout>
-    <div fxFlex="0" fxFlex.gt-md="15" fxFlex.gt-lg="20"></div>
-    <div fxFlex="100" fxFlex.gt-md="70" fxFlex.gt-lg="60">
+  <main *ngIf="user | async as userData" [class.lg]="isLg | async" [class.xl]="isXl | async">
+    <div class="left-gap"></div>
+    <div class="central">
       <div class="your-subscription">
         <div class="level">
           <h1 class="large">
@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <h1 class="manage-subscriptions-title" fxLayout.lt-sm="column">
+      <h1 class="manage-subscriptions-title" [style.flex-direction]="(isXs | async) ? 'column' : 'row'">
         <span>Manage Subscriptions</span>
 
         <button type="button"
@@ -60,7 +60,7 @@
         <mat-icon inline>warning</mat-icon> {{ error }}
       </div>
 
-      <div class="teammate-purchase" fxLayout.lt-sm="column">
+      <div class="teammate-purchase" [style.flex-direction]="(isXs | async) ? 'column' : 'row'">
         <h3 class="left">
           Subscriptions purchased: <span class="highlight">{{totalPurchased}}</span>
         </h3>
@@ -116,16 +116,16 @@
               class="expires-warning"
               matTooltip="This subscription is due to expire. After expiry you may assign the subscription to another user"
             >
-              <mat-icon inline fxHide.gt-xs>schedule</mat-icon>
-              <span fxHide.lt-sm>Expires on</span>
+              <mat-icon *ngIf="isXs | async" inline>schedule</mat-icon>
+              <span *ngIf="(isXs | async) === false">Expires on</span>
               {{ subscription.expiryDate | date }}
             </span>
             <span *ngIf="subscription.autoRenew && subscription.pausedUntil"
               class="expires-warning"
               matTooltip="Payment for this subscription has been paused"
             >
-              <mat-icon inline fxHide.gt-xs>pause</mat-icon>
-              <span fxHide.lt-sm>Paused until</span>
+              <mat-icon *ngIf="isXs | async" inline>pause</mat-icon>
+              <span *ngIf="(isXs | async) === false">Paused until</span>
               {{ subscription.pausedUntil | date }}
             </span>
             <button type="button"
@@ -186,6 +186,6 @@
         </div>
       </div>
     </div>
-    <div fxFlex="0" fxFlex.gt-md="15" fxFlex.gt-lg="20"></div>
+    <div class="right-gap"></div>
   </main>
 </app-container>

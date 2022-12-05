@@ -28,7 +28,24 @@ header {
 }
 
 main {
+  display: flex;
   text-align: left;
+
+  > .left-gap { flex: 1 1 0; }
+  > .central { flex: 1 1 100%; }
+  > .right-gap { flex: 1 1 0; }
+
+  &.lg {
+    > .left-gap { flex: 1 1 15%; }
+    > .central { flex: 1 1 70%; }
+    > .right-gap { flex: 1 1 15%; }
+  }
+
+  &.xl {
+    > .left-gap { flex: 1 1 20%; }
+    > .central { flex: 1 1 60%; }
+    > .right-gap { flex: 1 1 20%; }
+  }
 
   .your-subscription {
     margin-bottom: 60px;

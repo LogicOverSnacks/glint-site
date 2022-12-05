@@ -1,19 +1,12 @@
 <app-container>
-  <h2 class="title" ngClass.lt-sm="mat-display-1" ngClass.gt-xs="mat-display-2">Download Glint for free</h2>
+  <h2 class="title" [ngClass]="(isXs | async) ? 'mat-display-1' : 'mat-display-2'">Download Glint for free</h2>
 
   <h3 class="latest-release">Latest release: {{releaseName}}</h3>
 
-  <article fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="space-between">
-    <div class="windows"
-      fxFlex="33"
-      fxLayout="column"
-      fxLayout.lt-md="row"
-      fxLayoutAlign="start start"
-      fxLayoutAlign.lt-md="space-evenly center"
-      [ngStyle.lt-md]="{ 'margin-bottom': '20px' }"
-    >
-      <div class="os-icon" [ngStyle.gt-sm]="{ 'margin-bottom': '40px' }">
-        <svg [ngStyle.lt-sm]="{ width: '100px', height: '100px' }"><use xlink:href="assets/windows.svg#svg"></use></svg>
+  <article [class.xs]="isXs | async" [class.lt-md]="ltMd | async">
+    <div class="windows">
+      <div class="os-icon">
+        <svg><use xlink:href="assets/windows.svg#svg"></use></svg>
       </div>
       <a [href]="releaseLinkWindows" target="_blank" class="download-button">
         <button mat-stroked-button color="accent">
@@ -24,16 +17,9 @@
       </a>
     </div>
 
-    <div class="mac"
-      fxFlex="33"
-      fxLayout="column"
-      fxLayout.lt-md="row"
-      fxLayoutAlign="start center"
-      fxLayoutAlign.lt-md="space-evenly center"
-      [ngStyle.lt-md]="{ 'margin-bottom': '20px', 'margin-top': '20px' }"
-    >
-      <div class="os-icon" [ngStyle.gt-sm]="{ 'margin-bottom': '40px' }">
-        <svg [ngStyle.lt-sm]="{ width: '100px', height: '100px' }"><use xlink:href="assets/mac.svg#svg"></use></svg>
+    <div class="mac">
+      <div class="os-icon">
+        <svg><use xlink:href="assets/mac.svg#svg"></use></svg>
       </div>
       <a [href]="releaseLinkMac" target="_blank" class="download-button">
         <button mat-stroked-button color="accent">
@@ -44,16 +30,9 @@
       </a>
     </div>
 
-    <div class="linux"
-      fxFlex="33"
-      fxLayout="column"
-      fxLayout.lt-md="row"
-      fxLayoutAlign="start end"
-      fxLayoutAlign.lt-md="space-evenly center"
-      [ngStyle.lt-md]="{ 'margin-top': '20px' }"
-    >
-      <div class="os-icon" [ngStyle.gt-sm]="{ 'margin-bottom': '40px' }">
-        <svg [ngStyle.lt-sm]="{ width: '100px', height: '100px' }"><use xlink:href="assets/linux.svg#svg"></use></svg>
+    <div class="linux">
+      <div class="os-icon">
+        <svg><use xlink:href="assets/linux.svg#svg"></use></svg>
       </div>
       <div class="download-button">
         <a [href]="releaseLinkLinux" target="_blank">

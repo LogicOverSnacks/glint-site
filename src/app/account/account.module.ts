@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -22,7 +21,6 @@ import { UnauthorizedComponent } from './unauthorized.component';
 
 @NgModule({
   imports: [
-    FlexLayoutModule,
     MatFormFieldModule,
     MatInputModule,
     MatProgressSpinnerModule,

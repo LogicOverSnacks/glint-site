@@ -18,6 +18,21 @@
 }
 
 article {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .windows, .mac, .linux {
+    flex: 1 1 33%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .windows { align-items: flex-start; align-content: flex-start; }
+  .mac { align-items: center; align-content: center; }
+  .linux { align-items: flex-end; align-content: flex-end; }
+
   .download-button {
     button {
       display: block;
@@ -31,10 +46,42 @@ article {
   }
 
   .os-icon {
+    margin-bottom: 40px;
+
     > svg {
       width: 200px;
       height: 200px;
       color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+    }
+  }
+
+  &.lt-md {
+    flex-direction: column;
+
+    .windows, .mac, .linux {
+      flex: 1 1 33%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      align-items: center;
+      align-content: center;
+    }
+
+    .windows { margin-bottom: 20px; }
+    .mac { margin-top: 20px; margin-bottom: 20px; }
+    .linux { margin-top: 20px; }
+
+    .os-icon {
+      margin-bottom: 0;
+    }
+  }
+
+  &.xs {
+    .os-icon {
+      > svg {
+        width: 100px;
+        height: 100px;
+      }
     }
   }
 

@@ -1,4 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, filter, map, Observable, shareReplay } from 'rxjs';
@@ -33,7 +34,13 @@ export class HomeComponent implements OnInit {
     shareReplay(1)
   );
 
-  constructor(private store: Store) {}
+  isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(({ matches }) => matches));
+  ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private store: Store
+  ) {}
 
   ngOnInit() {
     this.release = this.store.select(ReleasesState.releases).pipe(

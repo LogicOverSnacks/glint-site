@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
@@ -5,7 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
@@ -39,10 +40,15 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   manageError = new BehaviorSubject<string | null>(null);
   refresh$ = new Subject<void>();
 
+  isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(state => state.matches));
+  isLg = this.breakpointObserver.observe([Breakpoints.Large]).pipe(map(state => state.matches));
+  isXl = this.breakpointObserver.observe([Breakpoints.XLarge]).pipe(map(state => state.matches));
+
   constructor(
     private cdr: ChangeDetectorRef,
     private route: ActivatedRoute,
     private router: Router,
+    private breakpointObserver: BreakpointObserver,
     private snackBar: MatSnackBar,
     private store: Store,
     private api: ApiService,

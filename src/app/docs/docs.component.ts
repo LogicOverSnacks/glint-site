@@ -1,4 +1,5 @@
 import { transition, trigger } from '@angular/animations';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -13,7 +14,7 @@ import {
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { ActivatedRoute, Router } from '@angular/router';
 import { unescape } from 'lodash-es';
-import { BehaviorSubject, takeUntil } from 'rxjs';
+import { BehaviorSubject, map, takeUntil } from 'rxjs';
 
 import { BaseComponent } from '../shared';
 
@@ -45,6 +46,9 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
   article = new BehaviorSubject('');
   headings = new BehaviorSubject<Heading[]>([]);
   loading = new BehaviorSubject(false);
+
+  isXl = this.breakpointObserver.observe([Breakpoints.XLarge]).pipe(map(state => state.matches));
+  ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(state => state.matches));
 
   /* eslint-disable quote-props */
   /* eslint-disable @typescript-eslint/naming-convention */
@@ -97,7 +101,8 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
   constructor(
     private cdr: ChangeDetectorRef,
     public route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
   ) { super(); }
 
   ngOnInit() {
@@ -145,8 +150,8 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
           const index = this.topics.findIndex(({ articles }) => articles.some(({ file }) => file === currentFile));
 
           if (index >= 0) {
-            this.expansionPanels.get(1 + index)?.open();
-            this.expansionPanels.get(1 + index + (this.expansionPanels.length - 1) / 2)?.open();
+            const ltMd = this.breakpointObserver.isMatched([Breakpoints.XSmall, Breakpoints.Small]);
+            this.expansionPanels.get(ltMd ? 1 + index : index)?.open();
           }
 
           this.cdr.detectChanges();
