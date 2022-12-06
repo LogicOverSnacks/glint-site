@@ -26,7 +26,7 @@
     "@ngxs/storage-plugin": "~3.7.4",
     "@ngxs/store": "~3.7.4",
     "lodash-es": "^4.17.21",
-    "ngx-markdown": "^14.0.1",
+    "ngx-markdown": "^15.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
