@@ -32,8 +32,10 @@ import { map } from 'rxjs';
       > a {
         font-size: 24px;
         line-height: 40px;
+        height: 50px;
         padding-top: 5px;
         padding-bottom: 5px;
+        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
 
         img {
           margin-right: 5px;
@@ -58,7 +60,7 @@ import { map } from 'rxjs';
   `],
   template: `
   <app-container>
-    <h1 class="title" [ngClass]="(isXs | async) ? 'mat-display-1' : 'mat-display-2'">Contact</h1>
+    <h1 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'">Contact</h1>
 
     <div class="discord-btn">
       <a target="_blank" href="https://discord.gg/wXv8WUeFYZ" mat-stroked-button>

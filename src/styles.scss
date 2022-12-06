@@ -23,3 +23,15 @@ a { color: unset; text-decoration: unset; }
 html .mat-expansion-indicator::after {
   transform: translateY(-2.8284px) rotate(45deg);
 }
+
+mat-snack-bar-container {
+  color: #000;
+
+  &.error {
+    --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-warn-palette, 300)};
+  }
+
+  &.success {
+    --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-primary-palette, 300)};
+  }
+}

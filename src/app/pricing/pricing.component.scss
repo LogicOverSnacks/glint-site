@@ -19,12 +19,12 @@ app-container {
 }
 
 .premium {
-  .mat-display-1 {
+  .mat-headline-4 {
     color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
   }
 }
 
-.mat-display-1 {
+.mat-headline-4 {
   margin-bottom: 20px;
   font-family: 'Alegreya Sans SC', sans-serif;
   letter-spacing: 0.1rem;
@@ -32,17 +32,21 @@ app-container {
 
 .price {
   line-height: 32px;
+  margin: 0;
 
   mat-form-field {
-    width: 75px;
+    margin-left: 10px;
+    width: 110px;
 
     ::ng-deep {
-      .mat-form-field-wrapper {
-        margin-bottom: -1.25em;
+      .mat-mdc-form-field-infix {
+        padding-top: 4px;
+        padding-bottom: 4px;
+        min-height: 32px;
       }
 
-      .mat-form-field-infix {
-        border-top: none;
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
       }
     }
   }
@@ -56,8 +60,8 @@ app-container {
 .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
 
 .features {
-  margin: 20px 0 0 0;
-  padding: 0;
+  margin: 0;
+  padding: 0 10px 10px 10px;
   list-style: none;
   text-align: left;
 

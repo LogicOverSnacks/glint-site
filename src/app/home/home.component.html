@@ -1,7 +1,7 @@
 <main [class.xs]="isXs | async">
   <article>
     <app-container>
-      <h1 class="main-title" [ngClass]="(isXs | async) ? 'mat-display-3' : 'mat-display-4'">Glint</h1>
+      <h1 class="main-title" [ngClass]="(isXs | async) ? 'mat-headline-2' : 'mat-headline-1'">Glint</h1>
       <h2 class="sub-title">A Graphical interface for Git</h2>
       <div class="download-links" *ngIf="release | async as releaseData">
         <a [href]="releaseData.link">
@@ -28,7 +28,7 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Sleek &amp; Powerful</h2>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Sleek &amp; Powerful</h2>
         <p class="text" [style.margin-bottom.px]="(isXs | async) ? 20 : 40">Perform complex tasks without breaking a sweat.</p>
         <div class="feature-image" [@fade]="currentFeature | async">
           <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" alt="">
@@ -62,7 +62,7 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Streamlined for performance</h2>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Streamlined for performance</h2>
         <!-- <p class="text">Work unconstrained. A smooth, drama-free experience.</p> -->
         <p class="text">Enjoy a smooth, effortless experience built from the ground up to run fast.</p>
       </div>
@@ -79,7 +79,7 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Cross Platform</h2>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Cross Platform</h2>
         <p class="text">Works on all desktop platforms.</p>
       </div>
       <div>
@@ -104,7 +104,7 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-display-1' : 'mat-display-2'">Free to use</h2>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Free to use</h2>
         <p class="text">
           See the <a routerLink="/pricing" class="link">pricing</a> page for more details.
         </p>

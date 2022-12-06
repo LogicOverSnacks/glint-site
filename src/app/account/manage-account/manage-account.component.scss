@@ -134,7 +134,7 @@ main {
     .right {
       width: 100%;
       flex: 1 1 auto;
-      max-width: 440px;
+      max-width: 500px;
       display: flex;
       gap: 10px;
     }
@@ -144,23 +144,17 @@ main {
     }
 
     .quantity-form-field {
-      width: 75px;
+      width: 110px;
       flex: 5 1 auto;
     }
 
     .renew-form-field {
-      width: 80px;
+      width: 110px;
       flex: 1 1 auto;
     }
 
     .info-icon {
       margin-right: 5px;
-      vertical-align: top;
-    }
-
-    .teammate-purchase-btn {
-      flex: 0 0 auto;
-      height: 36px;
     }
   }
 
@@ -185,8 +179,8 @@ main {
         text-overflow: ellipsis;
         overflow-x: hidden;
         white-space: nowrap;
-        height: 40px;
-        line-height: 40px;
+        height: 48px;
+        line-height: 48px;
 
         .email {
           overflow: hidden;
@@ -237,17 +231,5 @@ main {
         vertical-align: top;
       }
     }
-  }
-}
-
-::ng-deep snack-bar-container {
-  color: #000;
-
-  &.error {
-    background: mat.get-color-from-palette(theme.$app-warn-palette, 300);
-  }
-
-  &.success {
-    background: mat.get-color-from-palette(theme.$app-primary-palette, 300);
   }
 }

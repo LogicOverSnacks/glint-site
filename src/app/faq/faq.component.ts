@@ -51,7 +51,7 @@ import { map } from 'rxjs';
   template: `
     <app-container>
       <div class="faq-panel" [class.small]="isXs | async">
-        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-display-1' : 'mat-display-2'">FAQ</h2>
+        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'">FAQ</h2>
 
         <h3>Is Glint free to use for commercial projects?</h3>
         <p>
@@ -81,7 +81,7 @@ import { map } from 'rxjs';
       </div>
 
       <div class="enquire-panel">
-        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-display-1' : 'mat-display-2'">Further Questions?</h2>
+        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'">Further Questions?</h2>
         <a routerLink="/contact" class="link">Click here to enquire</a>
       </div>
     </app-container>

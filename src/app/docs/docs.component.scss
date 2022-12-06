@@ -70,14 +70,14 @@ article {
 
   markdown ::ng-deep {
     h1 {
-      @include mat.typography-level(theme.$app-typography, display-2);
+      @include mat.typography-level(theme.$app-typography, headline-3);
     }
     h2 {
-      @include mat.typography-level(theme.$app-typography, display-1);
+      @include mat.typography-level(theme.$app-typography, headline-4);
       margin-top: 40px;
     }
     h3 {
-      @include mat.typography-level(theme.$app-typography, headline);
+      @include mat.typography-level(theme.$app-typography, headline-5);
       margin-top: 40px;
     }
     h4 {
