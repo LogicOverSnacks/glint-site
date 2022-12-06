@@ -28,7 +28,7 @@ import { ActivatedRoute } from '@angular/router';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Invalid Login</header>
+      <header class="mat-headline-3 title">Invalid Login</header>
 
       <h3>
         <mat-icon color="warn" class="error-icon">warning</mat-icon><br>

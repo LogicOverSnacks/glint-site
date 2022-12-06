@@ -25,7 +25,7 @@ article {
   }
 
   &:nth-child(even) {
-    background: mat.get-color-from-palette(map.get(map.get(theme.$app-theme, color), background), background);
+    background: mat.get-color-from-palette(map.get(mat.get-color-config(theme.$app-theme), background), background);
 
     &.banner {
       app-container {
@@ -42,7 +42,7 @@ article {
     letter-spacing: normal;
     color: #000;
 
-    &.mat-display-3 {
+    &.mat-headline-2 {
       font-size: 70px;
       margin-left: -2px;
     }

@@ -35,7 +35,7 @@ import { BaseComponent } from '../../shared';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Email Not Confirmed</header>
+      <header class="mat-headline-3 title">Email Not Confirmed</header>
 
       <ng-container [ngSwitch]="view | async">
         <ng-container *ngSwitchCase="'init'">

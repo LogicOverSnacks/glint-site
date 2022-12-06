@@ -45,7 +45,7 @@ import { BaseComponent } from '../../shared';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Reset Password</header>
+      <header class="mat-headline-3 title">Reset Password</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="resetPassword()">

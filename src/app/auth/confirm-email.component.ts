@@ -41,7 +41,7 @@ import { BaseComponent } from '../shared';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Confirm Email</header>
+      <header class="mat-headline-3 title">Confirm Email</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="confirm()">

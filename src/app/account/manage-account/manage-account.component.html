@@ -2,7 +2,7 @@
 
 <app-container *ngIf="(processing | async) === false">
   <header>
-    <div class="mat-display-2 title">Your account</div>
+    <div class="mat-headline-3 title">Your account</div>
     <h3>You are logged in as: {{ (user | async)?.email }}</h3>
 
     <!-- <button type="button" mat-button>Change email</button> -->

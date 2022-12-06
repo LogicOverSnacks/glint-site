@@ -38,7 +38,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     `
   ],
   template: `
-    <header class="mat-display-2 title">Login</header>
+    <header class="mat-headline-3 title">Login</header>
     <div class="login-methods">
       <a [routerLink]="['/account/email/login']" mat-stroked-button>
         <mat-icon>mail</mat-icon> <span>with Email</span>

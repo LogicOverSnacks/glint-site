@@ -50,7 +50,7 @@ import { UserVm } from 'src/app/state/user.vm';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Change Password</header>
+      <header class="mat-headline-3 title">Change Password</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="change()">

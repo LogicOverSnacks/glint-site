@@ -16,7 +16,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
     `
   ],
   template: `
-    <header class="mat-display-2 title">403 Unauthorized</header>
+    <header class="mat-headline-3 title">403 Unauthorized</header>
     <h3>Sorry! You are not authorized to view this page. Click <a routerLink="/account/login">here</a> to login.</h3>
   `
 })

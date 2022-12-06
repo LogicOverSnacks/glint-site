@@ -1,6 +1,6 @@
 <app-container [style.flex-direction]="(ltMd | async) ? 'column-reverse' : 'row'">
-  <mat-card class="free">
-    <h2 class="mat-display-1">Basic</h2>
+  <mat-card appearance="outlined" class="free">
+    <h2 class="mat-headline-4">Basic</h2>
 
     <h3 class="price">Free</h3>
 
@@ -46,8 +46,8 @@
       </li> -->
     </ul>
   </mat-card>
-  <mat-card class="premium">
-    <h2 class="mat-display-1">Premium</h2>
+  <mat-card appearance="outlined" class="premium">
+    <h2 class="mat-headline-4">Premium</h2>
 
     <h3 class="price">
       {{price | async}} /

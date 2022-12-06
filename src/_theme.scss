@@ -1,6 +1,6 @@
 @use '@angular/material' as mat;
 
-$app-typography: mat.define-legacy-typography-config(
+$app-typography: mat.define-typography-config(
   $font-family: 'Montserrat'
 );
 

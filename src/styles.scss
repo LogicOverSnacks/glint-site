@@ -14,10 +14,10 @@ a { color: unset; text-decoration: unset; }
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
 //    `@include mat.legacy-typography-hierarchy(theme.$app-typography);`
-@include mat.all-legacy-component-typographies(theme.$app-typography);
-@include mat.legacy-core();
-@include mat.legacy-core-theme(theme.$app-theme);
-@include mat.all-legacy-component-themes(theme.$app-theme);
+@include mat.all-component-typographies(theme.$app-typography);
+@include mat.core();
+@include mat.core-theme(theme.$app-theme);
+@include mat.all-component-themes(theme.$app-theme);
 
 // TODO: remove this when https://github.com/angular/components/issues/15326 is fixed
 html .mat-expansion-indicator::after {

@@ -79,7 +79,7 @@ mat-toolbar {
 mat-sidenav-container {
   height: 100%;
 
-  .mat-list-item {
+  .mat-mdc-list-item {
     &.active {
       color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
     }

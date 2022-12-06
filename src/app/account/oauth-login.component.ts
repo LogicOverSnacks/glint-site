@@ -1,7 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatLegacyTooltip as MatTooltip } from '@angular/material/legacy-tooltip';
+import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
@@ -80,7 +80,7 @@ interface ProviderDetails {
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Login with {{type}}</header>
+      <header class="mat-headline-3 title">Login with {{type}}</header>
 
       <ng-container [ngSwitch]="view | async">
         <h3 *ngSwitchCase="'init'">Loading...</h3>

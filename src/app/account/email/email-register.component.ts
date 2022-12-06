@@ -42,7 +42,7 @@ import { environment } from 'src/environments/environment';
   ],
   template: `
     <app-container>
-      <header class="mat-display-2 title">Register</header>
+      <header class="mat-headline-3 title">Register</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="register()" [formGroup]="form">
