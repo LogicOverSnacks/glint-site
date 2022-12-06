@@ -3,29 +3,26 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
+    }
 
-      .title { margin-bottom: 50px; }
+    a {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+    }
 
-      a {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-      }
-
-      .error-icon {
-        font-size: 48px;
-        width: 48px;
-        height: 48px;
-      }
-    `
-  ],
+    .error-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  `],
   template: `
     <app-container>
       <header class="mat-headline-3 title">Invalid Login</header>

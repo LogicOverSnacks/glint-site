@@ -2,46 +2,43 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
+    }
 
-      .title { margin-bottom: 50px; }
+    .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
 
-      .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+    .login-methods {
+      margin: 40px auto;
+      width: 180px;
 
-      .login-methods {
-        display: inline-block;
-        margin-bottom: 40px;
-        width: 180px;
+      a {
+        margin-bottom: 10px;
+        justify-content: flex-start;
+        width: 100%;
 
-        a {
-          display: block;
-          margin-bottom: 10px;
-          text-align: left;
-
-          mat-icon, svg {
-            margin-right: 15px;
-          }
-
-          span {
-            font-size: 14px;
-          }
+        svg {
+          vertical-align: top;
+          height: 1.125rem;
+          width: 1.125rem;
+          margin-left: -4px;
+          margin-right: 8px;
         }
       }
-    `
-  ],
+    }
+  `],
   template: `
     <header class="mat-headline-3 title">Login</header>
     <div class="login-methods">
       <a [routerLink]="['/account/email/login']" mat-stroked-button>
-        <mat-icon>mail</mat-icon> <span>with Email</span>
+        <mat-icon>mail</mat-icon>
+        with Email
       </a>
       <a [routerLink]="['/account/login/github']" mat-stroked-button>
         <svg version="1.1" width="22" height="22" aria-hidden="true" viewBox="0 0 16 16" fill="currentColor">

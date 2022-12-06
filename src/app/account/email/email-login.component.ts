@@ -12,47 +12,52 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `.title { margin-bottom: 50px; }`,
-    `form {
+    }
+
+    form {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }`,
-    `.form-field {
+    }
+
+    .form-field {
       min-width: 250px;
       max-width: 400px;
       width: 100%;
       margin-bottom: 10px;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
-      a, .reset {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
-      }
-    `,
-    `.submit-btn {
+    }
+
+    a, .reset {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      cursor: pointer;
+    }
+
+    .submit-btn {
       margin-top: 10px;
       margin-bottom: 40px;
 
       mat-spinner {
         display: inline-block;
-        margin-right: 5px;
+        vertical-align: top;
+        margin-left: -4px;
+        margin-right: 8px;
       }
-    }`,
-    `.error-icon {
+    }
+
+    .error-icon {
       font-size: 48px;
       width: 48px;
       height: 48px;
-    }`
-  ],
+    }
+  `],
   template: `
     <app-container>
       <header class="mat-headline-3 title">Login</header>

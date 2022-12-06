@@ -45,7 +45,7 @@ import { BaseComponent } from '../shared';
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="confirm()">
-          <mat-form-field class="form-field">
+          <mat-form-field class="form-field" appearance="outline">
             <mat-label>Security code</mat-label>
             <input matInput required [formControl]="codeControl">
             <mat-error *ngIf="codeControl.hasError('pattern')">
@@ -84,7 +84,7 @@ import { BaseComponent } from '../shared';
           </h3>
 
           <form (ngSubmit)="requestNewCode()">
-            <mat-form-field class="form-field">
+            <mat-form-field class="form-field" appearance="outline">
               <mat-label>Email</mat-label>
               <input type="email" matInput required [formControl]="emailControl">
               <mat-error *ngIf="emailControl.hasError('email')">

@@ -7,39 +7,51 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `.title { margin-bottom: 50px; }`,
-    `form {
+    }
+
+    form {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }`,
-    `.form-field {
+    }
+
+    .form-field {
       min-width: 250px;
       max-width: 400px;
       width: 100%;
       margin-bottom: 10px;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
-      a, .reset {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
+    }
+
+    a, .reset {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      margin-top: 10px;
+
+      mat-spinner {
+        display: inline-block;
+        vertical-align: top;
+        margin-left: -4px;
+        margin-right: 8px;
       }
-    `,
-    `.submit-btn { margin-top: 10px; }`,
-    `.error-icon {
+    }
+
+    .error-icon {
       font-size: 48px;
       width: 48px;
       height: 48px;
-    }`
-  ],
+    }
+  `],
   template: `
     <app-container>
       <header class="mat-headline-3 title">Register</header>
@@ -81,7 +93,9 @@ import { environment } from 'src/environments/environment';
             </mat-error>
           </mat-form-field>
 
-          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">Create account</button>
+          <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">
+            <mat-spinner *ngIf="processing" diameter="18"></mat-spinner> Create account
+          </button>
         </form>
 
         <h3 *ngSwitchCase="'success'">

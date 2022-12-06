@@ -10,46 +10,49 @@ import { BaseComponent } from '../../shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `.title { margin-bottom: 50px; }`,
-    `form {
+    }
+
+    form {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }`,
-    `.form-field {
+    }
+
+    .form-field {
       min-width: 250px;
       max-width: 400px;
       width: 100%;
       margin-bottom: 10px;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
-      a, .reset {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
-      }
-    `,
-    `.submit-btn { margin-top: 10px; }`,
-    `.error-icon {
+    }
+
+    a, .reset {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      cursor: pointer;
+    }
+
+    .submit-btn { margin-top: 10px; }
+
+    .error-icon {
       font-size: 48px;
       width: 48px;
       height: 48px;
-    }`
-  ],
+    }
+  `],
   template: `
     <app-container>
       <header class="mat-headline-3 title">Reset Password</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="resetPassword()">
-          <mat-form-field class="form-field">
+          <mat-form-field class="form-field" appearance="outline">
             <mat-label>Email</mat-label>
             <input matInput required [formControl]="emailControl">
             <mat-error *ngIf="emailControl.hasError('email')">
