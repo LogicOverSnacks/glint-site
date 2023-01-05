@@ -4,7 +4,10 @@ The view will be shown whenever a file has been selected in the right-hand side 
 <img src="/assets/docs/ui-diff.png" class="fit-image">
 
 ## Layouts
-You can toggle the Diff View between 3 layouts:
+You can toggle the Diff View between 3 layouts by clicking the buttons in the top right:
 * Hunk : displays only the lines of the file that have changes.
 * Inline : displays the entire file.
 * Split : displays the old and new files side-by-side
+
+## Staging / Unstaging / Discarding Changes
+You can stage/unstage/discard individual lines by selecting them first, then clicking the buttons that appear in the top right.
