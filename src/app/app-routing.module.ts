@@ -7,10 +7,10 @@ import { ContactComponent } from './contact/contact.component';
 import { DownloadComponent } from './download/download.component';
 import { EulaComponent } from './eula/eula.component';
 import { FaqComponent } from './faq/faq.component';
+import { FeaturesComponent } from './features/features.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
-import { PricingComponent } from './pricing/pricing.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { TermsComponent } from './terms/terms.component';
 
@@ -22,8 +22,8 @@ const routes: Routes = [
   { path: 'download', component: DownloadComponent, data: { title: 'Download' } },
   { path: 'eula', component: EulaComponent, data: { title: 'End User License Agreement' } },
   { path: 'faq', component: FaqComponent, data: { title: 'Frequently Asked Questions' } },
+  { path: 'features', component: FeaturesComponent, data: { title: 'Features' } },
   { path: 'playground', component: PlaygroundComponent, data: { title: 'Playground' } },
-  { path: 'pricing', component: PricingComponent, data: { title: 'Pricing' } },
   { path: 'privacy', component: PrivacyComponent, data: { title: 'Privacy Policy' } },
   { path: 'terms', component: TermsComponent, data: { title: 'Terms and Conditions' } },
   { path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule), data: { title: 'Account' } },

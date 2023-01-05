@@ -12,10 +12,10 @@ import { AuthState, Logout } from '../state/auth.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrls: ['./pricing.component.scss'],
-  templateUrl: './pricing.component.html'
+  styleUrls: ['./features.component.scss'],
+  templateUrl: './features.component.html'
 })
-export class PricingComponent {
+export class FeaturesComponent {
   purchaseError = new BehaviorSubject<string | null>(null);
   price: Observable<string>;
   frequencyControl = new FormControl<'month' | 'year'>('year', { nonNullable: true });

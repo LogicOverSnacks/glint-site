@@ -25,10 +25,10 @@ import { ContactComponent } from './contact/contact.component';
 import { DownloadComponent } from './download/download.component';
 import { EulaComponent } from './eula/eula.component';
 import { FaqComponent } from './faq/faq.component';
+import { FeaturesComponent } from './features/features.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
-import { PricingComponent } from './pricing/pricing.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './state/auth.state';
@@ -74,10 +74,10 @@ import { TermsComponent } from './terms/terms.component';
     DownloadComponent,
     EulaComponent,
     FaqComponent,
+    FeaturesComponent,
     HomeComponent,
     PageNotFoundComponent,
     PlaygroundComponent,
-    PricingComponent,
     PrivacyComponent,
     ResetPasswordComponent,
     TermsComponent
