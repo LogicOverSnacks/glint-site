@@ -55,7 +55,7 @@ import { map } from 'rxjs';
 
         <h3>Is Glint free to use for commercial projects?</h3>
         <p>
-          Yes! You only need to pay for the listed premium features.
+          Yes, you only need to pay if you want the premium <a routerLink="/features" class="link">features</a>.
         </p>
 
         <h3>What operating systems does Glint work on?</h3>
