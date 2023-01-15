@@ -3,15 +3,18 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenavContent } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DomSanitizer, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { catchError, filter, map, Observable, takeUntil } from 'rxjs';
 
+import { environment } from 'src/environments/environment';
+import { CookieBannerComponent } from './cookie-banner.component';
 import { BaseComponent } from './shared/base.component';
 import { GithubService } from './shared/github.service';
 import { Release } from './shared/models/release';
-import { AuthState } from './state/auth.state';
+import { AuthState, ConsentToCookies } from './state/auth.state';
 import { Update } from './state/releases.state';
 import { UserVm } from './state/user.vm';
 
@@ -38,6 +41,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     sanitizer: DomSanitizer,
     private http: HttpClient,
     iconRegistry: MatIconRegistry,
+    snackBar: MatSnackBar,
     private breakpointObserver: BreakpointObserver,
     router: Router,
     titleService: Title,
@@ -46,11 +50,21 @@ export class AppComponent extends BaseComponent implements OnInit {
   ) {
     super();
 
+    const cookieConsent = store.selectSnapshot(AuthState.cookieConsent);
+    if (!cookieConsent) {
+      snackBar
+        .openFromComponent(CookieBannerComponent)
+        .afterDismissed()
+        .subscribe(dismiss => {
+          if (dismiss.dismissedByAction) store.dispatch(new ConsentToCookies());
+        });
+    }
+
     iconRegistry.addSvgIcon('glint', sanitizer.bypassSecurityTrustResourceUrl('/assets/glint.svg'));
 
     router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
+      .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
+      .subscribe(event => {
         let snapshot = router.routerState.snapshot.root;
         let title: string = snapshot.data?.title ?? '';
         let params = snapshot.params;
@@ -75,6 +89,9 @@ export class AppComponent extends BaseComponent implements OnInit {
 
         // manually scroll to top on route change due to https://github.com/angular/components/issues/4280
         this.matSidenavContent.scrollTo({ top: 0 });
+
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        gtag('config', environment.googleMeasurementId, { page_path: event.urlAfterRedirects });
       });
   }
 

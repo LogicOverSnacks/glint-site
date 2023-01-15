@@ -16,7 +16,6 @@ a { color: unset; text-decoration: unset; }
 //    `@include mat.legacy-typography-hierarchy(theme.$app-typography);`
 @include mat.all-component-typographies(theme.$app-typography);
 @include mat.core();
-@include mat.core-theme(theme.$app-theme);
 @include mat.all-component-themes(theme.$app-theme);
 
 // TODO: remove this when https://github.com/angular/components/issues/15326 is fixed

@@ -21,6 +21,7 @@
       "es2020"
     ],
     "types": [
+      "./node_modules/@types/gtag.js",
       "./node_modules/user-agent-data-types"
     ],
     "useDefineForClassFields": false

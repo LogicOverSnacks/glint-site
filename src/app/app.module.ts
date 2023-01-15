@@ -1,4 +1,5 @@
 import { LayoutModule } from '@angular/cdk/layout';
+import { PlatformLocation } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -9,9 +10,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule, Title } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { UrlHandlingStrategy } from '@angular/router';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -22,6 +25,8 @@ import { AppComponent } from './app.component';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
 import { ContactComponent } from './contact/contact.component';
+import { CookieBannerComponent } from './cookie-banner.component';
+import { CookiesComponent } from './cookies/cookies.component';
 import { DownloadComponent } from './download/download.component';
 import { EulaComponent } from './eula/eula.component';
 import { FaqComponent } from './faq/faq.component';
@@ -29,6 +34,7 @@ import { FeaturesComponent } from './features/features.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
+import { PreserveQueryParamsUrlHandlingStrategy } from './preserve-query-params-url-handling-strategy';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './state/auth.state';
@@ -50,6 +56,7 @@ import { TermsComponent } from './terms/terms.component';
     MatProgressSpinnerModule,
     MatSelectModule,
     MatSidenavModule,
+    MatSnackBarModule,
     MatToolbarModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([AuthState, ReleasesState], {
@@ -71,6 +78,8 @@ import { TermsComponent } from './terms/terms.component';
     AppComponent,
     ConfirmEmailComponent,
     ContactComponent,
+    CookieBannerComponent,
+    CookiesComponent,
     DownloadComponent,
     EulaComponent,
     FaqComponent,
@@ -83,7 +92,12 @@ import { TermsComponent } from './terms/terms.component';
     TermsComponent
   ],
   providers: [
-    Title
+    Title,
+    {
+      provide: UrlHandlingStrategy,
+      deps: [PlatformLocation],
+      useFactory: (platformLocation: PlatformLocation) => new PreserveQueryParamsUrlHandlingStrategy(platformLocation)
+    }
   ],
   bootstrap: [AppComponent]
 })

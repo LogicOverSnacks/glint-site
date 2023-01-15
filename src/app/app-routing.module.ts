@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ConfirmEmailComponent } from './auth/confirm-email.component';
 import { ResetPasswordComponent } from './auth/reset-password.component';
 import { ContactComponent } from './contact/contact.component';
+import { CookiesComponent } from './cookies/cookies.component';
 import { DownloadComponent } from './download/download.component';
 import { EulaComponent } from './eula/eula.component';
 import { FaqComponent } from './faq/faq.component';
@@ -17,6 +18,7 @@ import { TermsComponent } from './terms/terms.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'contact', component: ContactComponent, data: { title: 'Contact' } },
+  { path: 'cookies', component: CookiesComponent, data: { title: 'Cookie Policy' } },
   { path: 'docs', pathMatch: 'full', redirectTo: 'docs/get_started' },
   { path: 'docs', loadChildren: () => import('./docs/docs.module').then(m => m.DocsModule), data: { title: '${toTitle(file)} - Docs' } },
   { path: 'download', component: DownloadComponent, data: { title: 'Download' } },

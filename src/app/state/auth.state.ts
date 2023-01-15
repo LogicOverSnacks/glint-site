@@ -7,6 +7,10 @@ import { catchError, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserVm } from './user.vm';
 
+export class ConsentToCookies {
+  static readonly type = '[Auth] ConsentToCookies';
+}
+
 export class Logout {
   static readonly type = '[Auth] Logout';
 }
@@ -21,6 +25,7 @@ export class UpdateUser {
 }
 
 export interface IAuthStateModel {
+  cookieConsent: boolean;
   user: UserVm | null;
 }
 
@@ -28,14 +33,28 @@ export interface IAuthStateModel {
 @State<IAuthStateModel>({
   name: 'auth',
   defaults: {
+    cookieConsent: false,
     user: null
   }
 })
 @Injectable()
 export class AuthState {
   @Selector()
+  static cookieConsent(state: IAuthStateModel) {
+    return state.cookieConsent;
+  }
+
+  @Selector()
   static user(state: IAuthStateModel) {
     return state.user;
+  }
+
+  @Action(ConsentToCookies)
+  consentToCookies(ctx: StateContext<IAuthStateModel>, action: ConsentToCookies) {
+    ctx.setState(state => ({
+      ...state,
+      cookieConsent: true
+    }));
   }
 
   @Action(Logout)
