@@ -79,7 +79,7 @@ import { BaseComponent } from '../../shared';
           <h3>
             <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
             Sorry! Something went wrong.<br>
-            Please click <a [routerLink]="['/auth/lost-password']">here</a> to try again.<br>
+            Please click <a routerLink="/account/email/lost-password">here</a> to try again.<br>
             If the problem persists please <a routerLink="/contact">contact us</a>.
           </h3>
         </ng-container>

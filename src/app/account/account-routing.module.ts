@@ -10,17 +10,19 @@ import { InvalidLoginComponent } from './invalid-login.component';
 import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { OAuthLoginComponent } from './oauth-login.component';
+import { ReferralsComponent } from './referrals/referrals.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent, data: { title: 'Login' } },
   { path: 'email/change-password', component: EmailChangePasswordComponent, data: { title: 'Change Password' } },
   { path: 'email/login', component: EmailLoginComponent, data: { title: 'Login' } },
   { path: 'email/lost-password', component: EmailLostPasswordComponent, data: { title: 'Reset Password' } },
   { path: 'email/not-confirmed', component: EmailNotConfirmedComponent, data: { title: 'Email Not Confirmed' } },
   { path: 'email/register', component: EmailRegisterComponent, data: { title: 'Register' } },
+  { path: 'login', component: LoginComponent, data: { title: 'Login' } },
   { path: 'login/:type', component: OAuthLoginComponent, data: { title: 'Login with ${type}' } },
   { path: 'invalid/:type', component: InvalidLoginComponent, data: { title: 'Invalid Login' } },
+  { path: 'referrals', component: ReferralsComponent, data: { title: 'Referral Account' } },
   { path: 'unauthorized', component: UnauthorizedComponent, data: { title: 'Unauthorized' } },
   { path: '', component: ManageAccountComponent }
 ];

@@ -50,6 +50,9 @@ export class AppComponent extends BaseComponent implements OnInit {
   ) {
     super();
 
+    if (!environment.production)
+      (window as any)[`ga-disable-${environment.googleMeasurementId}`] = true;
+
     const cookieConsent = store.selectSnapshot(AuthState.cookieConsent);
     if (!cookieConsent) {
       snackBar

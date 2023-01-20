@@ -4,15 +4,21 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
 @Component({
   selector: 'app-cookie-banner',
   styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
     footer {
       padding: 0 8px 8px 8px;
 
       button {
-        --mat-mdc-snack-bar-button-color: var(--mdc-text-button-label-text-color, inherit);
         margin-right: 5px;
 
-        &:not(.mat-primary) {
-          --mat-mdc-snack-bar-button-color: #000;
+        &.details-btn {
+          --mat-mdc-snack-bar-button-color: var(--mdc-snackbar-supporting-text-color, inherit);
+        }
+
+        &.dismiss-btn {
+          --mat-mdc-snack-bar-button-color: #{mat.get-color-from-palette(theme.$app-primary-palette, 700)};
         }
 
         &:last-child {
@@ -26,8 +32,8 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar'
       This site uses cookies from Google to deliver its services and to analyze traffic.
     </div>
     <footer matSnackBarActions>
-      <button type="button" mat-button matSnackBarAction routerLink="/cookies">More Details</button>
-      <button type="button" mat-button matSnackBarAction color="primary" (click)="snackBarRef.dismissWithAction()">OK, got it</button>
+      <button type="button" mat-button matSnackBarAction class="details-btn" routerLink="/cookies">More Details</button>
+      <button type="button" mat-button matSnackBarAction class="dismiss-btn" (click)="snackBarRef.dismissWithAction()">OK, got it</button>
     </footer>
   `,
 })

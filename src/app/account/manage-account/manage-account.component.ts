@@ -107,7 +107,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
     this.processing.next(true);
 
-    this.api.purchaseSubscriptions(quantity, forSelf, this.currency, frequency)
+    this.api.purchaseSubscriptions(quantity, forSelf, this.currency, frequency, this.route.snapshot.queryParamMap.get('via') ?? undefined)
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'

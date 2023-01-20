@@ -17,6 +17,7 @@ import { InvalidLoginComponent } from './invalid-login.component';
 import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { OAuthLoginComponent } from './oauth-login.component';
+import { ReferralsComponent } from './referrals/referrals.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
 @NgModule({
@@ -41,6 +42,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
     LoginComponent,
     ManageAccountComponent,
     OAuthLoginComponent,
+    ReferralsComponent,
     UnauthorizedComponent
   ]
 })

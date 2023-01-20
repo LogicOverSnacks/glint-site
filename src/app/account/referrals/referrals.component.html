@@ -1,0 +1,44 @@
+<app-container>
+  <header class="mat-headline-3 title">Referral Account</header>
+  <ng-container [ngSwitch]="view | async">
+    <div *ngSwitchCase="'create'" class="create">
+      <button type="button" class="sign-up-btn" mat-stroked-button (click)="signUp()" [disabled]="processing | async">
+        <mat-spinner *ngIf="processing | async" diameter="18"></mat-spinner>
+        <span *ngIf="(processing | async) === false">Sign Up</span>
+      </button>
+
+      <p>
+        Sign Up for a referral account to start earning rewards! Earn 25% of subscriptions you refer.
+      </p>
+    </div>
+
+    <div *ngSwitchCase="'loading'" class="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+
+    <div *ngSwitchCase="'manage'" class="manage">
+      <mat-form-field class="referral-link" appearance="outline">
+        <mat-label>Referral Link</mat-label>
+        <input type="url" matInput readonly [value]="referralLink | async">
+        <mat-icon
+            matSuffix
+            (click)="copyReferralLink(tooltip)"
+            (mouseenter)="$event.stopImmediatePropagation()"
+            matTooltip="Link Copied!"
+            #tooltip="matTooltip"
+          >content_copy</mat-icon>
+        <mat-hint>You will be accredited when a user signs up using this link.</mat-hint>
+      </mat-form-field>
+
+      <button type="button" class="manage-btn" mat-stroked-button (click)="manage()" [disabled]="processing | async">
+        <mat-spinner *ngIf="processing | async" diameter="18"></mat-spinner>
+        <span *ngIf="(processing | async) === false">Manage</span>
+      </button>
+    </div>
+
+    <h3 *ngSwitchCase="'error'" class="errors">
+      <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
+      {{ error | async }}
+    </h3>
+  </ng-container>
+</app-container>

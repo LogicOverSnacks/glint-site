@@ -6,6 +6,7 @@ import { catchError, map, Observable, switchMap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthState, RefreshAccessToken } from 'src/app/state/auth.state';
 import { UserVm } from 'src/app/state/user.vm';
+import { GetReferralAccountResponse } from './models/referrals';
 import { GetSubscriptionsResponse } from './models/subscriptions';
 
 @Injectable({ providedIn: 'root' })
@@ -36,7 +37,8 @@ export class ApiService {
     quantity: number,
     forSelf: boolean,
     currency: 'GBP' | 'EUR' | 'USD',
-    frequency: 'month' | 'year' = 'month'
+    frequency: 'month' | 'year' = 'month',
+    via?: string
   ): Observable<string | null> {
     const priceId = currency === 'GBP' ? frequency === 'month' ? 'price_1L8jX9DHQ0P4M2Jef54yz8Vf' : 'price_1MADpLDHQ0P4M2JeYpMnekbG'
       : currency === 'EUR' ? frequency === 'month' ? 'price_1LBiVnDHQ0P4M2JeF1YU18pY' : 'price_1MAFDnDHQ0P4M2Jekbgap1ci'
@@ -45,7 +47,7 @@ export class ApiService {
     return this.withRetries(() => this.http
       .post<{ url: string; }>(
         `${environment.apiBaseUrl}/subscriptions/purchase`,
-        { priceId, quantity, forSelf },
+        { priceId, quantity, forSelf, via },
         { headers: this.getHeaders() }
       )
       .pipe(map(({ url }) => url))
@@ -113,6 +115,29 @@ export class ApiService {
 
   googleLogin(code: string) {
     return this.http.post<{ user: UserVm; }>(`${environment.apiBaseUrl}/auth/google/login`, { code });
+  }
+
+  getReferralAccount() {
+    return this.withRetries(() => this.http.get<GetReferralAccountResponse>(
+      `${environment.apiBaseUrl}/referrals`,
+      { headers: this.getHeaders() }
+    ));
+  }
+
+  manageReferralAccount() {
+    return this.withRetries(() => this.http.post<{ accountId: string; url: string; }>(
+      `${environment.apiBaseUrl}/referrals/manage`,
+      null,
+      { headers: this.getHeaders() }
+    ));
+  }
+
+  createReferralAccount() {
+    return this.withRetries(() => this.http.post<{ accountId: string; refersVia: string; url: string; }>(
+      `${environment.apiBaseUrl}/referrals/create`,
+      null,
+      { headers: this.getHeaders() }
+    ));
   }
 
   private withRetries = <T>(method: () => Observable<T>) => {

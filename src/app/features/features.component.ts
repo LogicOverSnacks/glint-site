@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, finalize, map, Observable, startWith, throwError } from 'rxjs';
 
@@ -26,6 +26,7 @@ export class FeaturesComponent {
   private currency: 'GBP' | 'EUR' | 'USD';
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
     private store: Store,
@@ -69,7 +70,13 @@ export class FeaturesComponent {
 
     this.processing = true;
 
-    this.api.purchaseSubscriptions(1, true, this.currency, this.frequencyControl.value)
+    this.api.purchaseSubscriptions(
+      1,
+      true,
+      this.currency,
+      this.frequencyControl.value,
+      this.route.snapshot.queryParamMap.get('via') ?? undefined
+    )
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
