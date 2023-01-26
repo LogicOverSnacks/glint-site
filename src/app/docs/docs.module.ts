@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, SecurityContext } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -13,7 +13,7 @@ import { DocsComponent } from './docs.component';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
-    MarkdownModule.forRoot(),
+    MarkdownModule.forRoot({ sanitize: SecurityContext.NONE }),
 
     SharedModule,
     DocsRoutingModule
