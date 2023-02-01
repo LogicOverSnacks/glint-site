@@ -10,4 +10,6 @@ You can toggle the Diff View between 3 layouts by clicking the buttons in the to
 * Split : displays the old and new files side-by-side
 
 ## Staging / Unstaging / Discarding Changes
-You can stage/unstage/discard individual lines by selecting them first, then clicking the buttons that appear in the top right.
+When viewing the diff for uncommitted changes, you can stage, unstage, or discard individual lines by selecting them first then clicking the buttons that appear in the top right.
+
+<img src="/assets/docs/ui-diff-by-line.png" class="fit-image">
