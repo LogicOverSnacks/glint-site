@@ -13,7 +13,7 @@ Each repository opened in Glint has its own tab. The + button on the right can b
 
 The Action Bar allows you to perform commonly used Git actions on the repository.
 
-From left to right, these are: fetch, pull, push, create tag, create branch, edit/rebase, search, and finally view settings for the repository.
+From left to right, these are: undo, redo, fetch, pull, push, create tag, create branch, stash, edit/rebase, search, and finally view settings for the repository.
 
 ## 3. Profile Selector & Settings
 <img src="/assets/docs/ui-3.png" class="fit-image">
