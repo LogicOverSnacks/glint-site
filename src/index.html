@@ -16,6 +16,15 @@
   <meta name="msapplication-TileColor" content="#2b5797">
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1e1e1e">
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self'
+  ; frame-src https://playground.glint.info https://*.youtube-nocookie.com
+  ; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com
+  ; script-src 'self' https://*.googletagmanager.com 'sha256-a7+5cc7KUIixDiUudpUTgiSlLYV5GkO7462ORD2UEIo='
+  ; img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com https://snapcraft.io
+  ; font-src 'self' https://fonts.gstatic.com
+  ; connect-src 'self' https://api.glint.info https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com
+  ">
 
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,6 +52,7 @@
       }
     }
   </script>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-CQVVEVKWNF"></script>
   <script>

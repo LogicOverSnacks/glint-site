@@ -60,6 +60,9 @@ import { TermsComponent } from './terms/terms.component';
     MatToolbarModule,
     ReactiveFormsModule,
     NgxsModule.forRoot([AuthState, ReleasesState], {
+      compatibility: {
+        strictContentSecurityPolicy: true
+      },
       developmentMode: !environment.production,
       selectorOptions: {
         injectContainerState: false,
