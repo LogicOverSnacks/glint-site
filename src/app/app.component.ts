@@ -12,6 +12,7 @@ import { catchError, filter, map, Observable, takeUntil } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CookieBannerComponent } from './cookie-banner.component';
 import { BaseComponent } from './shared/base.component';
+import { CanonicalService } from './shared/canonical.service';
 import { GithubService } from './shared/github.service';
 import { Release } from './shared/models/release';
 import { AuthState, ConsentToCookies } from './state/auth.state';
@@ -46,6 +47,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     router: Router,
     titleService: Title,
     private store: Store,
+    canonicalService: CanonicalService,
     private githubService: GithubService
   ) {
     super();
@@ -89,6 +91,8 @@ export class AppComponent extends BaseComponent implements OnInit {
           ? `${title} - Glint`
           : `Glint: A Graphical Interface for Git`
         );
+
+        canonicalService.updateCanonicalLink();
 
         // manually scroll to top on route change due to https://github.com/angular/components/issues/4280
         this.matSidenavContent.scrollTo({ top: 0 });
