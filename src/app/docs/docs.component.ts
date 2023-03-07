@@ -67,6 +67,7 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
         { title: 'Diff View', file: 'user_interface-diff_view' },
         // { title: 'Commit View', file: 'user_interface-commit_view' },
         { title: 'Merge View', file: 'user_interface-merge_view' },
+        { title: 'Search View', file: 'user_interface-search_view' },
         // { title: 'Settings View', file: 'user_interface-settings_view' },
       ]
     },

@@ -32,7 +32,6 @@ The Commit Graph displays a history of commits in the repository, along with the
 
 A commit can be selected by clicking on it, and this determines what is shown in the Commit Details view (see 6. below). Right-clicking a commit brings up a context menu from which you can initiate merges, create branches, revert commits, and more.
 
-
 ## 6. Commit Details
 <img src="/assets/docs/ui-6.png" class="fit-image">
 
