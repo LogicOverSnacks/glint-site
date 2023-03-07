@@ -22,8 +22,11 @@ header {
     margin-bottom: 10px;
   }
 
-  .change-password-btn {
-    margin-right: 10px;
+  .buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
   }
 }
 
@@ -45,6 +48,10 @@ main {
     > .left-gap { flex: 1 1 20%; }
     > .central { flex: 1 1 60%; }
     > .right-gap { flex: 1 1 20%; }
+  }
+
+  > .central {
+    max-width: 100%;
   }
 
   .your-subscription {
@@ -121,40 +128,72 @@ main {
   }
 
   .teammate-purchase {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 20px;
-    column-gap: 40px;
+    mat-card {
+      padding: 20px;
+      margin: 16px 0;
 
-    .left {
-      flex: 0 0 auto;
+      h4 {
+        mat-icon {
+          vertical-align: bottom;
+        }
+      }
     }
 
-    .right {
-      width: 100%;
-      flex: 1 1 auto;
-      max-width: 500px;
-      display: flex;
-      gap: 10px;
-    }
+    .purchase-form {
+      .purchase-fields {
+        display: flex;
+        align-items: baseline;
+        column-gap: 10px;
+        row-gap: 25px;
+        min-width: 0;
 
-    .highlight {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-    }
+        mat-form-field {
+          ::ng-deep {
+            .mdc-notched-outline .mat-mdc-floating-label {
+              top: 17px;
+              --mat-mdc-form-field-label-transform: translateY( -26px) scale(var(--mat-mdc-form-field-floating-label-scale, 0.75));
+            }
 
-    .quantity-form-field {
-      width: 110px;
-      flex: 5 1 auto;
-    }
+            .mat-mdc-form-field-infix {
+              padding-top: 6px;
+              padding-bottom: 6px;
+              min-height: 36px;
+            }
+          }
+        }
+      }
 
-    .renew-form-field {
-      width: 110px;
-      flex: 1 1 auto;
-    }
+      .quantity-form-field, .frequency-form-field, .currency-form-field {
+        flex: 0 0 auto;
 
-    .info-icon {
-      margin-right: 5px;
+        &.full-width {
+          min-width: 100%;
+          max-width: 100%;
+        }
+      }
+
+      .quantity-form-field {
+        min-width: 190px;
+        max-width: 190px;
+      }
+
+      .frequency-form-field {
+        min-width: 130px;
+        max-width: 130px;
+      }
+
+      .currency-form-field {
+        min-width: 130px;
+        max-width: 130px;
+      }
+
+      .calculation {
+        margin-top: 15px;
+      }
+
+      .teammate-purchase-btn {
+        margin-top: 15px;
+      }
     }
   }
 

@@ -6,11 +6,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, startWith, tap } from 'rxjs/operators';
 
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
-import { CurrencyService } from '../../shared/currency.service';
+import { Currency, CurrencyService } from '../../shared/currency.service';
 import { AuthSubscription } from '../../shared/models/subscriptions';
 import { AuthState, Logout } from '../../state/auth.state';
 import { UserVm } from '../../state/user.vm';
@@ -24,7 +24,6 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   @Select(AuthState.user)
   user!: Observable<UserVm>;
 
-  currency: 'GBP' | 'EUR' | 'USD';
   totalPurchased = 0;
   assigned: AuthSubscription[] = [];
   using: string[] = [];
@@ -33,8 +32,43 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
 
   processing = new BehaviorSubject(false);
   processingAssignedSubscription: Record<string, boolean> = {};
-  quantityControl = new FormControl<number | null>(null, [Validators.min(1), Validators.max(99)]);
+  quantityControl = new FormControl<number | null>(null, [
+    Validators.min(1),
+    Validators.max(99),
+    Validators.pattern(/^\d{1,3}$/),
+    Validators.required
+  ]);
   frequencyControl = new FormControl<'month' | 'year'>('year', { nonNullable: true });
+  currencyControl = new FormControl<Currency>(this.currencyService.getCurrency(), { nonNullable: true });
+  calculationText = combineLatest([
+    this.quantityControl.valueChanges.pipe(startWith(this.quantityControl.value)),
+    this.frequencyControl.valueChanges.pipe(startWith(this.frequencyControl.value)),
+    this.currencyControl.valueChanges.pipe(startWith(this.currencyControl.value))
+  ]).pipe(
+    map(([quantity, frequency, currency]) => {
+      if (quantity === null || quantity <= 0 || quantity > 99 || !Number.isInteger(quantity)) return null;
+
+      const price = currency === 'CNY' ? frequency === 'month' ? 30 : 250
+        : currency === 'EUR' ? frequency === 'month' ? 4 : 35
+        : currency === 'GBP' ? frequency === 'month' ? 4 : 35
+        : currency === 'JPY' ? frequency === 'month' ? 600 : 5000
+        : frequency === 'month' ? 4 : 35;
+      const totalPrice = price * (quantity ?? 0);
+
+      const priceText = currency === 'CNY' ? `${price}元`
+        : currency === 'EUR' ? `€${price}`
+        : currency === 'GBP' ? `£${price}`
+        : currency === 'JPY' ? `${price}円`
+        : `$${price}`;
+      const totalPriceText = currency === 'CNY' ? `${totalPrice}元`
+        : currency === 'EUR' ? `€${totalPrice}`
+        : currency === 'GBP' ? `£${totalPrice}`
+        : currency === 'JPY' ? `${totalPrice}円`
+        : `$${totalPrice}`;
+
+      return `${quantity} x ${priceText} = ${totalPriceText} / ${frequency}`;
+    })
+  );
   assignEmailControl = new FormControl<string | null>(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
   manageError = new BehaviorSubject<string | null>(null);
@@ -43,6 +77,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
   isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(state => state.matches));
   isLg = this.breakpointObserver.observe([Breakpoints.Large]).pipe(map(state => state.matches));
   isXl = this.breakpointObserver.observe([Breakpoints.XLarge]).pipe(map(state => state.matches));
+  ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
 
   constructor(
     private cdr: ChangeDetectorRef,
@@ -52,12 +87,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     private snackBar: MatSnackBar,
     private store: Store,
     private api: ApiService,
-    currencyService: CurrencyService
-  ) {
-    super();
-
-    this.currency = currencyService.getCurrency();
-  }
+    private currencyService: CurrencyService
+  ) { super(); }
 
   ngOnInit() {
     combineLatest([this.user, this.refresh$])
@@ -102,12 +133,18 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     }
   }
 
-  purchase(quantity: number | null, frequency: 'month' | 'year', forSelf: boolean) {
-    if (this.processing.value || !quantity) return;
+  purchase(forSelf: boolean) {
+    if (this.processing.value || !this.quantityControl.value) return;
 
     this.processing.next(true);
 
-    this.api.purchaseSubscriptions(quantity, forSelf, this.currency, frequency, this.route.snapshot.queryParamMap.get('via') ?? undefined)
+    this.api.purchaseSubscriptions(
+      this.quantityControl.value,
+      forSelf,
+      this.currencyControl.value,
+      this.frequencyControl.value,
+      this.route.snapshot.queryParamMap.get('via') ?? undefined
+    )
       .pipe(
         catchError((response: HttpErrorResponse) => {
           const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'

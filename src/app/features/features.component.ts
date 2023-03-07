@@ -4,10 +4,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, catchError, finalize, map, Observable, startWith, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, combineLatest, finalize, map, startWith, throwError } from 'rxjs';
 
 import { ApiService } from '../shared/api.service';
-import { CurrencyService } from '../shared/currency.service';
+import { Currency, CurrencyService } from '../shared/currency.service';
 import { AuthState, Logout } from '../state/auth.state';
 
 @Component({
@@ -17,13 +17,23 @@ import { AuthState, Logout } from '../state/auth.state';
 })
 export class FeaturesComponent {
   purchaseError = new BehaviorSubject<string | null>(null);
-  price: Observable<string>;
   frequencyControl = new FormControl<'month' | 'year'>('year', { nonNullable: true });
+  currencyControl = new FormControl<Currency>(this.currencyService.getCurrency(), { nonNullable: true });
+  price = combineLatest([
+    this.frequencyControl.valueChanges.pipe(startWith(this.frequencyControl.value)),
+    this.currencyControl.valueChanges.pipe(startWith(this.currencyControl.value))
+  ]).pipe(
+    map(([frequency, currency]) =>
+      currency === 'CNY' ? frequency === 'month' ? '30元' : '250元'
+      : currency === 'EUR' ? frequency === 'month' ? '€4' : '€35'
+      : currency === 'GBP' ? frequency === 'month' ? '£4' : '£35'
+      : currency === 'JPY' ? frequency === 'month' ? '600円' : '5000円'
+      : frequency === 'month' ? '$4' : '$35'
+    )
+  );
+  purchaseInProgress = new BehaviorSubject(false);
 
   ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
-
-  private processing = false;
-  private currency: 'GBP' | 'EUR' | 'USD';
 
   constructor(
     private route: ActivatedRoute,
@@ -31,20 +41,14 @@ export class FeaturesComponent {
     private breakpointObserver: BreakpointObserver,
     private store: Store,
     private api: ApiService,
-    currencyService: CurrencyService
-  ) {
-    this.currency = currencyService.getCurrency();
-    this.price = this.frequencyControl.valueChanges.pipe(
-      startWith(this.frequencyControl.value),
-      map(frequency =>
-        this.currency === 'GBP' ? frequency === 'month' ? '£4' : '£35'
-        : this.currency === 'EUR' ? frequency === 'month' ? '€4' : '€35'
-        : frequency === 'month' ? '$4' : '$35'
-      )
-    );
-  }
+    private currencyService: CurrencyService
+  ) {}
 
   buyLicense() {
+    if (this.purchaseInProgress.value) return;
+
+    this.purchaseInProgress.next(true);
+
     const user = this.store.selectSnapshot(AuthState.user);
     if (!user) {
       this.router.navigate(['/account']);
@@ -56,6 +60,7 @@ export class FeaturesComponent {
         catchError((response: HttpErrorResponse) => {
           if (response.status === 403) this.store.dispatch(new Logout()).subscribe(() => this.router.navigate(['/account']));
 
+          this.purchaseInProgress.next(false);
           return throwError(() => response);
         })
       )
@@ -66,14 +71,10 @@ export class FeaturesComponent {
   }
 
   private purchase() {
-    if (this.processing) return;
-
-    this.processing = true;
-
     this.api.purchaseSubscriptions(
       1,
       true,
-      this.currency,
+      this.currencyControl.value,
       this.frequencyControl.value,
       this.route.snapshot.queryParamMap.get('via') ?? undefined
     )
@@ -92,7 +93,7 @@ export class FeaturesComponent {
           return throwError(() => response);
         }),
         finalize(() => {
-          this.processing = false;
+          this.purchaseInProgress.next(false);
         })
       )
       .subscribe(url => {

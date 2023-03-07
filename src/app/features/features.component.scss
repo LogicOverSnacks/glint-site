@@ -55,6 +55,13 @@ app-container {
 .purchase-btn {
   display: block;
   margin: 20px auto;
+
+  mat-spinner {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: -4px;
+    margin-right: 8px;
+  }
 }
 
 .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }

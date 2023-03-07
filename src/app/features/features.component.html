@@ -59,9 +59,19 @@
           <mat-option value="year">Year</mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-select [formControl]="currencyControl">
+          <mat-option value="USD">USD $</mat-option>
+          <mat-option value="CNY">CNY 元</mat-option>
+          <mat-option value="EUR">EUR €</mat-option>
+          <mat-option value="GBP">GBP £</mat-option>
+          <mat-option value="JPY">JPY 円</mat-option>
+        </mat-select>
+      </mat-form-field>
     </h3>
 
-    <button class="purchase-btn" mat-stroked-button color="accent" (click)="buyLicense()">
+    <button class="purchase-btn" mat-stroked-button color="accent" [disabled]="purchaseInProgress | async" (click)="buyLicense()">
+      <mat-spinner *ngIf="purchaseInProgress | async" diameter="18"></mat-spinner>
       Buy License
     </button>
 
