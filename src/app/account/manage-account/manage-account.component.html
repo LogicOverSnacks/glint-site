@@ -98,11 +98,7 @@
               <mat-form-field class="currency-form-field" subscriptSizing="dynamic" [class.full-width]="isXs | async" appearance="outline">
                 <mat-label>Currency</mat-label>
                 <mat-select [formControl]="currencyControl">
-                  <mat-option value="USD">USD $</mat-option>
-                  <mat-option value="CNY">CNY 元</mat-option>
-                  <mat-option value="EUR">EUR €</mat-option>
-                  <mat-option value="GBP">GBP £</mat-option>
-                  <mat-option value="JPY">JPY 円</mat-option>
+                  <mat-option *ngFor="let currency of currencies" [value]="currency.id">{{currency.displayText}}</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>

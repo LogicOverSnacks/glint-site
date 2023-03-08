@@ -8,6 +8,7 @@ import { BehaviorSubject, catchError, combineLatest, finalize, map, startWith, t
 
 import { ApiService } from '../shared/api.service';
 import { Currency, CurrencyService } from '../shared/currency.service';
+import { PriceService } from '../shared/price.service';
 import { AuthState, Logout } from '../state/auth.state';
 
 @Component({
@@ -23,14 +24,12 @@ export class FeaturesComponent {
     this.frequencyControl.valueChanges.pipe(startWith(this.frequencyControl.value)),
     this.currencyControl.valueChanges.pipe(startWith(this.currencyControl.value))
   ]).pipe(
-    map(([frequency, currency]) =>
-      currency === 'CNY' ? frequency === 'month' ? '30元' : '250元'
-      : currency === 'EUR' ? frequency === 'month' ? '€4' : '€35'
-      : currency === 'GBP' ? frequency === 'month' ? '£4' : '£35'
-      : currency === 'JPY' ? frequency === 'month' ? '600円' : '5000円'
-      : frequency === 'month' ? '$4' : '$35'
-    )
+    map(([frequency, currency]) => this.currencyService.getPriceText(
+      currency,
+      this.priceService.getPriceInfo(currency, frequency).price
+    ))
   );
+  currencies = this.currencyService.currencies;
   purchaseInProgress = new BehaviorSubject(false);
 
   ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
@@ -41,7 +40,8 @@ export class FeaturesComponent {
     private breakpointObserver: BreakpointObserver,
     private store: Store,
     private api: ApiService,
-    private currencyService: CurrencyService
+    private currencyService: CurrencyService,
+    private priceService: PriceService
   ) {}
 
   buyLicense() {

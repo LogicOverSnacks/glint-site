@@ -23,6 +23,16 @@ export class CurrencyService {
     'Asia/Tokyo'
   ];
 
+  get currencies(): { id: Currency; displayText: string; }[] {
+    return [
+      { id: 'USD', displayText: 'USD $' },
+      { id: 'CNY', displayText: 'CNY 元' },
+      { id: 'EUR', displayText: 'EUR €' },
+      { id: 'GBP', displayText: 'GBP £' },
+      { id: 'JPY', displayText: 'JPY 円' },
+    ];
+  }
+
   getCurrency(): Currency {
     const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -39,5 +49,13 @@ export class CurrencyService {
       return 'EUR';
 
     return 'USD';
+  }
+
+  getPriceText(currency: Currency, price: number) {
+    return currency === 'CNY' ? `${price}元`
+      : currency === 'EUR' ? `€${price}`
+      : currency === 'GBP' ? `£${price}`
+      : currency === 'JPY' ? `${price}円`
+      : `$${price}`;
   }
 }

@@ -11,6 +11,7 @@ import { map, startWith, tap } from 'rxjs/operators';
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
 import { Currency, CurrencyService } from '../../shared/currency.service';
+import { PriceService } from '../../shared/price.service';
 import { AuthSubscription } from '../../shared/models/subscriptions';
 import { AuthState, Logout } from '../../state/auth.state';
 import { UserVm } from '../../state/user.vm';
@@ -48,27 +49,14 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     map(([quantity, frequency, currency]) => {
       if (quantity === null || quantity <= 0 || quantity > 99 || !Number.isInteger(quantity)) return null;
 
-      const price = currency === 'CNY' ? frequency === 'month' ? 30 : 250
-        : currency === 'EUR' ? frequency === 'month' ? 4 : 35
-        : currency === 'GBP' ? frequency === 'month' ? 4 : 35
-        : currency === 'JPY' ? frequency === 'month' ? 600 : 5000
-        : frequency === 'month' ? 4 : 35;
-      const totalPrice = price * (quantity ?? 0);
-
-      const priceText = currency === 'CNY' ? `${price}元`
-        : currency === 'EUR' ? `€${price}`
-        : currency === 'GBP' ? `£${price}`
-        : currency === 'JPY' ? `${price}円`
-        : `$${price}`;
-      const totalPriceText = currency === 'CNY' ? `${totalPrice}元`
-        : currency === 'EUR' ? `€${totalPrice}`
-        : currency === 'GBP' ? `£${totalPrice}`
-        : currency === 'JPY' ? `${totalPrice}円`
-        : `$${totalPrice}`;
+      const { price } = this.priceService.getPriceInfo(currency, frequency);
+      const priceText = this.currencyService.getPriceText(currency, price);
+      const totalPriceText = this.currencyService.getPriceText(currency, price * (quantity ?? 0));
 
       return `${quantity} x ${priceText} = ${totalPriceText} / ${frequency}`;
     })
   );
+  currencies = this.currencyService.currencies;
   assignEmailControl = new FormControl<string | null>(null, Validators.email);
   purchaseError = new BehaviorSubject<string | null>(null);
   manageError = new BehaviorSubject<string | null>(null);
@@ -87,7 +75,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
     private snackBar: MatSnackBar,
     private store: Store,
     private api: ApiService,
-    private currencyService: CurrencyService
+    private currencyService: CurrencyService,
+    private priceService: PriceService
   ) { super(); }
 
   ngOnInit() {
