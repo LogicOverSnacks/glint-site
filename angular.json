@@ -30,6 +30,7 @@
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
+              "src/robots.txt",
               "src/assets",
               {
                 "glob": "**/*",
