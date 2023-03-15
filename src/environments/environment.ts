@@ -1,10 +1,6 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
-
 export const environment = {
-  // apiBaseUrl: 'http://localhost:8082',
-  apiBaseUrl: 'https://api.glint.info',
+  apiBaseUrl: 'http://localhost:8082',
+  // apiBaseUrl: 'https://api.glint.info',
   bitbucketClientId: 'e7MPMawmwdL9cyEesg',
   githubClientId: '59c4c02cc28713de691c',
   gitlabClientId: '80ac91b1642437dd6793c05ad60615c0f3d15161703008d7c508d4042d408db5',

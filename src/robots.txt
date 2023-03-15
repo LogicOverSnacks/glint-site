@@ -1,2 +1,2 @@
 User-agent: *
-Allow: /
+Disallow: /account/payment-success

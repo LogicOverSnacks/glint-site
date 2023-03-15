@@ -218,7 +218,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
           }
 
           if (this.totalPurchased <= this.assigned.length) {
-            // in this case, the errors are not visible as the assign email part is hidden
+            // in this case, the errors are not visible as the assign email form is hidden
             this.snackBar.open(this.assignEmailControl.getError('server').join(', '), 'Close', { panelClass: 'error' });
           }
 
