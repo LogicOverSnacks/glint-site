@@ -36,6 +36,7 @@ import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PreserveQueryParamsUrlHandlingStrategy } from './preserve-query-params-url-handling-strategy';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { RefundPolicyComponent } from './refund-policy/refund-policy.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthState } from './state/auth.state';
 import { migrations } from './state/migrations';
@@ -91,6 +92,7 @@ import { TermsComponent } from './terms/terms.component';
     PageNotFoundComponent,
     PlaygroundComponent,
     PrivacyComponent,
+    RefundPolicyComponent,
     ResetPasswordComponent,
     TermsComponent
   ],

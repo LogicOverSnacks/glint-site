@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found.component';
 import { PlaygroundComponent } from './playground/playground.component';
 import { PrivacyComponent } from './privacy/privacy.component';
+import { RefundPolicyComponent } from './refund-policy/refund-policy.component';
 import { TermsComponent } from './terms/terms.component';
 
 const routes: Routes = [
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'features', component: FeaturesComponent, data: { title: 'Features' } },
   { path: 'playground', component: PlaygroundComponent, data: { title: 'Playground' } },
   { path: 'privacy', component: PrivacyComponent, data: { title: 'Privacy Policy' } },
+  { path: 'refund-policy', component: RefundPolicyComponent, data: { title: 'Refund Policy' } },
   { path: 'terms', component: TermsComponent, data: { title: 'Terms and Conditions' } },
   { path: '**', component: PageNotFoundComponent, data: { title: 'Page Not Found' } }
 ];
