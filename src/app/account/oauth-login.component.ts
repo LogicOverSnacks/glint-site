@@ -4,7 +4,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, catchError, EMPTY } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, finalize, throwError } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
 import { CryptoService } from 'src/app/shared/crypto.service';
@@ -14,6 +14,7 @@ import { environment } from 'src/environments/environment';
 interface IState {
   glint: boolean;
   integration: boolean;
+  purchase: boolean;
   random: string;
 }
 
@@ -112,6 +113,12 @@ interface ProviderDetails {
           Please click <a class="link" routerLink="/account/login">here</a> to try again.<br>
           If the problem persists please <a routerLink="/contact">contact us</a>.
         </h3>
+
+        <h3 *ngSwitchCase="'purchase-error'">
+          <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
+          There was a problem processing the request.<br>
+          Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ purchaseError | async }}.
+        </h3>
       </ng-container>
     </app-container>
   `
@@ -157,8 +164,9 @@ export class OAuthLoginComponent implements OnInit {
 
   type!: string;
   code?: string;
-  view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
+  view = new BehaviorSubject<'init' | 'success' | 'error' | 'purchase-error'>('init');
   error = new BehaviorSubject('Sorry! Something went wrong.');
+  purchaseError = new BehaviorSubject<string | null>(null);
 
   constructor(
     private route: ActivatedRoute,
@@ -209,10 +217,15 @@ export class OAuthLoginComponent implements OnInit {
         sessionStorage.removeItem(provider.storageKey);
 
         if (state.integration) this.integrated(type, decodeURIComponent(code));
-        else this.loggedIn(type, decodeURIComponent(code), state.glint);
+        else this.loggedIn(type, decodeURIComponent(code), state.glint, state.purchase);
       });
     } else {
-      this.login(provider, !!this.route.snapshot.queryParams.glint, !!this.route.snapshot.queryParams.integration);
+      this.login(
+        provider,
+        !!this.route.snapshot.queryParams.glint,
+        !!this.route.snapshot.queryParams.integration,
+        !!this.route.snapshot.queryParams.purchase
+      );
     }
   }
 
@@ -221,12 +234,21 @@ export class OAuthLoginComponent implements OnInit {
       navigator.clipboard.writeText(this.code).then(() => tooltip.show());
   }
 
-  private login(provider: ProviderDetails, glint: boolean, integration: boolean) {
-    const state = {
+  /**
+   * Send user on the next step of the OAuth flow
+   *
+   * @param provider The cloud provider
+   * @param glint True if this login came from the glint app
+   * @param integration True if this login came from adding an integration rather than logging in
+   * @param purchase If true, the user will be immediately redirected to the purchase page after logging in.
+   */
+  private login(provider: ProviderDetails, glint: boolean, integration: boolean, purchase: boolean) {
+    const state: IState = {
       glint: glint,
       integration: integration,
+      purchase: purchase,
       random: this.cryptoService.generateUUID()
-    } as IState;
+    };
     const stateString = JSON.stringify(state);
     this.cryptoService.digest(stateString).then(stateHash => {
       /* eslint-disable @typescript-eslint/naming-convention */
@@ -245,7 +267,7 @@ export class OAuthLoginComponent implements OnInit {
     });
   }
 
-  private loggedIn(type: ProviderType, code: string, glint: boolean) {
+  private loggedIn(type: ProviderType, code: string, glint: boolean, purchase: boolean) {
     if (glint) {
       window.open(`git-glint://oauth/${type}?${this.toQueryParamsString({ code })}`, '_self');
       this.view.next('success');
@@ -276,7 +298,10 @@ export class OAuthLoginComponent implements OnInit {
         )
         .subscribe(({ user }) => {
           this.store.dispatch(new UpdateUser(user)).subscribe(() => {
-            this.router.navigate(['/account']);
+            if (purchase)
+              this.purchase();
+            else
+              this.router.navigate(['/account']);
           });
         });
     }
@@ -285,6 +310,31 @@ export class OAuthLoginComponent implements OnInit {
   private integrated(type: ProviderType, code: string) {
     window.open(`git-glint://integration/${type}?${this.toQueryParamsString({ code })}`, '_self');
     this.view.next('success');
+  }
+
+  private purchase() {
+    this.api.purchaseSubscriptions(1, true, 'USD', 'year')
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
+            : response.status === 400 ? '400PB'
+            : response.status === 403 && response.error.reason === 'unverified' ? '403PA'
+            : '500PA';
+
+          if (code === '403PA') {
+            this.router.navigate(['/account/email/not-confirmed']);
+          } else {
+            this.purchaseError.next(code);
+            this.view.next('purchase-error');
+          }
+
+          return throwError(() => response);
+        })
+      )
+      .subscribe(url => {
+        this.purchaseError.next(null);
+        if (url) window.location.href = url;
+      });
   }
 
   private toQueryParamsString = (queryParams: Record<string, any>) =>

@@ -11,6 +11,7 @@ import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { OAuthLoginComponent } from './oauth-login.component';
 import { PaymentSuccessComponent } from './payment-success.component';
+import { PromoLoginComponent } from './promo-login.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
@@ -25,6 +26,7 @@ const routes: Routes = [
   { path: 'invalid/:type', component: InvalidLoginComponent, data: { title: 'Invalid Login' } },
   { path: 'payment-success', component: PaymentSuccessComponent, data: { title: 'Payment Succeeded' } },
   { path: 'referrals', component: ReferralsComponent, data: { title: 'Referral Account' } },
+  { path: 'promo-login', component: PromoLoginComponent, data: { title: 'Register' } },
   { path: 'unauthorized', component: UnauthorizedComponent, data: { title: 'Unauthorized' } },
   { path: '', component: ManageAccountComponent }
 ];

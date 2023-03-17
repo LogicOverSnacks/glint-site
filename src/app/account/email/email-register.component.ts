@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, catchError, EMPTY, finalize } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
@@ -101,7 +102,7 @@ import { environment } from 'src/environments/environment';
         <h3 *ngSwitchCase="'success'">
           New account created!<br>
           Please click the link in your email to confirm your registration.<br>
-          Click <a routerLink="/account/email/login">here</a> to login.
+          Click <a routerLink="/account/email/login" [queryParams]="purchase ? { purchase: true } : {}">here</a> to login.
         </h3>
 
         <h3 *ngSwitchCase="'error'">
@@ -114,7 +115,7 @@ import { environment } from 'src/environments/environment';
     </app-container>
   `
 })
-export class EmailRegisterComponent {
+export class EmailRegisterComponent implements OnInit {
   form = new FormGroup({
     email: new FormControl<string | null>(null, [Validators.required, Validators.email]),
     password: new FormControl<string | null>(null, [Validators.required, Validators.minLength(10)])
@@ -122,11 +123,17 @@ export class EmailRegisterComponent {
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
   processing = false;
+  purchase = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private http: HttpClient
+    private http: HttpClient,
+    private route: ActivatedRoute
   ) {}
+
+  ngOnInit() {
+    this.purchase = !!this.route.snapshot.queryParams.purchase;
+  }
 
   register() {
     if (this.processing) return;

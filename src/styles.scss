@@ -17,6 +17,7 @@ html .mat-expansion-indicator::after {
 
 mat-snack-bar-container {
   color: #000;
+  --mdc-snackbar-supporting-text-color: #000 !important;
 
   &.error {
     --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-warn-palette, 300)};

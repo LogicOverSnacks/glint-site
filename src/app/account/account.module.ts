@@ -18,6 +18,7 @@ import { InvalidLoginComponent } from './invalid-login.component';
 import { LoginComponent } from './login.component';
 import { ManageAccountComponent } from './manage-account/manage-account.component';
 import { OAuthLoginComponent } from './oauth-login.component';
+import { PromoLoginComponent } from './promo-login.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
@@ -44,6 +45,7 @@ import { UnauthorizedComponent } from './unauthorized.component';
     LoginComponent,
     ManageAccountComponent,
     OAuthLoginComponent,
+    PromoLoginComponent,
     ReferralsComponent,
     UnauthorizedComponent
   ]

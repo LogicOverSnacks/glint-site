@@ -1,11 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, EMPTY } from 'rxjs';
+import { BehaviorSubject, EMPTY, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
+import { ApiService } from 'src/app/shared/api.service';
 import { UpdateUser } from 'src/app/state/auth.state';
 import { UserVm } from 'src/app/state/user.vm';
 import { environment } from 'src/environments/environment';
@@ -118,6 +119,12 @@ import { environment } from 'src/environments/environment';
           Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
           If the problem persists please <a routerLink="/contact">contact us</a>.
         </h3>
+
+        <h3 *ngSwitchCase="'purchase-error'">
+          <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
+          There was a problem processing the request.<br>
+          Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ purchaseError | async }}.
+        </h3>
       </ng-container>
     </app-container>
   `
@@ -125,15 +132,18 @@ import { environment } from 'src/environments/environment';
 export class EmailLoginComponent {
   emailControl = new FormControl<string | null>(null, [Validators.required, Validators.email]);
   passwordControl = new FormControl<string | null>(null, [Validators.required, Validators.minLength(10)]);
-  view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
+  view = new BehaviorSubject<'init' | 'success' | 'error' | 'purchase-error'>('init');
   passwordHidden = new BehaviorSubject(true);
+  purchaseError = new BehaviorSubject<string | null>(null);
   processing = false;
 
   constructor(
     private cdr: ChangeDetectorRef,
     private http: HttpClient,
+    private route: ActivatedRoute,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private api: ApiService
   ) {}
 
   login() {
@@ -175,7 +185,10 @@ export class EmailLoginComponent {
       .subscribe(({ user }) => {
         this.view.next('success');
         this.store.dispatch(new UpdateUser(user)).subscribe(() => {
-          this.router.navigate(['/account']);
+          if (this.route.snapshot.queryParams.purchase)
+            this.purchase();
+          else
+            this.router.navigate(['/account']);
         });
       });
   }
@@ -184,5 +197,30 @@ export class EmailLoginComponent {
     this.emailControl.reset();
     this.passwordControl.reset();
     this.view.next('init');
+  }
+
+  private purchase() {
+    this.api.purchaseSubscriptions(1, true, 'USD', 'year')
+      .pipe(
+        catchError((response: HttpErrorResponse) => {
+          const code = response.status === 400 && response.error.reason === 'validation' ? '400PA'
+            : response.status === 400 ? '400PB'
+            : response.status === 403 && response.error.reason === 'unverified' ? '403PA'
+            : '500PA';
+
+          if (code === '403PA') {
+            this.router.navigate(['/account/email/not-confirmed']);
+          } else {
+            this.purchaseError.next(code);
+            this.view.next('purchase-error');
+          }
+
+          return throwError(() => response);
+        })
+      )
+      .subscribe(url => {
+        this.purchaseError.next(null);
+        if (url) window.location.href = url;
+      });
   }
 }
