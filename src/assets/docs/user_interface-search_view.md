@@ -1,7 +1,7 @@
 # Search View
 The view can be shown by clicking on the ![Search](/assets/docs/search-button.png) button in the [Action Bar](/docs/user_interface#2._Action_Bar).
 
-<img src="/assets/docs/ui-search.png" class="fit-image">
+<img src="/assets/docs/ui-search.png" class="fit-image" alt="Search view">
 
 ## Search query
 The search query can be modified by clicking the buttons on the right to toggle between:
@@ -26,4 +26,4 @@ The file path is displayed at the top, followed by a list of commits which match
 ## File Popup
 This popup displays the diff of a particular file in a particular commit, with the changes that match the search query highlighted. From here there are buttons to jump to the commit, or perform a file blame.
 
-<img src="/assets/docs/ui-search-popup.png" class="fit-image">
+<img src="/assets/docs/ui-search-popup.png" class="fit-image" alt="Search view popup">

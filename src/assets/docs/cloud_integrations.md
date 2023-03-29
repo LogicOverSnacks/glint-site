@@ -8,13 +8,13 @@ Glint can integrate with popular cloud providers. Doing so will allow you to bro
 * Ensure that you are logged in.
 * Under the "Integrations" heading, click on the + button.
 
-<img src="/assets/docs/cloud-integration-add.png" class="fit-image">
+<img src="/assets/docs/cloud-integration-add.png" class="fit-image" alt="Cloud integration settings">
 
 * From the menu, choose which cloud provider you would like to access.
 * A new tab will open in your browser so that you can login.
 * After logging in, you may be presented with a popup, click to allow opening Glint:
 
-<img src="/assets/docs/cloud-integration-deep-link.png" class="fit-image">
+<img src="/assets/docs/cloud-integration-deep-link.png" class="fit-image" alt="Cloud integration deep link">
 
 * The integration should now appear in Glint above the + button you clicked earlier.
 * If the integration does not appear, you may need to manually copy the Authorization Code from the website into Glint.

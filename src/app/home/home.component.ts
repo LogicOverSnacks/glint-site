@@ -69,7 +69,11 @@ export class HomeComponent implements OnInit {
   }
 
   private getPlatform() {
-    const platform = navigator.userAgentData?.platform ?? navigator.platform;
+    let platform: string;
+    if (navigator.userAgentData)
+      platform = navigator.userAgentData.platform;
+    else
+      platform = navigator.platform;
 
     return /win/i.test(platform) ? 'Windows' as const
       : /mac/i.test(platform) ? 'Mac' as const

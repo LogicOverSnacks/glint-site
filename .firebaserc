@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "glint-site"
-  }
+    "default": "glint-site",
+    "staging": "glint-site-staging"
+  },
+  "targets": {},
+  "etags": {}
 }

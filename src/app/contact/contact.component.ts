@@ -64,7 +64,7 @@ import { map } from 'rxjs';
 
     <div class="discord-btn">
       <a target="_blank" href="https://discord.gg/wXv8WUeFYZ" mat-stroked-button>
-        <img src="assets/discord.svg"> <span class="white">|</span> Join
+        <img src="assets/discord.svg" alt="Join Discord"> <span class="white">|</span> Join
       </a>
     </div>
 
