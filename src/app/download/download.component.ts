@@ -1,14 +1,26 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Store } from '@ngxs/store';
 import { map, takeUntil } from 'rxjs';
 
 import { BaseComponent } from '../shared';
+import { ContainerComponent } from '../shared/container.component';
 import { ReleasesState } from '../state/releases.state';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+
+    ContainerComponent
+  ],
   selector: 'app-download',
+  standalone: true,
   styleUrls: ['./download.component.scss'],
   templateUrl: './download.component.html'
 })

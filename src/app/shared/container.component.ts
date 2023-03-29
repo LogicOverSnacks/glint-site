@@ -7,6 +7,7 @@ import { BaseComponent } from './base.component';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-container',
+  standalone: true,
   styles: [
     `:host {
       display: block;

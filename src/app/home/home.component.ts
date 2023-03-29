@@ -1,9 +1,15 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, filter, map, Observable, shareReplay } from 'rxjs';
 
+import { DownloadComponent } from '../download/download.component';
+import { ContainerComponent } from '../shared/container.component';
 import { ReleasesState } from '../state/releases.state';
 
 @Component({
@@ -23,6 +29,16 @@ import { ReleasesState } from '../state/releases.state';
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+
+    ContainerComponent,
+    DownloadComponent
+  ],
+  standalone: true,
   styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html'
 })

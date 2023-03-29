@@ -1,5 +1,4 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
 import { EmailChangePasswordComponent } from './email/email-change-password.component';
 import { EmailLoginComponent } from './email/email-login.component';
@@ -15,7 +14,7 @@ import { PromoLoginComponent } from './promo-login.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
-const routes: Routes = [
+export default [
   { path: 'email/change-password', component: EmailChangePasswordComponent, data: { title: 'Change Password' } },
   { path: 'email/login', component: EmailLoginComponent, data: { title: 'Login' } },
   { path: 'email/lost-password', component: EmailLostPasswordComponent, data: { title: 'Reset Password' } },
@@ -29,10 +28,4 @@ const routes: Routes = [
   { path: 'promo-login', component: PromoLoginComponent, data: { title: 'Register' } },
   { path: 'unauthorized', component: UnauthorizedComponent, data: { title: 'Unauthorized' } },
   { path: '', component: ManageAccountComponent }
-];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
-})
-export class AccountRoutingModule {}
+] as Routes;

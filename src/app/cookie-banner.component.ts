@@ -1,8 +1,16 @@
 import { Component, Inject } from '@angular/core';
-import { MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBarModule, MatSnackBarRef, MAT_SNACK_BAR_DATA } from '@angular/material/snack-bar';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-cookie-banner',
+  imports: [
+    RouterModule,
+    MatButtonModule,
+    MatSnackBarModule
+  ],
+  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

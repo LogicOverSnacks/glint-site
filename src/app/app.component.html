@@ -6,7 +6,7 @@
     </a>
 
     <div *ngIf="ltMd | async; else links">
-      <button mat-icon-button (click)="sidenav.toggle()">
+      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Show/Hide Menu">
         <mat-icon>menu</mat-icon>
       </button>
     </div>

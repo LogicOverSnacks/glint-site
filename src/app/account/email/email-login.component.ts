@@ -1,18 +1,42 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule, HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/shared/api.service';
+import { ContainerComponent } from 'src/app/shared/container.component';
 import { UpdateUser } from 'src/app/state/auth.state';
 import { UserVm } from 'src/app/state/user.vm';
 import { environment } from 'src/environments/environment';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+
+    ContainerComponent
+  ],
+  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -92,7 +116,7 @@ import { environment } from 'src/environments/environment';
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl.hasError('invalid')">
+            <mat-error *ngIf="passwordControl.hasError('invalid') || passwordControl.hasError('minlength')">
               Password must have at least 10 characters
             </mat-error>
             <mat-error *ngIf="passwordControl.hasError('server')">

@@ -1,13 +1,32 @@
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 import { BehaviorSubject, catchError, takeUntil, throwError } from 'rxjs';
 
 import { BaseComponent } from 'src/app/shared';
 import { ApiService } from 'src/app/shared/api.service';
+import { ContainerComponent } from 'src/app/shared/container.component';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatTooltipModule,
+
+    ContainerComponent
+  ],
+  standalone: true,
   styleUrls: ['./referrals.component.scss'],
   templateUrl: './referrals.component.html'
 })

@@ -1,14 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
 import { catchError, takeUntil } from 'rxjs/operators';
+import { ContainerComponent } from 'src/app/shared/container.component';
 
 import { environment } from 'src/environments/environment';
 import { BaseComponent } from '../../shared';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatIconModule,
+
+    ContainerComponent
+  ],
+  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

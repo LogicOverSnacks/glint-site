@@ -1,11 +1,15 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { MatIconRegistry } from '@angular/material/icon';
-import { MatSidenavContent } from '@angular/material/sidenav';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { DomSanitizer, Title } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { catchError, filter, map, Observable, takeUntil } from 'rxjs';
 
@@ -21,6 +25,18 @@ import { UserVm } from './state/user.vm';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatSidenavModule,
+    MatSnackBarModule,
+    MatToolbarModule
+  ],
+  standalone: true,
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'

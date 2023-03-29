@@ -1,15 +1,20 @@
 import { animate, style, transition, trigger } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MatTooltip } from '@angular/material/tooltip';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, catchError, EMPTY, finalize, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, throwError } from 'rxjs';
 
 import { ApiService } from 'src/app/shared/api.service';
 import { CryptoService } from 'src/app/shared/crypto.service';
 import { UpdateUser } from 'src/app/state/auth.state';
 import { environment } from 'src/environments/environment';
+import { ContainerComponent } from '../shared/container.component';
 
 interface IState {
   glint: boolean;
@@ -40,6 +45,17 @@ interface ProviderDetails {
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatTooltipModule,
+
+    ContainerComponent
+  ],
+  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

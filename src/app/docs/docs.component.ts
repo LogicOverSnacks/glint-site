@@ -1,5 +1,6 @@
 import { transition, trigger } from '@angular/animations';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -11,12 +12,15 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import { MatExpansionPanel } from '@angular/material/expansion';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatExpansionModule, MatExpansionPanel } from '@angular/material/expansion';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { unescape } from 'lodash-es';
+import { MarkdownModule } from 'ngx-markdown';
 import { BehaviorSubject, map, takeUntil } from 'rxjs';
 
 import { BaseComponent } from '../shared';
+import { ContainerComponent } from '../shared/container.component';
 
 interface Heading {
   id: string;
@@ -32,6 +36,16 @@ interface Heading {
     ])
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    MarkdownModule,
+
+    ContainerComponent
+  ],
+  standalone: true,
   styleUrls: ['./docs.component.scss'],
   templateUrl: './docs.component.html'
 })

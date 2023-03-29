@@ -10,6 +10,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "stage": "npm run build && firebase deploy -P staging",
     "update:releases": "env-cmd --no-override --silent node ./scripts/update-releases.mjs"
   },
   "private": true,
