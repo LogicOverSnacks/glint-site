@@ -1,8 +1,8 @@
-name: deploy
+name: staging
 on:
   push:
     branches:
-      - main
+      - staging
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,6 +26,6 @@ jobs:
       - name: Deploy
         uses: w9jds/firebase-action@v11.24.1
         with:
-          args: deploy --only hosting --project default
+          args: deploy --only hosting --project staging
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLINT_SITE }}
