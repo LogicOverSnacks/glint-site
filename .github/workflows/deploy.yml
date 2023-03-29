@@ -24,8 +24,8 @@ jobs:
           npm run build
 
       - name: Deploy
-        uses: w9jds/firebase-action@v2.2.2
+        uses: w9jds/firebase-action@v11.24.1
         with:
-          args: deploy --only hosting
+          args: deploy --only hosting:default
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_GLINT_SITE }}
