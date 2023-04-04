@@ -71,7 +71,8 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
       title: 'Get Started',
       articles: [
         { title: 'Overview', file: 'get_started' },
-        { title: 'Installation', file: 'installation' }
+        { title: 'Installation', file: 'installation' },
+        { title: 'Troubleshooting', file: 'troubleshooting' }
       ]
     },
     {

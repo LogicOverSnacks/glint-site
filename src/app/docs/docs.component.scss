@@ -72,6 +72,11 @@ article {
   markdown ::ng-deep {
     h1 {
       @include mat.typography-level(theme.$app-typography, headline-3);
+      margin-top: 60px;
+
+      &:first-child {
+        margin-top: 0;
+      }
     }
     h2 {
       @include mat.typography-level(theme.$app-typography, headline-4);
