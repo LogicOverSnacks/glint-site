@@ -40,7 +40,7 @@ bootstrapApplication(
         NgxsStoragePluginModule.forRoot({ key: ['auth'], migrations: migrations }),
         NgxsReduxDevtoolsPluginModule.forRoot({
           disabled: environment.production
-        }),
+        })
       ),
       {
         provide: UrlHandlingStrategy,

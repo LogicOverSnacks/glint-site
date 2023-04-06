@@ -25,6 +25,11 @@ Within Glint you can configure profiles, which let you specify the name & email 
 
 The Branches Panel displays all available branches and tags, including branches on the remote(s). There is also a section where you can see, add, remove, or open submodules (opening a submodule will open it in a new tab). The button in the top-left allows you to show/hide the entire panel.
 
+<mat-card>
+  Premium users are additionally able to manage pull requests:
+  <img src="/assets/docs/ui-branches-pull-requests.png" style="margin-top: 5px; border: 1px solid black;" class="fit-image" alt="UI 4.1">
+</mat-card>
+
 ## 5. Commit Graph
 <img src="/assets/docs/ui-5.png" class="fit-image" alt="UI 5">
 

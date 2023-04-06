@@ -82,6 +82,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     }
 
     iconRegistry.addSvgIcon('glint', sanitizer.bypassSecurityTrustResourceUrl('/assets/glint.svg'));
+    iconRegistry.addSvgIcon('pull-request', sanitizer.bypassSecurityTrustResourceUrl('/assets/pull-request.svg'));
 
     router.events
       .pipe(filter((event): event is NavigationEnd => event instanceof NavigationEnd))
