@@ -5,7 +5,8 @@
     "outDir": "./out-tsc/spec",
     "types": [
       "./node_modules/user-agent-data-types",
-      "jasmine"
+      "jasmine",
+      "@angular/localize"
     ]
   },
   "files": [

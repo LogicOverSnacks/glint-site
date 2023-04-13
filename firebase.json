@@ -6,6 +6,9 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "i18n": {
+      "root": "/"
+    },
     "rewrites": [
       {
         "source": "**",

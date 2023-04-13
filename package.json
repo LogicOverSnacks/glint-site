@@ -4,14 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:staging": "ng serve --configuration staging",
-    "start:dev": "ng serve --configuration development",
+    "start:zh": "ng serve --configuration development-zh",
     "build": "npm run update:releases && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
     "stage": "npm run build && firebase deploy -P staging",
-    "update:releases": "env-cmd --no-override --silent node ./scripts/update-releases.mjs"
+    "update:releases": "env-cmd --no-override --silent node ./scripts/update-releases.mjs",
+    "extract:i18n": "ng extract-i18n --output-path src/locale"
   },
   "private": true,
   "dependencies": {
@@ -36,13 +36,14 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.4",
-    "@angular/cli": "^15.2.4",
-    "@angular/compiler-cli": "^15.2.4",
     "@angular-eslint/builder": "~15.2.1",
     "@angular-eslint/eslint-plugin": "~15.2.1",
     "@angular-eslint/eslint-plugin-template": "~15.2.1",
     "@angular-eslint/schematics": "~15.2.1",
     "@angular-eslint/template-parser": "~15.2.1",
+    "@angular/cli": "^15.2.4",
+    "@angular/compiler-cli": "^15.2.4",
+    "@angular/localize": "^15.2.4",
     "@types/gtag.js": "^0.0.12",
     "@types/jasmine": "~4.0.3",
     "@types/lodash-es": "^4.17.6",
@@ -60,6 +61,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-extract-i18n-merge": "^2.7.0",
     "typescript": "~4.8.4",
     "user-agent-data-types": "~0.3.0"
   }

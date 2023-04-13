@@ -1,3 +1,5 @@
+/// <reference types="@angular/localize" />
+
 import { PlatformLocation } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { enableProdMode, importProvidersFrom } from '@angular/core';
