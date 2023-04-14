@@ -15,17 +15,17 @@ import { ReferralsComponent } from './referrals/referrals.component';
 import { UnauthorizedComponent } from './unauthorized.component';
 
 export default [
-  { path: 'email/change-password', component: EmailChangePasswordComponent, data: { title: 'Change Password' } },
-  { path: 'email/login', component: EmailLoginComponent, data: { title: 'Login' } },
-  { path: 'email/lost-password', component: EmailLostPasswordComponent, data: { title: 'Reset Password' } },
-  { path: 'email/not-confirmed', component: EmailNotConfirmedComponent, data: { title: 'Email Not Confirmed' } },
-  { path: 'email/register', component: EmailRegisterComponent, data: { title: 'Register' } },
-  { path: 'login', component: LoginComponent, data: { title: 'Login' } },
-  { path: 'login/:type', component: OAuthLoginComponent, data: { title: 'Login with ${type}' } },
-  { path: 'invalid/:type', component: InvalidLoginComponent, data: { title: 'Invalid Login' } },
-  { path: 'payment-success', component: PaymentSuccessComponent, data: { title: 'Payment Succeeded' } },
-  { path: 'referrals', component: ReferralsComponent, data: { title: 'Referral Account' } },
-  { path: 'promo-login', component: PromoLoginComponent, data: { title: 'Register' } },
-  { path: 'unauthorized', component: UnauthorizedComponent, data: { title: 'Unauthorized' } },
+  { path: 'email/change-password', component: EmailChangePasswordComponent, data: { title: $localize`Change Password` } },
+  { path: 'email/login', component: EmailLoginComponent, data: { title: $localize`Login` } },
+  { path: 'email/lost-password', component: EmailLostPasswordComponent, data: { title: $localize`Reset Password` } },
+  { path: 'email/not-confirmed', component: EmailNotConfirmedComponent, data: { title: $localize`Email Not Confirmed` } },
+  { path: 'email/register', component: EmailRegisterComponent, data: { title: $localize`Register` } },
+  { path: 'login', component: LoginComponent, data: { title: $localize`Login` } },
+  { path: 'login/:type', component: OAuthLoginComponent, data: { title: $localize`Login with \${type}` } },
+  { path: 'invalid/:type', component: InvalidLoginComponent, data: { title: $localize`Invalid Login` } },
+  { path: 'payment-success', component: PaymentSuccessComponent, data: { title: $localize`Payment Succeeded` } },
+  { path: 'referrals', component: ReferralsComponent, data: { title: $localize`Referral Account` } },
+  { path: 'promo-login', component: PromoLoginComponent, data: { title: $localize`Register` } },
+  { path: 'unauthorized', component: UnauthorizedComponent, data: { title: $localize`Unauthorized` } },
   { path: '', component: ManageAccountComponent }
 ] as Routes;

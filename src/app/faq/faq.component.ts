@@ -62,15 +62,15 @@ import { ContainerComponent } from '../shared/container.component';
   template: `
     <app-container>
       <div class="faq-panel" [class.small]="isXs | async">
-        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'">FAQ</h2>
+        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>FAQ</h2>
 
-        <h3>Is Glint free to use for commercial projects?</h3>
-        <p>
+        <h3 i18n>Is Glint free to use for commercial projects?</h3>
+        <p i18n>
           Yes, you only need to pay if you want the premium <a routerLink="/features" class="link">features</a>.
         </p>
 
-        <h3>What operating systems does Glint work on?</h3>
-        <p>
+        <h3 i18n>What operating systems does Glint work on?</h3>
+        <p i18n>
           Windows, macOS, and Linux. Only x64 systems and Apple M1 (arm64) are supported.
           The application is designed for use on desktop computers,
           and so there is no version available for mobile devices or web browsers.
@@ -78,22 +78,22 @@ import { ContainerComponent } from '../shared/container.component';
           downloading the app.
         </p>
 
-        <h3>Can I use Glint on multiple computers?</h3>
-        <p>Yes, licenses are per user so you can use a single subscription on multiple devices, just log in with the same account.</p>
+        <h3 i18n>Can I use Glint on multiple computers?</h3>
+        <p i18n>Yes, licenses are per user so you can use a single subscription on multiple devices, just log in with the same account.</p>
 
-        <h3>Do I need to install any dependencies?</h3>
-        <p>In most cases no, but check the <a routerLink="/docs/installation" class="link">installation docs</a> for details.</p>
+        <h3 i18n>Do I need to install any dependencies?</h3>
+        <p i18n>In most cases no, but check the <a routerLink="/docs/installation" class="link">installation docs</a> for details.</p>
 
-        <h3>Can I purchase subscriptions for team members?</h3>
-        <p>Yes, you can purchase multiple subscriptions and assign them to other users on the <a routerLink="/account" class="link">account</a> page. You don't need to have your own subscription to do this.</p>
+        <h3 i18n>Can I purchase subscriptions for team members?</h3>
+        <p i18n>Yes, you can purchase multiple subscriptions and assign them to other users on the <a routerLink="/account" class="link">account</a> page. You don't need to have your own subscription to do this.</p>
 
-        <h3>What is your refund policy?</h3>
-        <p>All payments are non-refundable, but you can cancel your subscription at any time. Upon cancellation, you will still receive the premium benefits until the end of your billing period.</p>
+        <h3 i18n>What is your refund policy?</h3>
+        <p i18n>All payments are non-refundable, but you can cancel your subscription at any time. Upon cancellation, you will still receive the premium benefits until the end of your billing period.</p>
       </div>
 
       <div class="enquire-panel">
-        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'">Further Questions?</h2>
-        <a routerLink="/contact" class="link">Click here to enquire</a>
+        <h2 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Further Questions?</h2>
+        <a routerLink="/contact" class="link" i18n>Click here to enquire</a>
       </div>
     </app-container>
   `

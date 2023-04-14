@@ -2,18 +2,18 @@
 
 <app-container *ngIf="(processing | async) === false">
   <header>
-    <div class="mat-headline-3 title">Your account</div>
-    <h3>You are logged in as: {{ (user | async)?.email }}</h3>
+    <div class="mat-headline-3 title" i18n>Your account</div>
+    <h3 i18n>You are logged in as: {{ (user | async)?.email }}</h3>
 
     <div class="buttons">
       <!-- <button type="button" mat-button>Change email</button> -->
       <a routerLink="/account/email/change-password">
-        <button type="button" mat-stroked-button color="primary" class="change-password-btn">Change password</button>
+        <button type="button" mat-stroked-button color="primary" class="change-password-btn" i18n>Change password</button>
       </a>
       <a routerLink="/account/referrals">
-        <button type="button" mat-stroked-button color="primary" class="referrals-btn">Referrals</button>
+        <button type="button" mat-stroked-button color="primary" class="referrals-btn" i18n>Referrals</button>
       </a>
-      <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()">Logout</button>
+      <button type="button" mat-stroked-button color="warn" class="logout-btn" (click)="logout()" i18n>Logout</button>
     </div>
   </header>
 
@@ -22,13 +22,18 @@
     <div class="central">
       <div class="your-subscription">
         <div class="level">
-          <h1 class="large">
-            Your plan: <span [class.highlight]="yourSubscription">{{yourSubscription ? 'Premium' : 'Free'}}</span>
+          <h1 class="large" *ngIf="yourSubscription" i18n>
+            Your plan: <span class="highlight">Premium</span>
+          </h1>
+          <h1 class="large" *ngIf="!yourSubscription" i18n>
+            Your plan: Free
           </h1>
 
           <span class="small"
             *ngIf="yourSubscription && yourSubscription !== userData.email"
             [matTooltip]="'Your subscription is paid for by ' + yourSubscription"
+            i18n
+            i18n-matTooltip
           >
             (Provided by {{yourSubscription}})
           </span>
@@ -40,6 +45,8 @@
             color="accent"
             matTooltip="Click to purchase a subscription"
             routerLink="/features"
+            i18n
+            i18n-matTooltip
           >Upgrade</button>
         </div>
 
@@ -49,7 +56,7 @@
       </div>
 
       <h1 class="manage-subscriptions-title" [style.flex-direction]="(isXs | async) ? 'column' : 'row'">
-        <span>Manage Subscriptions</span>
+        <span i18n>Manage Subscriptions</span>
 
         <button type="button"
           *ngIf="totalPurchased > 0"
@@ -58,6 +65,8 @@
           class="manage-payments-btn"
           matTooltip="Click to manage payments or change the number of subscriptions"
           (click)="manage()"
+          i18n
+          i18n-matTooltip
         >Manage payments</button>
       </h1>
 
@@ -66,37 +75,40 @@
       </div>
 
       <div class="teammate-purchase">
-        <h3>Subscriptions purchased: <span class="highlight">{{totalPurchased}}</span></h3>
+        <h3 i18n>Subscriptions purchased: <span class="highlight">{{totalPurchased}}</span></h3>
 
         <mat-card>
           <h4>
-            Purchase subscriptions
-            <mat-icon inline matTooltip="You can buy subscriptions and assign them by email to other users (e.g. teammates)">info</mat-icon>
+            <ng-container i18n>Purchase subscriptions</ng-container>
+            <mat-icon inline
+              matTooltip="You can buy subscriptions and assign them by email to other users (e.g. teammates)"
+              i18n-matTooltip
+            >info</mat-icon>
           </h4>
 
           <form class="purchase-form">
             <div class="purchase-fields" [style.flex-direction]="(isXs | async) ? 'column' : 'row'">
               <mat-form-field class="quantity-form-field" subscriptSizing="dynamic" [class.full-width]="isXs | async" appearance="outline">
-                <mat-label>Quantity</mat-label>
+                <mat-label i18n>Quantity</mat-label>
                 <input matInput
                   type="number"
                   min="1"
                   max="100"
                   [formControl]="quantityControl"
                 >
-                <mat-error *ngIf="quantityControl.errors">
+                <mat-error *ngIf="quantityControl.errors" i18n>
                   Must be a positive integer less than 100
                 </mat-error>
               </mat-form-field>
               <mat-form-field class="frequency-form-field" subscriptSizing="dynamic" [class.full-width]="isXs | async" appearance="outline">
-                <mat-label>Renew</mat-label>
+                <mat-label i18n>Renew</mat-label>
                 <mat-select [formControl]="frequencyControl">
-                  <mat-option value="month">Monthly</mat-option>
-                  <mat-option value="year">Yearly</mat-option>
+                  <mat-option value="month" i18n>Monthly</mat-option>
+                  <mat-option value="year" i18n>Yearly</mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="currency-form-field" subscriptSizing="dynamic" [class.full-width]="isXs | async" appearance="outline">
-                <mat-label>Currency</mat-label>
+                <mat-label i18n>Currency</mat-label>
                 <mat-select [formControl]="currencyControl">
                   <mat-option *ngFor="let currency of currencies" [value]="currency.id">{{currency.displayText}}</mat-option>
                 </mat-select>
@@ -110,30 +122,34 @@
               matTooltip="Click to purchase subscriptions that can be assigned to other users"
               [disabled]="!quantityControl.value || quantityControl.invalid"
               (click)="purchase(false)"
+              i18n
+              i18n-matTooltip
             >Purchase</button>
           </form>
         </mat-card>
       </div>
 
       <div class="subscriptions" *ngIf="totalPurchased > 0">
-        <h3>Assigned subscriptions ({{ assigned.length }}):</h3>
+        <h3 i18n>Assigned subscriptions ({{ assigned.length }}):</h3>
         <ul class="subscription-list">
           <li *ngFor="let subscription of assigned">
             <span class="email" [matTooltip]="subscription.email">{{ subscription.email }}</span>
             <span *ngIf="!subscription.autoRenew"
               class="expires-warning"
               matTooltip="This subscription is due to expire. After expiry you may assign the subscription to another user"
+              i18n-matTooltip
             >
               <mat-icon *ngIf="isXs | async" inline>schedule</mat-icon>
-              <span *ngIf="(isXs | async) === false">Expires on</span>
+              <span *ngIf="(isXs | async) === false" i18n>Expires on</span>
               {{ subscription.expiryDate | date }}
             </span>
             <span *ngIf="subscription.autoRenew && subscription.pausedUntil"
               class="expires-warning"
               matTooltip="Payment for this subscription has been paused"
+              i18n-matTooltip
             >
               <mat-icon *ngIf="isXs | async" inline>pause</mat-icon>
-              <span *ngIf="(isXs | async) === false">Paused until</span>
+              <span *ngIf="(isXs | async) === false" i18n>Paused until</span>
               {{ subscription.pausedUntil | date }}
             </span>
             <button type="button"
@@ -143,14 +159,16 @@
               matTooltip="Reinstate subscription"
               aria-label="Reinstate subscription"
               (click)="assign(subscription.email)"
+              i18n-matTooltip
             ><mat-icon class="nudge-up">restart_alt</mat-icon></button>
             <button type="button"
               *ngIf="subscription.autoRenew && !processingAssignedSubscription[subscription.email]"
               mat-icon-button
               color="warn"
-              [matTooltip]="subscription.activated ? 'Unassign subscription at the end of the billing period' : 'Unassign subscription'"
+              [matTooltip]="unassignTooltip(subscription.activated)"
               aria-label="Unassign subscription"
               (click)="unassign(subscription)"
+              i18n-aria-label
             >
               <mat-icon [class.nudge-right]="subscription.activated">
                 {{ subscription.activated ? 'auto_delete' : 'delete' }}
@@ -161,13 +179,14 @@
         </ul>
 
         <mat-form-field class="assign-subscription" *ngIf="totalPurchased > assigned.length" appearance="outline">
-          <mat-label>Assign a subscription</mat-label>
+          <mat-label i18n>Assign a subscription</mat-label>
           <input matInput
             type="email"
             placeholder="Enter the user's email address..."
             [formControl]="assignEmailControl"
+            i18n-placeholder
           >
-          <mat-error *ngIf="assignEmailControl.hasError('email')">
+          <mat-error *ngIf="assignEmailControl.hasError('email')" i18n>
             Invalid email
           </mat-error>
           <mat-error *ngIf="assignEmailControl.hasError('server')">
@@ -181,16 +200,20 @@
           aria-label="Assign a subscription to this user"
           [disabled]="!assignEmailControl.value || assignEmailControl.invalid || (processingAssignedSubscription | keyvalue).length > 0"
           (click)="assign(assignEmailControl.value); assignEmailControl.reset()"
+          i18n-matTooltip
+          i18n-aria-label
         >
           <mat-icon>add</mat-icon>
         </button>
 
         <div class="assign-warning" *ngIf="totalPurchased > assigned.length">
-          <mat-icon inline>info</mat-icon>You have
-          <span class="highlight">{{ totalPurchased - assigned.length }}</span>
-          unassigned subscription{{(totalPurchased - assigned.length) > 1 ? 's' : ''}}.
-          You can assign the remaining one{{(totalPurchased - assigned.length) > 1 ? 's' : ''}},
-          or cancel excess subscriptions by clicking the Manage Payments button and reducing the subscription quantity.
+          <mat-icon inline>info</mat-icon>
+          <ng-container i18n>
+            You have <span class="highlight">{{ totalPurchased - assigned.length }}</span>
+            unassigned subscription{{(totalPurchased - assigned.length) > 1 ? 's' : ''}}.
+            You can assign the remaining one{{(totalPurchased - assigned.length) > 1 ? 's' : ''}},
+            or cancel excess subscriptions by clicking the Manage Payments button and reducing the subscription quantity.
+          </ng-container>
         </div>
       </div>
     </div>

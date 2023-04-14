@@ -2,7 +2,7 @@
   <article>
     <app-container>
       <h1 class="main-title" [ngClass]="(isXs | async) ? 'mat-headline-2' : 'mat-headline-1'">Glint</h1>
-      <h2 class="sub-title">A Graphical interface for Git</h2>
+      <h2 class="sub-title" i18n>A Graphical interface for Git</h2>
       <div class="download-links" *ngIf="release | async as releaseData">
         <a [href]="releaseData.link">
           <button mat-flat-button class="download-button" color="accent">
@@ -12,48 +12,57 @@
             </div>
             <div class="os-icon" *ngIf="releaseData.platform === 'Linux'"><svg><use xlink:href="assets/linux.svg#svg"></use></svg></div>
             <div class="os-icon" *ngIf="releaseData.platform === 'Other'"><mat-icon>file_download</mat-icon></div>
-            Free Download{{ releaseData.platform === 'Other' ? '' : ' for ' + releaseData.platform }}
+            <ng-container i18n>
+              {releaseData.platform, select, Windows {Free Download for Windows} Mac {Free Download for Mac} Linux {Free Download for Linux} other {Free Download}}
+            </ng-container>
           </button>
         </a>
-        <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other">Other platform downloads</a>
+        <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other" i18n>Other platform downloads</a>
       </div>
 
       <a *ngIf="(ltMd | async) === false" routerLink="/playground" class="screenshot">
-        <img src="/assets/screenshot.webp" width="1920" height="1080" alt="Screenshot of Glint">
+        <img src="/assets/screenshot.webp" width="1920" height="1080" alt="Screenshot of Glint" i18n-alt>
       </a>
-      <img *ngIf="ltMd | async" class="screenshot" src="/assets/screenshot-sm.webp" width="960" height="540" alt="Screenshot of Glint">
+      <img *ngIf="ltMd | async" class="screenshot" src="/assets/screenshot-sm.webp" width="960" height="540" alt="Screenshot of Glint" i18n-alt>
     </app-container>
   </article>
 
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Sleek &amp; Powerful</h2>
-        <p class="text" [style.margin-bottom.px]="(isXs | async) ? 20 : 40">Perform complex tasks without breaking a sweat.</p>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Sleek &amp; Powerful</h2>
+        <p class="text" [style.margin-bottom.px]="(isXs | async) ? 20 : 40" i18n>Perform complex tasks without breaking a sweat.</p>
         <div class="feature-image" [@fade]="currentFeature | async">
-          <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" alt="Search within files & commits">
-          <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="Manage multiple merges simultaneously">
-          <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="Rewrite commit history">
-          <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="Move branches manually">
-          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="Resolve merge conflicts 4-way">
+          <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" alt="Search within files & commits" i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="Manage multiple merges simultaneously" i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="Rewrite commit history" i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="Move branches manually" i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="Resolve merge conflicts 4-way" i18n-alt>
         </div>
       </div>
       <div>
         <ul (mouseleave)="currentFeature.next('none')">
           <li (mouseenter)="currentFeature.next('merge')">
-            <mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously
+            <mat-icon>merge_type</mat-icon>
+            <ng-container i18n>Manage multiple merges simultaneously</ng-container>
           </li>
           <li (mouseenter)="currentFeature.next('search')">
-            <mat-icon>search</mat-icon>Search within files &amp; commits
+            <mat-icon>search</mat-icon>
+            <ng-container i18n>Search within files &amp; commits</ng-container>
           </li>
-          <li (mouseenter)="currentFeature.next('edit')"><mat-icon>edit</mat-icon>Rewrite commit history</li>
+          <li (mouseenter)="currentFeature.next('edit')">
+            <mat-icon>edit</mat-icon>
+            <ng-container i18n>Rewrite commit history</ng-container>
+          </li>
           <li (mouseenter)="currentFeature.next('move')">
-            <mat-icon>move_up</mat-icon>Move branches manually
+            <mat-icon>move_up</mat-icon>
+            <ng-container i18n>Move branches manually</ng-container>
           </li>
           <li (mouseenter)="currentFeature.next('resolve')">
-            <mat-icon>build</mat-icon>Resolve merge conflicts 4-way
+            <mat-icon>build</mat-icon>
+            <ng-container i18n>Resolve merge conflicts 4-way</ng-container>
           </li>
-          <!-- <li><mat-icon>compress</mat-icon>Squash commits</li> -->
+          <!-- <li><mat-icon>compress</mat-icon><ng-container i18n>Squash commits</ng-container></li> -->
         </ul>
       </div>
     </app-container>
@@ -62,15 +71,14 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Streamlined for performance</h2>
-        <!-- <p class="text">Work unconstrained. A smooth, drama-free experience.</p> -->
-        <p class="text">Enjoy a smooth, effortless experience built from the ground up to run fast.</p>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Streamlined for performance</h2>
+        <p class="text" i18n>Enjoy a smooth, effortless experience built from the ground up to run fast.</p>
       </div>
       <div>
         <ul>
-          <li><mat-icon>dynamic_feed</mat-icon>Bloat-free</li>
-          <li><mat-icon>hourglass_top</mat-icon>Minimal loading times</li>
-          <li><mat-icon>block</mat-icon>No UI blocking</li>
+          <li><mat-icon>dynamic_feed</mat-icon><ng-container i18n>Bloat-free</ng-container></li>
+          <li><mat-icon>hourglass_top</mat-icon><ng-container i18n>Minimal loading times</ng-container></li>
+          <li><mat-icon>block</mat-icon><ng-container i18n>No UI blocking</ng-container></li>
         </ul>
       </div>
     </app-container>
@@ -79,8 +87,8 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Cross Platform</h2>
-        <p class="text">Works on all desktop platforms.</p>
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Cross Platform</h2>
+        <p class="text" i18n>Works on all desktop platforms.</p>
       </div>
       <div>
         <ul>
@@ -104,16 +112,25 @@
   <article class="banner">
     <app-container>
       <div>
-        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'">Free to use</h2>
-        <p class="text">
+        <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Free to use</h2>
+        <p class="text" i18n>
           See the <a routerLink="/features" class="link">features</a> page for more details.
         </p>
       </div>
       <div>
         <ul>
-          <li><mat-icon>money_off</mat-icon>All essential features completely free</li>
-          <li><mat-icon fontSet="material-icons-outlined">timer_off</mat-icon>No time limits or trial periods</li>
-          <li><mat-icon>attach_money</mat-icon>Upgrade to Premium for bonus features and to support development</li>
+          <li>
+            <mat-icon>money_off</mat-icon>
+            <ng-container i18n>All essential features completely free</ng-container>
+          </li>
+          <li>
+            <mat-icon fontSet="material-icons-outlined">timer_off</mat-icon>
+            <ng-container i18n>No time limits or trial periods</ng-container>
+          </li>
+          <li>
+            <mat-icon>attach_money</mat-icon>
+            <ng-container i18n>Upgrade to Premium for bonus features and to support development</ng-container>
+          </li>
         </ul>
       </div>
     </app-container>

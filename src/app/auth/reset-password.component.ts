@@ -61,37 +61,37 @@ import { ContainerComponent } from '../shared/container.component';
   ],
   template: `
     <app-container>
-      <header class="mat-headline-3 title">Reset Password</header>
+      <header class="mat-headline-3 title" i18n>Reset Password</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="resetPassword()">
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Security code</mat-label>
+            <mat-label i18n>Security code</mat-label>
             <input matInput required [formControl]="codeControl">
-            <mat-error *ngIf="codeControl.hasError('pattern')">
+            <mat-error *ngIf="codeControl.hasError('pattern')" i18n>
               Please enter a valid security code
             </mat-error>
           </mat-form-field>
 
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label i18n>Password</mat-label>
             <input matInput required [formControl]="passwordControl">
-            <mat-error *ngIf="passwordControl.hasError('pattern')">
+            <mat-error *ngIf="passwordControl.hasError('pattern')" i18n>
               Please enter a strong password with these rules:
             </mat-error>
           </mat-form-field>
 
           <div>
-            <button type="submit" class="submit-btn" mat-stroked-button>Reset password</button>
+            <button type="submit" class="submit-btn" mat-stroked-button i18n>Reset password</button>
           </div>
         </form>
 
         <ng-container *ngSwitchCase="'processing'">
-          <h3>Processing...</h3>
+          <h3 i18n>Processing...</h3>
         </ng-container>
 
         <ng-container *ngSwitchCase="'success'">
-          <h3>
+          <h3 i18n>
             Password changed!<br>
             You can now close this window and login to Glint.
           </h3>
@@ -100,28 +100,32 @@ import { ContainerComponent } from '../shared/container.component';
         <ng-container *ngSwitchCase="'expired'">
           <h3>
             <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-            This security code has expired.<br>
-            Please click <span class="reset" (click)="requestNewCode()">here</span> to request a new one.
+            <ng-container i18n>
+              This security code has expired.<br>
+              Please click <span class="reset" (click)="requestNewCode()">here</span> to request a new one.
+            </ng-container>
           </h3>
         </ng-container>
 
         <ng-container *ngSwitchCase="'invalid'">
           <h3>
             <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-            This security code is invalid, please try again, or confirm your email address to request a new code:
+            <ng-container i18n>
+              This security code is invalid, please try again, or confirm your email address to request a new code:
+            </ng-container>
           </h3>
 
           <form (ngSubmit)="requestNewCode()">
             <mat-form-field class="form-field" appearance="outline">
-              <mat-label>Email</mat-label>
+              <mat-label i18n>Email</mat-label>
               <input type="email" matInput required [formControl]="emailControl">
-              <mat-error *ngIf="emailControl.hasError('email')">
+              <mat-error *ngIf="emailControl.hasError('email')" i18n>
                 Please enter a valid email address
               </mat-error>
             </mat-form-field>
 
             <div>
-              <button type="submit" class="submit-btn" mat-stroked-button>Request a new code</button>
+              <button type="submit" class="submit-btn" mat-stroked-button i18n>Request a new code</button>
             </div>
           </form>
         </ng-container>
@@ -129,9 +133,11 @@ import { ContainerComponent } from '../shared/container.component';
         <ng-container *ngSwitchCase="'error'">
           <h3>
             <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-            Sorry! Something went wrong.<br>
-            Please click <a [routerLink]="['/auth/register']">here</a> to try again.<br>
-            If the problem persists please <a routerLink="/contact">contact us</a>.
+            <ng-container i18n>
+              Sorry! Something went wrong.<br>
+              Please click <a [routerLink]="['/auth/register']">here</a> to try again.<br>
+              If the problem persists please <a routerLink="/contact">contact us</a>.
+            </ng-container>
           </h3>
         </ng-container>
       </ng-container>

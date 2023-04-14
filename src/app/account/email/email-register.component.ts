@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { BehaviorSubject, catchError, EMPTY, finalize } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, finalize, map } from 'rxjs';
 import { ContainerComponent } from 'src/app/shared/container.component';
 
 import { environment } from 'src/environments/environment';
@@ -79,14 +79,14 @@ import { environment } from 'src/environments/environment';
   `],
   template: `
     <app-container>
-      <header class="mat-headline-3 title">Register</header>
+      <header class="mat-headline-3 title" i18n>Register</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="register()" [formGroup]="form">
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input type="email" matInput required formControlName="email" placeholder="Enter your email address...">
-            <mat-error *ngIf="form.controls['email'].hasError('email')">
+            <mat-label i18n>Email</mat-label>
+            <input type="email" matInput required formControlName="email" placeholder="Enter your email address..." i18n-placeholder>
+            <mat-error *ngIf="form.controls['email'].hasError('email')" i18n>
               Invalid email address
             </mat-error>
             <mat-error *ngIf="form.controls['email'].hasError('server')">
@@ -95,22 +95,23 @@ import { environment } from 'src/environments/environment';
           </mat-form-field>
 
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label i18n>Password</mat-label>
             <input matInput
               [attr.type]="(passwordHidden | async) ? 'password' : 'text'"
               required
               formControlName="password"
               placeholder="Choose a password..."
+              i18n-placeholder
             >
             <button type="button"
               matSuffix
               mat-icon-button
-              [matTooltip]="(passwordHidden | async) ? 'Show' : 'Hide'"
+              [matTooltip]="(passwordTooltip | async) ?? ''"
               (click)="passwordHidden.next(!passwordHidden.value)"
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="form.controls['password'].hasError('minlength')">
+            <mat-error *ngIf="form.controls['password'].hasError('minlength')" i18n>
               Password must have at least 10 characters
             </mat-error>
             <mat-error *ngIf="form.controls['password'].hasError('server')">
@@ -119,11 +120,11 @@ import { environment } from 'src/environments/environment';
           </mat-form-field>
 
           <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">
-            <mat-spinner *ngIf="processing" diameter="18"></mat-spinner> Create account
+            <mat-spinner *ngIf="processing" diameter="18"></mat-spinner> <ng-container i18n>Create account</ng-container>
           </button>
         </form>
 
-        <h3 *ngSwitchCase="'success'">
+        <h3 *ngSwitchCase="'success'" i18n>
           New account created!<br>
           Please click the link in your email to confirm your registration.<br>
           Click <a routerLink="/account/email/login" [queryParams]="purchase ? { purchase: true } : {}">here</a> to login.
@@ -131,9 +132,11 @@ import { environment } from 'src/environments/environment';
 
         <h3 *ngSwitchCase="'error'">
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-          Sorry! Something went wrong.<br>
-          Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
-          If the problem persists please <a routerLink="/contact">contact us</a>.
+          <ng-container i18n>
+            Sorry! Something went wrong.<br>
+            Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
+            If the problem persists please <a routerLink="/contact">contact us</a>.
+          </ng-container>
         </h3>
       </ng-container>
     </app-container>
@@ -146,6 +149,7 @@ export class EmailRegisterComponent implements OnInit {
   });
   view = new BehaviorSubject<'init' | 'success' | 'error'>('init');
   passwordHidden = new BehaviorSubject(true);
+  passwordTooltip = this.passwordHidden.pipe(map(hidden => hidden ? $localize`Show` : $localize`Hide`));
   processing = false;
   purchase = false;
 

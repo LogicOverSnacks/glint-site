@@ -1,33 +1,33 @@
 <app-container [style.flex-direction]="(ltMd | async) ? 'column-reverse' : 'row'">
   <mat-card appearance="outlined" class="free">
-    <h2 class="mat-headline-4">Basic</h2>
+    <h2 class="mat-headline-4" i18n>Basic</h2>
 
-    <h3 class="price">Free</h3>
+    <h3 class="price" i18n>Free</h3>
 
     <a class="purchase-btn" routerLink="/download">
-      <button mat-stroked-button>
+      <button mat-stroked-button i18n>
         Download
       </button>
     </a>
 
     <ul class="features">
-      <li class="item"><mat-icon>public</mat-icon>Work with public &amp; private repositories</li>
-      <li class="item"><mat-icon>tab</mat-icon>Use up to two tabs simultaneously</li>
-      <li class="item"><mat-icon>dark_mode</mat-icon>Dark theme</li>
-      <li class="item"><mat-icon>commit</mat-icon>Visual commit graph</li>
-      <li class="item"><mat-icon>difference</mat-icon>Diffs with full syntax highlighting</li>
-      <li class="item"><mat-icon>build</mat-icon>Built-in merge conflict editor</li>
-      <li class="item"><mat-icon>layers</mat-icon>Work with submodules</li>
-      <li class="item"><mat-icon>compress</mat-icon>Squash commits</li>
-      <li class="item"><mat-icon>edit</mat-icon>Rewrite commit history</li>
-      <li class="item"><mat-icon>search</mat-icon>Search across file changes &amp; commits</li>
-      <li class="item"><mat-icon>visibility_off</mat-icon>Show/hide branches</li>
-      <li class="item"><mat-icon>merge_type</mat-icon>Manage multiple merges simultaneously</li>
-      <li class="item"><mat-icon>group</mat-icon>Quickly switch profiles</li>
-      <li class="item"><mat-icon>key</mat-icon>Manage credentials</li>
-      <li class="item"><mat-icon>description</mat-icon>File history / blame</li>
-      <li class="item"><mat-icon>undo</mat-icon>Undo mistakes</li>
-      <li class="item"><mat-icon>archive</mat-icon>Stash changes</li>
+      <li class="item"><mat-icon>public</mat-icon><ng-container i18n>Work with public &amp; private repositories</ng-container></li>
+      <li class="item"><mat-icon>tab</mat-icon><ng-container i18n>Use up to two tabs simultaneously</ng-container></li>
+      <li class="item"><mat-icon>dark_mode</mat-icon><ng-container i18n>Dark theme</ng-container></li>
+      <li class="item"><mat-icon>commit</mat-icon><ng-container i18n>Visual commit graph</ng-container></li>
+      <li class="item"><mat-icon>difference</mat-icon><ng-container i18n>Diffs with full syntax highlighting</ng-container></li>
+      <li class="item"><mat-icon>build</mat-icon><ng-container i18n>Built-in merge conflict editor</ng-container></li>
+      <li class="item"><mat-icon>layers</mat-icon><ng-container i18n>Work with submodules</ng-container></li>
+      <li class="item"><mat-icon>compress</mat-icon><ng-container i18n>Squash commits</ng-container></li>
+      <li class="item"><mat-icon>edit</mat-icon><ng-container i18n>Rewrite commit history</ng-container></li>
+      <li class="item"><mat-icon>search</mat-icon><ng-container i18n>Search across file changes &amp; commits</ng-container></li>
+      <li class="item"><mat-icon>visibility_off</mat-icon><ng-container i18n>Show/hide branches</ng-container></li>
+      <li class="item"><mat-icon>merge_type</mat-icon><ng-container i18n>Manage multiple merges simultaneously</ng-container></li>
+      <li class="item"><mat-icon>group</mat-icon><ng-container i18n>Quickly switch profiles</ng-container></li>
+      <li class="item"><mat-icon>key</mat-icon><ng-container i18n>Manage credentials</ng-container></li>
+      <li class="item"><mat-icon>description</mat-icon><ng-container i18n>File history / blame</ng-container></li>
+      <li class="item"><mat-icon>undo</mat-icon><ng-container i18n>Undo mistakes</ng-container></li>
+      <li class="item"><mat-icon>archive</mat-icon><ng-container i18n>Stash changes</ng-container></li>
       <!-- <li class="item">
         <span>
           <mat-icon>touch_app</mat-icon>
@@ -49,14 +49,14 @@
     </ul>
   </mat-card>
   <mat-card appearance="outlined" class="premium">
-    <h2 class="mat-headline-4">Premium</h2>
+    <h2 class="mat-headline-4" i18n>Premium</h2>
 
     <h3 class="price">
       {{price | async}} /
       <mat-form-field appearance="outline">
         <mat-select [formControl]="frequencyControl">
-          <mat-option value="month">Month</mat-option>
-          <mat-option value="year">Year</mat-option>
+          <mat-option value="month" i18n>Month</mat-option>
+          <mat-option value="year" i18n>Year</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field appearance="outline">
@@ -68,22 +68,22 @@
 
     <button class="purchase-btn" mat-stroked-button color="accent" [disabled]="purchaseInProgress | async" (click)="buyLicense()">
       <mat-spinner *ngIf="purchaseInProgress | async" diameter="18"></mat-spinner>
-      Buy License
+      <ng-container i18n>Buy License</ng-container>
     </button>
 
     <div class="errors" *ngIf="purchaseError | async as error">
       <mat-icon inline>warning</mat-icon>
-      There was a problem processing the request.
-      Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ error }}.
+      <ng-container i18n>
+        There was a problem processing the request.
+        Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ error }}.
+      </ng-container>
     </div>
 
     <ul class="features">
-      <li class="item highlight">
-        <mat-icon>check</mat-icon>All basic features
-      </li>
-      <li class="item"><mat-icon>tab</mat-icon>Unlimited tabs</li>
-      <li class="item"><mat-icon>light_mode</mat-icon>Light theme</li>
-      <li class="item"><mat-icon svgIcon="pull-request"></mat-icon>Manage pull requests</li>
+      <li class="item highlight"><mat-icon>check</mat-icon><ng-container i18n>All basic features</ng-container></li>
+      <li class="item"><mat-icon>tab</mat-icon><ng-container i18n>Unlimited tabs</ng-container></li>
+      <li class="item"><mat-icon>light_mode</mat-icon><ng-container i18n>Light theme</ng-container></li>
+      <li class="item"><mat-icon svgIcon="pull-request"></mat-icon><ng-container i18n>Manage pull requests</ng-container></li>
     </ul>
   </mat-card>
 </app-container>

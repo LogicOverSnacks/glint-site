@@ -2,7 +2,7 @@
   <div class="side-menu" [class.lt-md]="ltMd | async">
     <div class="fixed-container">
       <mat-expansion-panel *ngIf="ltMd | async; else topicsTemplate" [expanded]="false">
-        <mat-expansion-panel-header>Topics</mat-expansion-panel-header>
+        <mat-expansion-panel-header i18n>Topics</mat-expansion-panel-header>
         <ng-container *ngTemplateOutlet="topicsTemplate"></ng-container>
       </mat-expansion-panel>
 
@@ -31,13 +31,14 @@
   </article>
 </app-container>
 <!-- <mat-form-field floatLabel="always" appearance="outline">
-  <mat-label>Search</mat-label>
-  <input type="text" matInput [formControl]="search" placeholder="Search...">
+  <mat-label i18n>Search</mat-label>
+  <input type="text" matInput [formControl]="search" placeholder="Search..." i18n-placeholder>
   <button type="button"
     matSuffix
     mat-icon-button
     (click)="search.setValue(null)"
     matTooltip="Clear"
+    i18n-matTooltip
   >
     <mat-icon>close</mat-icon>
   </button>

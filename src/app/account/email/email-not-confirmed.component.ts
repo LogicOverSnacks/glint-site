@@ -43,11 +43,11 @@ import { BaseComponent } from '../../shared';
   `],
   template: `
     <app-container>
-      <header class="mat-headline-3 title">Email Not Confirmed</header>
+      <header class="mat-headline-3 title" i18n>Email Not Confirmed</header>
 
       <ng-container [ngSwitch]="view | async">
         <ng-container *ngSwitchCase="'init'">
-          <h3>
+          <h3 i18n>
             Your email has not yet been confirmed.<br>
             Please check your email for the confirmation link, including in any spam folders.<br>
             Please click <span class="reset" (click)="requestNewCode()">here</span> to resend the confirmation email.<br>
@@ -55,23 +55,27 @@ import { BaseComponent } from '../../shared';
         </ng-container>
 
         <ng-container *ngSwitchCase="'processing'">
-          <h3>Processing...</h3>
+          <h3 i18n>Processing...</h3>
         </ng-container>
 
         <ng-container *ngSwitchCase="'invalid'">
           <h3>
             <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-            The email '{{email}}' is already confirmed or doesn't have an account associated with it.<br>
-            Please click <a routerLink="/account/login">here</a> to login.<br>
+            <ng-container i18n>
+              The email '{{email}}' is already confirmed or doesn't have an account associated with it.<br>
+              Please click <a routerLink="/account/login">here</a> to login.<br>
+            </ng-container>
           </h3>
         </ng-container>
 
         <ng-container *ngSwitchCase="'error'">
           <h3>
             <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-            Sorry! Something went wrong.<br>
-            Please click <span class="reset" (click)="requestNewCode()">here</span> to try again.<br>
-            If the problem persists please <a routerLink="/contact">contact us</a>.
+            <ng-container i18n>
+              Sorry! Something went wrong.<br>
+              Please click <span class="reset" (click)="requestNewCode()">here</span> to try again.<br>
+              If the problem persists please <a routerLink="/contact">contact us</a>.
+            </ng-container>
           </h3>
         </ng-container>
       </ng-container>

@@ -71,19 +71,19 @@ import { ContainerComponent } from '../shared/container.component';
   `],
   template: `
   <app-container>
-    <h1 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'">Contact</h1>
+    <h1 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Contact</h1>
 
     <div class="discord-btn">
       <a target="_blank" href="https://discord.gg/wXv8WUeFYZ" mat-stroked-button>
-        <img src="assets/discord.svg" alt="Join Discord"> <span class="white">|</span> Join
+        <img src="assets/discord.svg" alt="Join Discord" i18n-alt> <span class="white">|</span> <ng-container i18n>Join</ng-container>
       </a>
     </div>
 
-    <h2>Alternatively:</h2>
+    <h2 i18n>Alternatively:</h2>
 
-    <h3>General Help: <a href="mailto:help@glint.info">help@glint.info</a></h3>
-    <h3>Legal Questions: <a href="mailto:legal@glint.info">legal@glint.info</a></h3>
-    <h3>Sales Enquiries: <a href="mailto:sales@glint.info">sales@glint.info</a></h3>
+    <h3><ng-container i18n>General Help:</ng-container> <a href="mailto:help@glint.info">help@glint.info</a></h3>
+    <h3><ng-container i18n>Legal Questions:</ng-container> <a href="mailto:legal@glint.info">legal@glint.info</a></h3>
+    <h3><ng-container i18n>Sales Enquiries:</ng-container> <a href="mailto:sales@glint.info">sales@glint.info</a></h3>
   </app-container>
   `
 })

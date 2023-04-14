@@ -68,45 +68,45 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
   /* eslint-disable @typescript-eslint/naming-convention */
   topics = [
     {
-      title: 'Get Started',
+      title: $localize`Get Started`,
       articles: [
-        { title: 'Overview', file: 'get_started' },
-        { title: 'Installation', file: 'installation' },
-        { title: 'Troubleshooting', file: 'troubleshooting' }
+        { title: $localize`Overview`, file: $localize`get_started` },
+        { title: $localize`Installation`, file: $localize`installation` },
+        { title: $localize`Troubleshooting`, file: $localize`troubleshooting` }
       ]
     },
     {
-      title: 'User Interface',
+      title: $localize`User Interface`,
       articles: [
-        { title: 'Overview', file: 'user_interface' },
-        { title: 'Diff View', file: 'user_interface-diff_view' },
-        // { title: 'Commit View', file: 'user_interface-commit_view' },
-        { title: 'Merge View', file: 'user_interface-merge_view' },
-        { title: 'Pull Request View', file: 'user_interface-pull_request_view' },
-        { title: 'Search View', file: 'user_interface-search_view' },
-        // { title: 'Settings View', file: 'user_interface-settings_view' },
+        { title: $localize`Overview`, file: $localize`user_interface` },
+        { title: $localize`Diff View`, file: $localize`user_interface-diff_view` },
+        // { title: $localize`Commit View`, file: $localize`user_interface-commit_view` },
+        { title: $localize`Merge View`, file: $localize`user_interface-merge_view` },
+        { title: $localize`Pull Request View`, file: $localize`user_interface-pull_request_view` },
+        { title: $localize`Search View`, file: $localize`user_interface-search_view` },
+        // { title: $localize`Settings View`, file: $localize`user_interface-settings_view` },
       ]
     },
     {
-      title: 'Configuration',
+      title: $localize`Configuration`,
       articles: [
-        { title: 'Cloud Integrations', file: 'cloud_integrations' },
-        { title: 'Credentials', file: 'credentials' },
-        { title: 'Profiles', file: 'profiles' },
+        { title: $localize`Cloud Integrations`, file: $localize`cloud_integrations` },
+        { title: $localize`Credentials`, file: $localize`credentials` },
+        { title: $localize`Profiles`, file: $localize`profiles` },
       ]
     },
     // {
-    //   title: 'Merges',
+    //   title: $localize`Merges`,
     //   articles: [
-    //     { title: '', file: '' }
+    //     { title: $localize``, file: $localize`` }
     //   ]
     // },
     // {
-    //   title: 'Submodules',
+    //   title: $localize`Submodules`,
     //   articles: [
-    //     { title: 'Add', file: 'add-a-submodule' },
-    //     { title: 'Open', file: 'open-a-submodule' },
-    //     { title: 'Remove', file: 'remove-a-submodule' }
+    //     { title: $localize`Add`, file: $localize`add-a-submodule` },
+    //     { title: $localize`Open`, file: $localize`open-a-submodule` },
+    //     { title: $localize`Remove`, file: $localize`remove-a-submodule` }
     //   ]
     // }
   ];

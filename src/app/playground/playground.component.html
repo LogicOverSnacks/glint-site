@@ -1,9 +1,9 @@
 <app-container>
   <main *ngIf="(ltMd | async) === false">
     <header>
-      <div class="mat-headline-3 title">Play with Glint below:</div>
+      <div class="mat-headline-3 title" i18n>Play with Glint below:</div>
 
-      <p>
+      <p i18n>
         Note: certain features are disabled and will do nothing - don't worry they will be available in the downloaded app!
       </p>
     </header>
@@ -15,10 +15,10 @@
   </main>
 
   <main *ngIf="ltMd | async">
-    <p>
+    <p i18n>
       Your device is too small to use the playground.
     </p>
-    <p>
+    <p i18n>
       Try opening this page on a desktop computer to play with the demo.
     </p>
   </main>

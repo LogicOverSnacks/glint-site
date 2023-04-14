@@ -46,7 +46,7 @@ export class ReferralsComponent extends BaseComponent implements OnInit {
           this.processing.next(false);
 
           this.error.next(response.status >= 500
-            ? `There was a problem processing the request. Please email support at help@glint.info`
+            ? $localize`There was a problem processing the request. Please email support at help@glint.info`
             : response.error.message
           );
           this.view.next('error');
@@ -79,7 +79,7 @@ export class ReferralsComponent extends BaseComponent implements OnInit {
           this.processing.next(false);
 
           this.error.next(response.status >= 500
-            ? `There was a problem processing the request. Please email support at help@glint.info`
+            ? $localize`There was a problem processing the request. Please email support at help@glint.info`
             : response.error.message
           );
           this.view.next('error');
@@ -104,7 +104,7 @@ export class ReferralsComponent extends BaseComponent implements OnInit {
           this.processing.next(false);
 
           this.error.next(response.status >= 500
-            ? `There was a problem processing the request. Please email support at help@glint.info`
+            ? $localize`There was a problem processing the request. Please email support at help@glint.info`
             : response.error.message
           );
           this.view.next('error');

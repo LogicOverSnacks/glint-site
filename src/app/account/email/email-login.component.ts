@@ -11,7 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, EMPTY, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 
 import { ApiService } from 'src/app/shared/api.service';
 import { ContainerComponent } from 'src/app/shared/container.component';
@@ -85,14 +85,14 @@ import { environment } from 'src/environments/environment';
   `],
   template: `
     <app-container>
-      <header class="mat-headline-3 title">Login</header>
+      <header class="mat-headline-3 title" i18n>Login</header>
 
       <ng-container [ngSwitch]="view | async">
         <form *ngSwitchCase="'init'" (ngSubmit)="login()">
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input type="email" matInput required [formControl]="emailControl" placeholder="Enter your email address...">
-            <mat-error *ngIf="emailControl.hasError('invalid')">
+            <mat-label i18n>Email</mat-label>
+            <input type="email" matInput required [formControl]="emailControl" placeholder="Enter your email address..." i18n-placeholder>
+            <mat-error *ngIf="emailControl.hasError('invalid')" i18n>
               Invalid email address
             </mat-error>
             <mat-error *ngIf="emailControl.hasError('server')">
@@ -101,22 +101,23 @@ import { environment } from 'src/environments/environment';
           </mat-form-field>
 
           <mat-form-field class="form-field" appearance="outline">
-            <mat-label>Password</mat-label>
+            <mat-label i18n>Password</mat-label>
             <input matInput
               [attr.type]="(passwordHidden | async) ? 'password' : 'text'"
               required
               [formControl]="passwordControl"
               placeholder="Enter your password..."
+              i18n-placeholder
             >
             <button type="button"
               matSuffix
               mat-icon-button
-              [matTooltip]="(passwordHidden | async) ? 'Show' : 'Hide'"
+              [matTooltip]="(passwordTooltip | async) ?? ''"
               (click)="passwordHidden.next(!passwordHidden.value)"
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl.hasError('invalid') || passwordControl.hasError('minlength')">
+            <mat-error *ngIf="passwordControl.hasError('invalid') || passwordControl.hasError('minlength')" i18n>
               Password must have at least 10 characters
             </mat-error>
             <mat-error *ngIf="passwordControl.hasError('server')">
@@ -125,29 +126,33 @@ import { environment } from 'src/environments/environment';
           </mat-form-field>
 
           <button type="submit" class="submit-btn" mat-stroked-button [disabled]="processing">
-            <mat-spinner *ngIf="processing" diameter="18"></mat-spinner> Login
+            <mat-spinner *ngIf="processing" diameter="18"></mat-spinner> <ng-container i18n>Login</ng-container>
           </button>
 
-          <p>Forgot your password? Click <a routerLink="/account/email/lost-password">here</a> to reset it.</p>
-          <p>Don't have an account? Click <a routerLink="/account/email/register">here</a> to register.</p>
+          <p i18n>Forgot your password? Click <a routerLink="/account/email/lost-password">here</a> to reset it.</p>
+          <p i18n>Don't have an account? Click <a routerLink="/account/email/register">here</a> to register.</p>
         </form>
 
-        <h3 *ngSwitchCase="'success'">
+        <h3 *ngSwitchCase="'success'" i18n>
           Logged in successfully!<br>
           Redirecting...
         </h3>
 
         <h3 *ngSwitchCase="'error'">
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-          Sorry! Something went wrong.<br>
-          Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
-          If the problem persists please <a routerLink="/contact">contact us</a>.
+          <ng-container i18n>
+            Sorry! Something went wrong.<br>
+            Please click <span class="reset" (click)="reset()">here</span> to try again.<br>
+            If the problem persists please <a routerLink="/contact">contact us</a>.
+          </ng-container>
         </h3>
 
         <h3 *ngSwitchCase="'purchase-error'">
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-          There was a problem processing the request.<br>
-          Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ purchaseError | async }}.
+          <ng-container i18n>
+            There was a problem processing the request.<br>
+            Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ purchaseError | async }}.
+          </ng-container>
         </h3>
       </ng-container>
     </app-container>
@@ -158,6 +163,7 @@ export class EmailLoginComponent {
   passwordControl = new FormControl<string | null>(null, [Validators.required, Validators.minLength(10)]);
   view = new BehaviorSubject<'init' | 'success' | 'error' | 'purchase-error'>('init');
   passwordHidden = new BehaviorSubject(true);
+  passwordTooltip = this.passwordHidden.pipe(map(hidden => hidden ? $localize`Show` : $localize`Hide`));
   purchaseError = new BehaviorSubject<string | null>(null);
   processing = false;
 

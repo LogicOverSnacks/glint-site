@@ -20,8 +20,8 @@ import { RouterModule } from '@angular/router';
     a { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
   `],
   template: `
-    <header class="mat-headline-3 title">403 Unauthorized</header>
-    <h3>Sorry! You are not authorized to view this page. Click <a routerLink="/account/login">here</a> to login.</h3>
+    <header class="mat-headline-3 title" i18n>403 Unauthorized</header>
+    <h3 i18n>Sorry! You are not authorized to view this page. Click <a routerLink="/account/login">here</a> to login.</h3>
   `
 })
 export class UnauthorizedComponent {}

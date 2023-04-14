@@ -36,12 +36,14 @@ import { RouterModule } from '@angular/router';
     }
   `],
   template: `
-    <div matSnackBarLabel>
+    <div matSnackBarLabel i18n>
       This site uses cookies from Google to deliver its services and to analyze traffic.
     </div>
     <footer matSnackBarActions>
-      <button type="button" mat-button matSnackBarAction class="details-btn" routerLink="/cookies">More Details</button>
-      <button type="button" mat-button matSnackBarAction class="dismiss-btn" (click)="snackBarRef.dismissWithAction()">OK, got it</button>
+      <button type="button" mat-button matSnackBarAction class="details-btn" routerLink="/cookies" i18n>More Details</button>
+      <button type="button" mat-button matSnackBarAction class="dismiss-btn" (click)="snackBarRef.dismissWithAction()" i18n>
+        OK, got it
+      </button>
     </footer>
   `,
 })

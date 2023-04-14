@@ -9,7 +9,7 @@ export default [
   {
     path: ':file',
     component: DocsComponent,
-    data: { title: '${toTitle(file)} - Docs' },
+    data: { title: `\${toTitle(file)} - ${$localize`Docs`}` },
     providers: [
       importProvidersFrom(MarkdownModule.forRoot({ sanitize: SecurityContext.NONE }))
     ],

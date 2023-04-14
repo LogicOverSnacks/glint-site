@@ -106,7 +106,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
         titleService.setTitle(title
           ? `${title} - Glint`
-          : `Glint: A Graphical Interface for Git`
+          : $localize`Glint: A Graphical Interface for Git`
         );
 
         canonicalService.updateCanonicalLink();

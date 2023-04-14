@@ -1,13 +1,23 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
 import { BehaviorSubject, catchError, combineLatest, finalize, Observable, Subject, switchMap, takeUntil, throwError } from 'rxjs';
 import { map, startWith, tap } from 'rxjs/operators';
 
+import { ContainerComponent } from 'src/app/shared/container.component';
 import { BaseComponent } from '../../shared';
 import { ApiService } from '../../shared/api.service';
 import { Currency, CurrencyService } from '../../shared/currency.service';
@@ -15,16 +25,6 @@ import { PriceService } from '../../shared/price.service';
 import { AuthSubscription } from '../../shared/models/subscriptions';
 import { AuthState, Logout } from '../../state/auth.state';
 import { UserVm } from '../../state/user.vm';
-import { CommonModule } from '@angular/common';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { ContainerComponent } from 'src/app/shared/container.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatCardModule } from '@angular/material/card';
-import { MatSelectModule } from '@angular/material/select';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -172,7 +172,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             this.router.navigate(['/account/email/not-confirmed']);
           } else {
             this.purchaseError.next(
-              `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
+              $localize`There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
             );
           }
 
@@ -197,7 +197,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       .pipe(
         catchError((response: HttpErrorResponse) => {
           if (response.status === 400 && response.error.reason === 'invalid') {
-            this.manageError.next(`You have no payment details to manage. Please purchase a subscription first.`);
+            this.manageError.next($localize`You have no payment details to manage. Please purchase a subscription first.`);
             return throwError(() => response);
           }
 
@@ -206,7 +206,7 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
             : '500MA';
 
           this.manageError.next(
-            `There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
+            $localize`There was a problem processing the request. Please email support at help@glint.info quoting code ${code}.`
           );
           this.processing.next(false);
 
@@ -240,13 +240,13 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
           } else if (response.status === 403) {
             this.assignEmailControl.setErrors({
               // eslint-disable-next-line max-len
-              server: ['Unable to find available subscriptions, please check your payment settings are in working order by clicking the Manage Payments button above. If the problem persists email help@glint.info for support.']
+              server: [$localize`Unable to find available subscriptions, please check your payment settings are in working order by clicking the Manage Payments button above. If the problem persists email help@glint.info for support.`]
             });
           }
 
           if (this.totalPurchased <= this.assigned.length) {
             // in this case, the errors are not visible as the assign email form is hidden
-            this.snackBar.open(this.assignEmailControl.getError('server').join(', '), 'Close', { panelClass: 'error' });
+            this.snackBar.open(this.assignEmailControl.getError('server').join(', '), $localize`Close`, { panelClass: 'error' });
           }
 
           this.cdr.markForCheck();
@@ -261,9 +261,9 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
         this.refresh$.next();
         this.snackBar.open(
           self
-            ? `Thank you for your purchase! You will need to logout of Glint and back in again to activate.`
-            : `Subscription assigned for '${email}'. The user needs to logout of Glint and back in again to activate.`,
-          'Close',
+            ? $localize`Thank you for your purchase! You will need to logout of Glint and back in again to activate.`
+            : $localize`Subscription assigned for '${email}'. The user needs to logout of Glint and back in again to activate.`,
+          $localize`Close`,
           { panelClass: 'success' }
         );
       });
@@ -291,4 +291,8 @@ export class ManageAccountComponent extends BaseComponent implements OnInit {
       this.router.navigate(['/account/login']);
     });
   }
+
+  unassignTooltip = (activated: boolean) => activated
+    ? $localize`Unassign subscription at the end of the billing period`
+    : $localize`Unassign subscription`;
 }

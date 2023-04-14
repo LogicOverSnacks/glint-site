@@ -94,29 +94,32 @@ interface ProviderDetails {
   `],
   template: `
     <app-container>
-      <header class="mat-headline-3 title">Login with {{type}}</header>
+      <header class="mat-headline-3 title" i18n>Login with {{type}}</header>
 
       <ng-container [ngSwitch]="view | async">
-        <h3 *ngSwitchCase="'init'">Loading...</h3>
+        <h3 *ngSwitchCase="'init'" i18n>Loading...</h3>
 
         <ng-container *ngSwitchCase="'success'">
           <h3>
             <mat-icon color="primary" class="success-icon">done</mat-icon><br>
-            Logged in successfully!<br>
-            You should now be redirected back to Glint.<br>
+            <ng-container i18n>
+              Logged in successfully!<br>
+              You should now be redirected back to Glint.<br>
+            </ng-container>
           </h3>
 
           <div class="authorization-code" @fadeIn>
-            If that didn't work, you can paste this authorization code into Glint directly:
+          <ng-container i18n>If that didn't work, you can paste this authorization code into Glint directly:</ng-container>
 
             <mat-form-field appearance="outline">
-              <mat-label>Authorization Code</mat-label>
+              <mat-label i18n>Authorization Code</mat-label>
               <input matInput readonly [value]="code">
               <mat-icon
                 matSuffix
                 (click)="copyCode(tooltip)"
                 (mouseenter)="$event.stopImmediatePropagation()"
                 matTooltip="Authorization Code Copied!"
+                i18n-matTooltip
                 #tooltip="matTooltip"
               >content_copy</mat-icon>
             </mat-form-field>
@@ -126,14 +129,18 @@ interface ProviderDetails {
         <h3 *ngSwitchCase="'error'">
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
           {{error | async}}<br>
-          Please click <a class="link" routerLink="/account/login">here</a> to try again.<br>
-          If the problem persists please <a routerLink="/contact">contact us</a>.
+          <ng-container i18n>
+            Please click <a class="link" routerLink="/account/login">here</a> to try again.<br>
+            If the problem persists please <a routerLink="/contact">contact us</a>.
+          </ng-container>
         </h3>
 
         <h3 *ngSwitchCase="'purchase-error'">
           <mat-icon color="warn" class="error-icon">warning</mat-icon><br>
-          There was a problem processing the request.<br>
-          Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ purchaseError | async }}.
+          <ng-container i18n>
+            There was a problem processing the request.<br>
+            Please <a class="link" routerLink="/contact">contact us</a> quoting code {{ purchaseError | async }}.
+          </ng-container>
         </h3>
       </ng-container>
     </app-container>
@@ -181,7 +188,7 @@ export class OAuthLoginComponent implements OnInit {
   type!: string;
   code?: string;
   view = new BehaviorSubject<'init' | 'success' | 'error' | 'purchase-error'>('init');
-  error = new BehaviorSubject('Sorry! Something went wrong.');
+  error = new BehaviorSubject($localize`Sorry! Something went wrong.`);
   purchaseError = new BehaviorSubject<string | null>(null);
 
   constructor(
@@ -199,15 +206,15 @@ export class OAuthLoginComponent implements OnInit {
 
     if (!['bitbucket', 'github', 'gitlab', 'google'].includes(type)) {
       this.type = type;
-      this.error.next(`Invalid url segment: ${type}`);
+      this.error.next($localize`Invalid url segment: ${type}`);
       this.view.next('error');
       return;
     }
 
-    this.type = type === 'bitbucket' ? 'Bitbucket'
-      : type === 'github' ? 'GitHub'
-      : type === 'gitlab' ? 'GitLab'
-      : type === 'google' ? 'Google'
+    this.type = type === 'bitbucket' ? $localize`Bitbucket`
+      : type === 'github' ? $localize`GitHub`
+      : type === 'gitlab' ? $localize`GitLab`
+      : type === 'google' ? $localize`Google`
       : type;
 
     const provider = OAuthLoginComponent.providers[type];
@@ -295,9 +302,9 @@ export class OAuthLoginComponent implements OnInit {
         : null;
 
       if (!login) {
-        this.error.next(`Invalid url segment: ${type}`);
+        this.error.next($localize`Invalid url segment: ${type}`);
         this.view.next('error');
-        throw new Error(`Invalid url segment: ${type}`);
+        throw new Error($localize`Invalid url segment: ${type}`);
       }
 
       login
@@ -306,7 +313,7 @@ export class OAuthLoginComponent implements OnInit {
             if (response.status === 400 || response.status === 403)
               this.error.next(response.error.message);
             else
-              this.error.next('Sorry! Something went wrong.');
+              this.error.next($localize`Sorry! Something went wrong.`);
 
             this.view.next('error');
             return EMPTY;

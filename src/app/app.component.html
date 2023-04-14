@@ -6,7 +6,7 @@
     </a>
 
     <div *ngIf="ltMd | async; else links">
-      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Show/Hide Menu">
+      <button mat-icon-button (click)="sidenav.toggle()" aria-label="Show/Hide Menu" i18n-aria-label>
         <mat-icon>menu</mat-icon>
       </button>
     </div>
@@ -14,19 +14,20 @@
 
   <ng-template #links>
     <ul class="links">
-      <li><a routerLink="/contact" routerLinkActive="active">Contact</a></li>
-      <li><a routerLink="/docs" routerLinkActive="active">Docs</a></li>
-      <li><a routerLink="/faq" routerLinkActive="active">FAQ</a></li>
-      <li><a routerLink="/features" routerLinkActive="active">Features</a></li>
-      <li><a routerLink="/playground" routerLinkActive="active">Playground</a></li>
-      <li><a href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a></li>
+      <li><a routerLink="/contact" routerLinkActive="active" i18n>Contact</a></li>
+      <li><a routerLink="/docs" routerLinkActive="active" i18n>Docs</a></li>
+      <li><a routerLink="/faq" routerLinkActive="active" i18n>FAQ</a></li>
+      <li><a routerLink="/features" routerLinkActive="active" i18n>Features</a></li>
+      <li><a routerLink="/playground" routerLinkActive="active" i18n>Playground</a></li>
+      <li><a href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank" i18n>Updates</a></li>
     </ul>
 
     <div class="end-links">
-      <a class="account-link" routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
+      <a class="account-link" routerLink="/account" routerLinkActive="active" *ngIf="user | async" i18n>My Account</a>
+      <a class="account-link" routerLink="/account" routerLinkActive="active" *ngIf="(user | async) === null" i18n>Login/Register</a>
       <a routerLink="/download">
         <button mat-flat-button class="download-button" color="accent">
-          Download
+          <ng-container i18n>Download</ng-container>
           <mat-icon>file_download</mat-icon>
         </button>
       </a>
@@ -44,13 +45,14 @@
     #sidenav
   >
     <mat-nav-list>
-      <a mat-list-item routerLink="/download" routerLinkActive="active">Download</a>
-      <a mat-list-item routerLink="/contact" routerLinkActive="active">Contact</a>
-      <a mat-list-item routerLink="/docs" routerLinkActive="active">Docs</a>
-      <a mat-list-item routerLink="/faq" routerLinkActive="active">FAQ</a>
-      <a mat-list-item routerLink="/features" routerLinkActive="active">Features</a>
-      <a mat-list-item href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank">Updates</a>
-      <a mat-list-item routerLink="/account" routerLinkActive="active">{{ (user | async) ? 'My Account' : 'Login/Register'}}</a>
+      <a mat-list-item routerLink="/download" routerLinkActive="active" i18n>Download</a>
+      <a mat-list-item routerLink="/contact" routerLinkActive="active" i18n>Contact</a>
+      <a mat-list-item routerLink="/docs" routerLinkActive="active" i18n>Docs</a>
+      <a mat-list-item routerLink="/faq" routerLinkActive="active" i18n>FAQ</a>
+      <a mat-list-item routerLink="/features" routerLinkActive="active" i18n>Features</a>
+      <a mat-list-item href="https://github.com/LogicOverSnacks/glint-release/releases" target="_blank" i18n>Updates</a>
+      <a mat-list-item routerLink="/account" routerLinkActive="active" *ngIf="user | async" i18n>My Account</a>
+      <a mat-list-item routerLink="/account" routerLinkActive="active" *ngIf="(user | async) === null" i18n>Login/Register</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -58,8 +60,10 @@
 
     <footer>
       <hr>
-      By downloading and using Glint, you agree to the <a routerLink="eula">license agreement</a>, <a routerLink="/terms">terms of service</a> and <a routerLink="/privacy">privacy policy</a>.<br>
-      © {{ currentYear }} Logic Over Snacks Ltd.
+      <ng-container i18n>
+        By downloading and using Glint, you agree to the <a routerLink="eula">license agreement</a>, <a routerLink="/terms">terms of service</a> and <a routerLink="/privacy">privacy policy</a>.<br>
+        © {{ currentYear }} Logic Over Snacks Ltd.
+      </ng-container>
       <hr>
     </footer>
   </mat-sidenav-content>
