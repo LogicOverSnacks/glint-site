@@ -11,7 +11,7 @@
     "lint": "ng lint",
     "stage": "npm run build && firebase deploy -P staging",
     "update:releases": "env-cmd --no-override --silent node ./scripts/update-releases.mjs",
-    "extract:i18n": "ng extract-i18n --output-path src/locale"
+    "i18n": "ng extract-i18n --output-path src/locale"
   },
   "private": true,
   "dependencies": {
