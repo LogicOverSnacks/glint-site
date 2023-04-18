@@ -37,7 +37,7 @@
           <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="Manage multiple merges simultaneously" i18n-alt>
           <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="Rewrite commit history" i18n-alt>
           <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="Move branches manually" i18n-alt>
-          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="Resolve merge conflicts 4-way" i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="Resolve merge conflicts 3-way" i18n-alt>
         </div>
       </div>
       <div>
@@ -60,7 +60,7 @@
           </li>
           <li (mouseenter)="currentFeature.next('resolve')">
             <mat-icon>build</mat-icon>
-            <ng-container i18n>Resolve merge conflicts 4-way</ng-container>
+            <ng-container i18n>Resolve merge conflicts 3-way</ng-container>
           </li>
           <!-- <li><mat-icon>compress</mat-icon><ng-container i18n>Squash commits</ng-container></li> -->
         </ul>

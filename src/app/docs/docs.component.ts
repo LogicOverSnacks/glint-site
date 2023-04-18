@@ -57,7 +57,7 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
   expansionPanels!: QueryList<MatExpansionPanel>;
 
   // search = new FormControl<string | null>(null);
-  article = new BehaviorSubject('');
+  articleContent = new BehaviorSubject('');
   headings = new BehaviorSubject<Heading[]>([]);
   loading = new BehaviorSubject(false);
 
@@ -123,14 +123,14 @@ export class DocsComponent extends BaseComponent implements OnInit, AfterViewIni
   ) { super(); }
 
   ngOnInit() {
-    this.article
+    this.articleContent
       .pipe(takeUntil(this.destroyed$))
       .subscribe(() => this.loading.next(true));
 
     this.route.data
       .pipe(takeUntil(this.destroyed$))
       .subscribe(data => {
-        this.article.next(data.doc ?? '');
+        this.articleContent.next(data.doc ?? '');
       });
 
     this.route.fragment

@@ -27,7 +27,7 @@
   </div>
   <article>
     <mat-spinner *ngIf="loading | async"></mat-spinner>
-    <markdown #markdown [data]="(article | async) ?? undefined" (ready)="loaded()" (click)="markdownClicked($event)"></markdown>
+    <markdown #markdown [data]="(articleContent | async) ?? undefined" (ready)="loaded()" (click)="markdownClicked($event)"></markdown>
   </article>
 </app-container>
 <!-- <mat-form-field floatLabel="always" appearance="outline">

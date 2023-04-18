@@ -134,6 +134,9 @@
             },
             "development": {
               "browserTarget": "glint-site:build:development"
+            },
+            "development-zh": {
+              "browserTarget": "glint-site:build:development-zh"
             }
           },
           "defaultConfiguration": "development"
