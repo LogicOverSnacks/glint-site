@@ -1184,7 +1184,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="9113665197285449379" datatype="html">
-        <source> By downloading and using Glint, you agree to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;eula&quot;&gt;" />license agreement<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />, <x id="START_LINK_1" equiv-text="&lt;a routerLink=&quot;/terms&quot;&gt;" />terms of service<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> and <x id="START_LINK_2" equiv-text="&lt;a routerLink=&quot;/privacy&quot;&gt;" />privacy policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;" /> © <x id="INTERPOLATION" equiv-text="{{ currentYear }}" /> Logic Over Snacks Ltd. </source><target>下载和使用 Glint，即表示您同意 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;eula&quot;&gt;" />许可协议<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />, <x id="START_LINK_1" equiv-text="&lt;a routerLink=&quot;/terms&quot;&gt;" />服务条款<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> 和 <x id="START_LINK_2" equiv-text="&lt;a routerLink=&quot;/privacy&quot;&gt;" />隐私政策<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />。<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;" /> ©<x id="INTERPOLATION" equiv-text="{{ currentYear }}" /> Logic Over Snacks Ltd.</target>
+        <source> By downloading and using Glint, you agree to the <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;eula&quot;&gt;" />license agreement<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />, <x id="START_LINK_1" equiv-text="&lt;a routerLink=&quot;/terms&quot;&gt;" />terms of service<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> and <x id="START_LINK_2" equiv-text="&lt;a routerLink=&quot;/privacy&quot;&gt;" />privacy policy<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;" /> © <x id="INTERPOLATION" equiv-text="{{ currentYear }}" /> Logic Over Snacks Ltd. </source><target>下载和使用 Glint，即表示您同意 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;eula&quot;&gt;" />许可协议<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />、<x id="START_LINK_1" equiv-text="&lt;a routerLink=&quot;/terms&quot;&gt;" />服务条款<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> 和 <x id="START_LINK_2" equiv-text="&lt;a routerLink=&quot;/privacy&quot;&gt;" />隐私政策<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" />。<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;" /> ©<x id="INTERPOLATION" equiv-text="{{ currentYear }}" /> Logic Over Snacks Ltd.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/app.component.html</context>
           <context context-type="linenumber">64,66</context>
@@ -1503,14 +1503,14 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1724681620088510181" datatype="html">
-        <source>Cloud Integrations</source><target>云集成</target>
+        <source>Cloud Integrations</source><target>云整合</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/docs.component.ts</context>
           <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6614201052306036951" datatype="html">
-        <source>cloud_integrations</source><target>云集成</target>
+        <source>cloud_integrations</source><target>云整合</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/docs/docs.component.ts</context>
           <context context-type="linenumber">93</context>
@@ -1587,7 +1587,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4653377858985570861" datatype="html">
-        <source> Windows, macOS, and Linux. Only x64 systems and Apple M1 (arm64) are supported. The application is designed for use on desktop computers, and so there is no version available for mobile devices or web browsers. The <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/playground&quot; class=&quot;link&quot;&gt;" />playground<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> is a partially working online version that you can try without downloading the app. </source><target>Windows，macOS 和 Linux。仅支持 x64 和 Apple M1 (arm64) 操作系统。该应用程序专为在台式计算机上使用而设计，因此没有适用于移动设备或网络浏览器的版本。这 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/playground&quot; class=&quot;link&quot;&gt;" />测试环境<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> 是一个部分可用的在线版本，您无需下载该应用程序即可试用。</target>
+        <source> Windows, macOS, and Linux. Only x64 systems and Apple M1 (arm64) are supported. The application is designed for use on desktop computers, and so there is no version available for mobile devices or web browsers. The <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/playground&quot; class=&quot;link&quot;&gt;" />playground<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> is a partially working online version that you can try without downloading the app. </source><target>Windows、macOS 和 Linux。仅支持 x64 和 Apple M1 (arm64) 操作系统。该应用程序专为在台式计算机上使用而设计，因此没有适用于移动设备或网络浏览器的版本。这 <x id="START_LINK" ctype="x-a" equiv-text="&lt;a routerLink=&quot;/playground&quot; class=&quot;link&quot;&gt;" />测试环境<x id="CLOSE_LINK" ctype="x-a" equiv-text="&lt;/a&gt;" /> 是一个部分可用的在线版本，您无需下载该应用程序即可试用。</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/faq/faq.component.ts</context>
           <context context-type="linenumber">74,79</context>
@@ -1958,7 +1958,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7524684434559113932" datatype="html">
-        <source>Resolve merge conflicts 3-way</source><target>3方合并冲突解决</target>
+        <source>Resolve merge conflicts 3-way</source><target>解决合并冲突 3 向</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/home/home.component.html</context>
           <context context-type="linenumber">40</context>
@@ -2138,6 +2138,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/routes.ts</context>
           <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4315592540095527174" datatype="html">
+        <source>docs/get_started</source><target>docs/开始</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/routes.ts</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5958239988842910864" datatype="html">

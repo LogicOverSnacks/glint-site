@@ -25,7 +25,7 @@ export default [
     loadComponent: () => import('./cookies/cookies.component').then(m => m.CookiesComponent),
     data: { title: $localize`Cookie Policy` }
   },
-  { path: 'docs', pathMatch: 'full', redirectTo: 'docs/get_started' },
+  { path: 'docs', pathMatch: 'full', redirectTo: $localize`docs/get_started` },
   { path: 'docs', loadChildren: () => import('./docs/routes'), data: { title: `\${toTitle(file)} - ${$localize`Docs`}` } },
   {
     path: 'download',
