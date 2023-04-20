@@ -94,6 +94,10 @@ article {
       background: #1e1e1e;
       padding: 5px 10px;
 
+      code {
+        font-family: Monaco, Menlo, Consolas, "Droid Sans Mono", "Inconsolata", "Courier New", monospace;
+      }
+
       .language-bash::before {
         content: '$';
         color: mat.get-color-from-palette(map.get(mat.get-color-config(theme.$app-theme), foreground), disabled);
