@@ -9,10 +9,21 @@
     "i18n": {
       "root": "/"
     },
+    "redirects": [
+      {
+        "regex": "^/(?P<url>([^e][^h]|[^z][^n]).*|.)$",
+        "destination": "/en/:url",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
-        "source": "**",
-        "destination": "/index.html"
+        "source": "en/**",
+        "destination": "/en/index.html"
+      },
+      {
+        "source": "zh/**",
+        "destination": "/zh/index.html"
       }
     ],
     "headers": [
