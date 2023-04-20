@@ -17,11 +17,11 @@ This section shows all commits where the search query matches one of:
 * author name or email
 * commit message
 
-The commit message is shown at the top, followed by the author and commit id. Clicking on the commit id will jump to that id in the main view.
+The commit message is shown at the top, followed by the author and commit id. Clicking on the commit id will jump to that commit in the main view.
 
 ## Files
-This section shows all files for which a commit has been made with changes to the file that match the search query.
-The file path is displayed at the top, followed by a list of commits which match the search query. Clicking on one of these commits will display the [File Popup](/docs/user_interface-search_view#File_Popup).
+This section shows a list of files, where the search query matches a change made to that file by one or more commits.
+The file path is displayed at the top, followed by a list of commits where the matching changes were made. Clicking on one of these commits will display the [File Popup](/docs/user_interface-search_view#File_Popup).
 
 ## File Popup
 This popup displays the diff of a particular file in a particular commit, with the changes that match the search query highlighted. From here there are buttons to jump to the commit, or perform a file blame.
