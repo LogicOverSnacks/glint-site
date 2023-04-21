@@ -451,7 +451,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7115543133338643360" datatype="html">
-        <source>with Email</source><target>使用电子邮件地址登录</target>
+        <source>with Email</source><target>使用电子邮件地址</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/login.component.ts</context>
           <context context-type="linenumber">50</context>
@@ -462,7 +462,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5331330917514601592" datatype="html">
-        <source>with GitHub</source><target>使用 GitHub 登录</target>
+        <source>with GitHub</source><target>使用 GitHub</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/login.component.ts</context>
           <context context-type="linenumber">56</context>
@@ -473,7 +473,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="4650758548144320505" datatype="html">
-        <source>with GitLab</source><target>使用 GitLab 登录</target>
+        <source>with GitLab</source><target>使用 GitLab</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/login.component.ts</context>
           <context context-type="linenumber">62</context>
@@ -484,7 +484,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="7437088725718353872" datatype="html">
-        <source>with Bitbucket</source><target>使用 Bitbucket 登录</target>
+        <source>with Bitbucket</source><target>使用 Bitbucket</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/login.component.ts</context>
           <context context-type="linenumber">69</context>
@@ -495,7 +495,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="6260162059029893059" datatype="html">
-        <source>with Google</source><target>使用 Google 登录</target>
+        <source>with Google</source><target>使用 Google</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/login.component.ts</context>
           <context context-type="linenumber">96</context>

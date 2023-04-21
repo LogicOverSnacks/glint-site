@@ -25,7 +25,7 @@ import { RouterModule } from '@angular/router';
 
     .login-methods {
       margin: 40px auto;
-      width: 180px;
+      width: 185px;
 
       a {
         margin-bottom: 10px;
