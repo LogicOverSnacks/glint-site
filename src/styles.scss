@@ -27,3 +27,10 @@ mat-snack-bar-container {
     --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-primary-palette, 300)};
   }
 }
+
+.country-flag {
+  width: 32px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 5px;
+}

@@ -97,4 +97,16 @@ footer {
   a {
     color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
   }
+
+  mat-select {
+    width: 200px;
+    margin-top: 20px;
+  }
+
+  // in styles.scss due to the html being in an overlay
+  // .country-flag {
+  //   width: 32px;
+  //   height: 24px;
+  //   vertical-align: middle;
+  // }
 }

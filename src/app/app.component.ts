@@ -2,9 +2,11 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSidenavContent, MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -27,11 +29,14 @@ import { UserVm } from './state/user.vm';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
+    FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     RouterModule,
     MatButtonModule,
     MatIconModule,
     MatListModule,
+    MatSelectModule,
     MatSidenavModule,
     MatSnackBarModule,
     MatToolbarModule
@@ -49,6 +54,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   matSidenavContent!: MatSidenavContent;
 
   currentYear = new Date().getFullYear();
+  languageControl = new FormControl<'en' | 'zh'>('en', { nonNullable: true });
 
   isXs = this.breakpointObserver.observe([Breakpoints.XSmall]).pipe(map(({ matches }) => matches));
   ltMd = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small]).pipe(map(({ matches }) => matches));
@@ -128,6 +134,11 @@ export class AppComponent extends BaseComponent implements OnInit {
       .subscribe(releases => {
         this.store.dispatch(new Update(releases));
       });
+
+    this.languageControl.setValue(window.location.href.includes('/zh/') ? 'zh' : 'en');
+    this.languageControl.valueChanges.subscribe(language => {
+      window.location.href = window.location.href.replace(/\/(en|zh)\//, `/${language}/`);
+    });
   }
 
   private toTitle = (value: string) => value

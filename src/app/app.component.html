@@ -64,6 +64,19 @@
         By downloading and using Glint, you agree to the <a routerLink="eula">license agreement</a>, <a routerLink="/terms">terms of service</a> and <a routerLink="/privacy">privacy policy</a>.<br>
         © {{ currentYear }} Logic Over Snacks Ltd.
       </ng-container>
+      <br>
+      <mat-select [formControl]="languageControl">
+        <mat-select-trigger>
+          <span *ngIf="languageControl.value === 'en'">
+            <svg class="country-flag"><use xlink:href="assets/en.svg#svg"></use></svg> English
+          </span>
+          <span *ngIf="languageControl.value === 'zh'">
+            <svg class="country-flag"><use xlink:href="assets/zh.svg#svg"></use></svg> 中文
+          </span>
+        </mat-select-trigger>
+        <mat-option value="en"><svg class="country-flag"><use xlink:href="assets/en.svg#svg"></use></svg> English</mat-option>
+        <mat-option value="zh"><svg class="country-flag"><use xlink:href="assets/zh.svg#svg"></use></svg> 中文</mat-option>
+      </mat-select>
       <hr>
     </footer>
   </mat-sidenav-content>
