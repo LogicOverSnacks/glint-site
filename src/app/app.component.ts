@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
@@ -61,6 +61,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   ltLg = this.breakpointObserver.observe([Breakpoints.XSmall, Breakpoints.Small, Breakpoints.Medium]).pipe(map(({ matches }) => matches));
 
   constructor(
+    @Inject(DOCUMENT) document: Document,
     sanitizer: DomSanitizer,
     private http: HttpClient,
     iconRegistry: MatIconRegistry,
@@ -73,6 +74,9 @@ export class AppComponent extends BaseComponent implements OnInit {
     private githubService: GithubService
   ) {
     super();
+
+    document.documentElement.lang = $localize`en`;
+    canonicalService.updateUrl();
 
     if (!environment.production)
       (window as any)[`ga-disable-${environment.googleMeasurementId}`] = true;
@@ -115,7 +119,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           : $localize`Glint: A Graphical Interface for Git`
         );
 
-        canonicalService.updateCanonicalLink();
+        canonicalService.updateUrl();
 
         // manually scroll to top on route change due to https://github.com/angular/components/issues/4280
         this.matSidenavContent.scrollTo({ top: 0 });
@@ -135,7 +139,7 @@ export class AppComponent extends BaseComponent implements OnInit {
         this.store.dispatch(new Update(releases));
       });
 
-    this.languageControl.setValue(window.location.href.includes('/zh/') ? 'zh' : 'en');
+    this.languageControl.setValue($localize`en` as 'en' | 'zh');
     this.languageControl.valueChanges.subscribe(language => {
       window.location.href = window.location.href.replace(/\/(en|zh)\//, `/${language}/`);
     });
