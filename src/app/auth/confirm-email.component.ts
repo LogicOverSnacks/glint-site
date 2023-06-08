@@ -30,35 +30,42 @@ import { ContainerComponent } from '../shared/container.component';
     ContainerComponent
   ],
   standalone: true,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `.title { margin-bottom: 50px; }`,
-    `form {
+    }
+
+    .title { margin-bottom: 50px; }
+
+    form {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }`,
-    `.form-field {
+    }
+    .form-field {
       min-width: 250px;
       max-width: 400px;
       width: 100%;
       margin-bottom: 10px;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
-      a, .reset {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
-      }
-    `,
-    `.submit-btn { margin-top: 10px; }`,
-    `.error-icon { font-size: 48px; }`
-  ],
+    }
+
+    a, .reset {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      cursor: pointer;
+    }
+
+    .submit-btn { margin-top: 10px; }
+    .error-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  `],
   template: `
     <app-container>
       <header class="mat-headline-3 title" i18n>Confirm Email</header>
