@@ -60,6 +60,7 @@ import { UserVm } from 'src/app/state/user.vm';
       cursor: pointer;
     }
 
+    .password-visibility-btn { margin-right: 10px; }
     .submit-btn {
       margin-top: 10px;
       margin-bottom: 40px;
@@ -86,6 +87,7 @@ import { UserVm } from 'src/app/state/user.vm';
               i18n-placeholder
             >
             <button type="button"
+              class="password-visibility-btn"
               matSuffix
               mat-icon-button
               [matTooltip]="(passwordTooltip | async) ?? ''"
@@ -93,7 +95,7 @@ import { UserVm } from 'src/app/state/user.vm';
             >
               <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="passwordControl.hasError('invalid')" i18n>
+            <mat-error *ngIf="passwordControl.hasError('minlength')" i18n>
               Password must have at least 10 characters
             </mat-error>
             <mat-error *ngIf="passwordControl.hasError('server')">
@@ -111,15 +113,15 @@ import { UserVm } from 'src/app/state/user.vm';
               i18n-placeholder
             >
             <button type="button"
+              class="password-visibility-btn"
               matSuffix
               mat-icon-button
-              [matTooltip]="(newPasswordTooltip | async)?? ''"
-              i18n-matTooltip
+              [matTooltip]="(newPasswordTooltip | async) ?? ''"
               (click)="newPasswordHidden.next(!newPasswordHidden.value)"
             >
               <mat-icon>{{newPasswordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
-            <mat-error *ngIf="newPasswordControl.hasError('invalid')" i18n>
+            <mat-error *ngIf="newPasswordControl.hasError('minlength')" i18n>
               Password must have at least 10 characters
             </mat-error>
             <mat-error *ngIf="newPasswordControl.hasError('server')">

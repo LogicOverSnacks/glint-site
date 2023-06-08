@@ -6,9 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { BehaviorSubject, EMPTY } from 'rxjs';
-import { catchError, takeUntil } from 'rxjs/operators';
+import { catchError, map, takeUntil } from 'rxjs/operators';
 
 import { environment } from 'src/environments/environment';
 import { BaseComponent } from '../shared';
@@ -26,39 +27,44 @@ import { ContainerComponent } from '../shared/container.component';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatTooltipModule,
 
     ContainerComponent
   ],
   standalone: true,
-  styles: [
-    `:host {
+  styles: [`
+    @use '@angular/material' as mat;
+    @use 'src/theme' as theme;
+
+    :host {
       display: block;
       padding-top: 40px;
       text-align: center;
-    }`,
-    `.title { margin-bottom: 50px; }`,
-    `form {
+    }
+
+    .title { margin-bottom: 50px; }
+
+    form {
       display: flex;
       flex-direction: column;
       align-items: center;
-    }`,
-    `.form-field {
+    }
+    .form-field {
       min-width: 250px;
       max-width: 400px;
       width: 100%;
       margin-bottom: 10px;
-    }`,
-    `
-      @use '@angular/material' as mat;
-      @use 'src/theme' as theme;
-      a, .reset {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
-        cursor: pointer;
-      }
-    `,
-    `.submit-btn { margin-top: 10px; }`,
-    `.error-icon { font-size: 48px; }`
-  ],
+    }
+
+    a, .reset {
+      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      cursor: pointer;
+    }
+
+    .password-visibility-btn { margin-right: 10px; }
+    .submit-btn { margin-top: 10px; }
+    .error-icon { font-size: 48px; }
+  `],
   template: `
     <app-container>
       <header class="mat-headline-3 title" i18n>Reset Password</header>
@@ -75,9 +81,24 @@ import { ContainerComponent } from '../shared/container.component';
 
           <mat-form-field class="form-field" appearance="outline">
             <mat-label i18n>Password</mat-label>
-            <input matInput required [formControl]="passwordControl">
+            <input matInput
+              [attr.type]="(passwordHidden | async) ? 'password' : 'text'"
+              required
+              [formControl]="passwordControl"
+              placeholder="Enter your password..."
+              i18n-placeholder
+            >
+            <button type="button"
+              class="password-visibility-btn"
+              matSuffix
+              mat-icon-button
+              [matTooltip]="(passwordTooltip | async) ?? ''"
+              (click)="passwordHidden.next(!passwordHidden.value)"
+            >
+              <mat-icon>{{passwordHidden.value ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </button>
             <mat-error *ngIf="passwordControl.hasError('minlength')" i18n>
-              Please enter a strong password with at least 8 characters
+              Password must have at least 10 characters
             </mat-error>
           </mat-form-field>
 
@@ -154,10 +175,12 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     Validators.required
   ]);
   passwordControl = new FormControl<string | null>(null, [
-    Validators.minLength(8),
+    Validators.minLength(10),
     Validators.required
   ]);
   view = new BehaviorSubject<'init' | 'processing' | 'success' | 'expired' | 'invalid' | 'error'>('init');
+  passwordHidden = new BehaviorSubject(true);
+  passwordTooltip = this.passwordHidden.pipe(map(hidden => hidden ? $localize`Show` : $localize`Hide`));
 
   constructor(
     private http: HttpClient,

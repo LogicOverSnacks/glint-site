@@ -1303,13 +1303,6 @@
           <context context-type="linenumber">128</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1849784011777259553" datatype="html">
-        <source> Please enter a strong password with at least 8 characters </source><target>请输入至少8个字符的强密码：</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/auth/reset-password.component.ts</context>
-          <context context-type="linenumber">80,81</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="6672162009949792944" datatype="html">
         <source> Password changed!<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;" /> You can now close this window and login to Glint. </source><target>密码已更改！<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br&gt;" />您现在可以关闭此窗口并登录 Glint。</target>
         <context-group purpose="location">
