@@ -1,6 +1,7 @@
 {
   "hosting": {
     "public": "docs",
+    "cleanUrls": true,
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,14 +10,11 @@
     "i18n": {
       "root": "/"
     },
-    "redirects": [
-      {
-        "regex": "^/(?P<url>([^e][^h]|[^z][^n]).*|.)$",
-        "destination": "/en/:url",
-        "type": 301
-      }
-    ],
     "rewrites": [
+      {
+        "source": "robots.txt",
+        "destination": "/en/robots.txt"
+      },
       {
         "source": "en/**",
         "destination": "/en/index.html"
@@ -24,6 +22,10 @@
       {
         "source": "zh/**",
         "destination": "/zh/index.html"
+      },
+      {
+        "source": "**",
+        "destination": "/en/index.html"
       }
     ],
     "headers": [
