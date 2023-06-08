@@ -213,7 +213,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     this.view.next('processing');
 
     this.http
-      .post(`${environment.apiBaseUrl}/auth/email/confirm`, {
+      .post(`${environment.apiBaseUrl}/auth/email/reset-password`, {
         email: this.emailControl.value,
         password: this.passwordControl.value,
         lostPasswordCode: this.codeControl.value
