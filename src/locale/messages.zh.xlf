@@ -1304,7 +1304,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="1849784011777259553" datatype="html">
-        <source> Please enter a strong password with these rules: </source><target>请输入符合以下规则的强密码：</target>
+        <source> Please enter a strong password with at least 8 characters </source><target>请输入符合以下规则的强密码：</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/auth/reset-password.component.ts</context>
           <context context-type="linenumber">80,81</context>

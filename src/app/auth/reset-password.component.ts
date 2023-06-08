@@ -76,8 +76,8 @@ import { ContainerComponent } from '../shared/container.component';
           <mat-form-field class="form-field" appearance="outline">
             <mat-label i18n>Password</mat-label>
             <input matInput required [formControl]="passwordControl">
-            <mat-error *ngIf="passwordControl.hasError('pattern')" i18n>
-              Please enter a strong password with these rules:
+            <mat-error *ngIf="passwordControl.hasError('min-length')" i18n>
+              Please enter a strong password with at least 8 characters
             </mat-error>
           </mat-form-field>
 
@@ -154,7 +154,7 @@ export class ResetPasswordComponent extends BaseComponent implements OnInit {
     Validators.required
   ]);
   passwordControl = new FormControl<string | null>(null, [
-    Validators.pattern(/password/),
+    Validators.minLength(8),
     Validators.required
   ]);
   view = new BehaviorSubject<'init' | 'processing' | 'success' | 'expired' | 'invalid' | 'error'>('init');
