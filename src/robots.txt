@@ -1,2 +1,4 @@
 User-agent: *
 Disallow: /account/payment-success
+Disallow: /en/account/payment-success
+Disallow: /zh/account/payment-success
