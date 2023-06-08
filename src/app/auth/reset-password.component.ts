@@ -76,7 +76,7 @@ import { ContainerComponent } from '../shared/container.component';
           <mat-form-field class="form-field" appearance="outline">
             <mat-label i18n>Password</mat-label>
             <input matInput required [formControl]="passwordControl">
-            <mat-error *ngIf="passwordControl.hasError('min-length')" i18n>
+            <mat-error *ngIf="passwordControl.hasError('minlength')" i18n>
               Please enter a strong password with at least 8 characters
             </mat-error>
           </mat-form-field>
