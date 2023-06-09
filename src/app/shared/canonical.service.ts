@@ -8,11 +8,11 @@ export class CanonicalService {
 
   updateUrl() {
     const url = this.document.URL.split('?')[0];
-    this.getCanonicalLinkElement().setAttribute('href', url);
+    this.updateCanonicalLinkElement(url.replace(/https?:\/\/[^\/]+\/?/, ''));
     this.updateAlternateLinkElements(url.replace(/https?:\/\/[^\/]+\/(en|zh)?\/?/, ''));
   }
 
-  private getCanonicalLinkElement() {
+  private updateCanonicalLinkElement(path: string) {
     let element = this.document.querySelector<HTMLLinkElement>(`link[rel='canonical']`);
     if (!element) {
       element = this.document.createElement('link');
@@ -20,7 +20,7 @@ export class CanonicalService {
       this.document.head.appendChild(element);
     }
 
-    return element;
+    element.setAttribute('href', path ? `${location.origin}/${path}` : location.origin);
   }
 
   private updateAlternateLinkElements(path: string) {
@@ -29,13 +29,13 @@ export class CanonicalService {
     elements.forEach(element => {
       switch (element.getAttribute('hreflang')) {
         case 'en':
-          element.setAttribute('href', `${location.origin}/en/${path}`);
+          element.setAttribute('href', path ? `${location.origin}/en/${path}` : `${location.origin}/en`);
           break;
         case 'zh':
-          element.setAttribute('href', `${location.origin}/zh/${path}`);
+          element.setAttribute('href', path ? `${location.origin}/zh/${path}` : `${location.origin}/zh`);
           break;
         default:
-          element.setAttribute('href', `${location.origin}/${path}`);
+          element.setAttribute('href', path ? `${location.origin}/${path}` : location.origin);
           break;
       }
     });

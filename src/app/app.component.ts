@@ -141,7 +141,9 @@ export class AppComponent extends BaseComponent implements OnInit {
 
     this.languageControl.setValue($localize`en` as 'en' | 'zh');
     this.languageControl.valueChanges.subscribe(language => {
-      window.location.href = window.location.href.replace(/\/(en|zh)\//, `/${language}/`);
+      window.location.href = /^https?:\/\/[^\/]+\/(en|zh)/.test(window.location.href)
+        ? window.location.href.replace(/^(https?:\/\/[^\/]+)\/(en|zh)\/(.*)$/, `$1/${language}/$3`)
+        : window.location.href.replace(/^(https?:\/\/[^\/]+)\/(.*)$/, `$1/${language}/$2`);
     });
   }
 
