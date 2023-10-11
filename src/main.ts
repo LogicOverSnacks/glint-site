@@ -18,7 +18,6 @@ import { migrations } from './app/state/migrations';
 import { ReleasesState } from './app/state/releases.state';
 import { environment } from './environments/environment';
 
-
 if (environment.production) enableProdMode();
 
 bootstrapApplication(

@@ -34,7 +34,7 @@ export class CurrencyService {
   }
 
   getCurrency(): Currency {
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const timezone = Intl.DateTimeFormat().resolvedOptions()?.timeZone;
 
     if (CurrencyService.cnyCountries.includes(timezone))
       return 'CNY';
@@ -45,7 +45,7 @@ export class CurrencyService {
     if (CurrencyService.jpyCountries.includes(timezone))
       return 'JPY';
 
-    if (timezone.startsWith('Europe'))
+    if (timezone?.startsWith('Europe'))
       return 'EUR';
 
     return 'USD';
