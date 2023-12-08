@@ -16,6 +16,10 @@
         "destination": "/en/robots.txt"
       },
       {
+        "source": "favicon.ico",
+        "destination": "/en/assets/favicon/favicon.ico"
+      },
+      {
         "source": "en/**",
         "destination": "/en/index.html"
       },
