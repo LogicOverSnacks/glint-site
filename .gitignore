@@ -9,6 +9,7 @@
 /tmp
 /out-tsc
 /bazel-out
+/scripts/favicons
 
 # Node
 /node_modules

@@ -10,6 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "stage": "npm run build && firebase deploy -P staging",
+    "update:favicons": "env-cmd --no-override --silent node ./scripts/update-favicons.mjs",
     "update:releases": "env-cmd --no-override --silent node ./scripts/update-releases.mjs",
     "i18n": "ng extract-i18n --output-path src/locale"
   },
@@ -55,6 +56,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.3.3",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "favicons": "^7.1.4",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
