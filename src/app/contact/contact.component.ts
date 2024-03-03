@@ -81,9 +81,9 @@ import { ContainerComponent } from '../shared/container.component';
 
     <h2 i18n>Alternatively:</h2>
 
-    <h3><ng-container i18n>General Help:</ng-container> <a href="mailto:help@glint.info">help@glint.info</a></h3>
-    <h3><ng-container i18n>Legal Questions:</ng-container> <a href="mailto:legal@glint.info">legal@glint.info</a></h3>
-    <h3><ng-container i18n>Sales Enquiries:</ng-container> <a href="mailto:sales@glint.info">sales@glint.info</a></h3>
+    <h3><ng-container i18n>General Help:</ng-container>&nbsp;<a href="mailto:help@glint.info">help@glint.info</a></h3>
+    <h3><ng-container i18n>Legal Questions:</ng-container>&nbsp;<a href="mailto:legal@glint.info">legal@glint.info</a></h3>
+    <h3><ng-container i18n>Sales Enquiries:</ng-container>&nbsp;<a href="mailto:sales@glint.info">sales@glint.info</a></h3>
   </app-container>
   `
 })
