@@ -87,8 +87,13 @@ export class AppComponent extends BaseComponent implements OnInit {
         .openFromComponent(CookieBannerComponent)
         .afterDismissed()
         .subscribe(dismiss => {
-          if (dismiss.dismissedByAction) store.dispatch(new ConsentToCookies());
+          if (dismiss.dismissedByAction) {
+            store.dispatch(new ConsentToCookies());
+            this.enableCookies();
+          }
         });
+    } else {
+      this.enableCookies();
     }
 
     iconRegistry.addSvgIcon('glint', sanitizer.bypassSecurityTrustResourceUrl('/assets/glint.svg'));
@@ -145,6 +150,26 @@ export class AppComponent extends BaseComponent implements OnInit {
         ? window.location.href.replace(/^(https?:\/\/[^\/]+)\/(en|zh)\/(.*)$/, `$1/${language}/$3`)
         : window.location.href.replace(/^(https?:\/\/[^\/]+)\/(.*)$/, `$1/${language}/$2`);
     });
+  }
+
+  private enableCookies() {
+    gtag('consent', 'update', {
+      /* eslint-disable @typescript-eslint/naming-convention */
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      ad_storage: 'denied',
+      personalization_storage: 'denied',
+      analytics_storage: 'granted',
+      functionality_storage: 'granted',
+      security_storage: 'granted'
+      /* eslint-enable @typescript-eslint/naming-convention */
+    });
+    const gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-CQVVEVKWNF';
+
+    const firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode?.insertBefore(gtagScript, firstScript);
   }
 
   private toTitle = (value: string) => value
