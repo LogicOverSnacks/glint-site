@@ -604,7 +604,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="5171189610898952690" datatype="html">
-        <source>You can buy subscriptions and assign them by email to other users (e.g. teammates)</source><target>您可以购买订阅并通过邮箱登录将其分配给其他用户（例如队友）</target>
+        <source>You can buy subscriptions and assign them by email to yourself or other users (e.g. teammates)</source><target>您可以购买订阅并通过邮箱登录将其分配给自己或其他用户（例如队友）</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/account/manage-account/manage-account.component.html</context>
           <context context-type="linenumber">84</context>

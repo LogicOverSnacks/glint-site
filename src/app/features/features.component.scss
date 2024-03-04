@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '@angular/material' as mat;
 @use 'src/theme' as theme;
 
@@ -21,6 +22,17 @@ app-container {
 .premium {
   .mat-headline-4 {
     color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+  }
+
+  .features {
+    .item.popup {
+      cursor: pointer;
+      text-decoration: underline;
+
+      mat-icon {
+        color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+      }
+    }
   }
 }
 

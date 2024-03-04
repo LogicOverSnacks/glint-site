@@ -18,6 +18,8 @@ import { ContainerComponent } from '../shared/container.component';
 import { Currency, CurrencyService } from '../shared/currency.service';
 import { PriceService } from '../shared/price.service';
 import { AuthState, Logout } from '../state/auth.state';
+import { FeaturesDialogComponent } from './features-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -28,6 +30,7 @@ import { AuthState, Logout } from '../state/auth.state';
     RouterModule,
     MatButtonModule,
     MatCardModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatProgressSpinnerModule,
@@ -61,11 +64,16 @@ export class FeaturesComponent {
     private route: ActivatedRoute,
     private router: Router,
     private breakpointObserver: BreakpointObserver,
+    private dialog: MatDialog,
     private store: Store,
     private api: ApiService,
     private currencyService: CurrencyService,
     private priceService: PriceService
   ) {}
+
+  openFeatureDialog(image: string) {
+    this.dialog.open(FeaturesDialogComponent, { data: `/assets/features/animated/${image}.gif` });
+  }
 
   buyLicense() {
     if (this.purchaseInProgress.value) return;

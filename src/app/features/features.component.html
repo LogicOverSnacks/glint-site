@@ -81,9 +81,15 @@
 
     <ul class="features">
       <li class="item highlight"><mat-icon>check</mat-icon><ng-container i18n>All basic features</ng-container></li>
-      <li class="item"><mat-icon>tab</mat-icon><ng-container i18n>Unlimited tabs</ng-container></li>
-      <li class="item"><mat-icon>light_mode</mat-icon><ng-container i18n>Light theme</ng-container></li>
-      <li class="item"><mat-icon svgIcon="pull-request"></mat-icon><ng-container i18n>Manage pull requests</ng-container></li>
+      <li class="item popup" (click)="openFeatureDialog('unlimited_tabs')">
+        <mat-icon>tab</mat-icon><ng-container i18n>Unlimited tabs</ng-container>
+      </li>
+      <li class="item popup" (click)="openFeatureDialog('light_theme')">
+        <mat-icon>light_mode</mat-icon><ng-container i18n>Light theme</ng-container>
+      </li>
+      <li class="item popup" (click)="openFeatureDialog('pull_requests')">
+        <mat-icon svgIcon="pull-request"></mat-icon><ng-container i18n>Manage pull requests</ng-container>
+      </li>
     </ul>
   </mat-card>
 </app-container>
