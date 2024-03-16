@@ -162,7 +162,7 @@ export class OAuthLoginComponent implements OnInit {
       redirectUri: `${location.origin}/account/login/github`,
       storageKey: 'githubState',
       loginScopes: 'user:email',
-      glintScopes: 'repo user:email'
+      glintScopes: 'repo user:email workflow'
     },
     gitlab: {
       clientId: environment.gitlabClientId,
