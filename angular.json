@@ -127,16 +127,16 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "glint-site:build:production"
+              "buildTarget": "glint-site:build:production"
             },
             "staging": {
-              "browserTarget": "glint-site:build:staging"
+              "buildTarget": "glint-site:build:staging"
             },
             "development": {
-              "browserTarget": "glint-site:build:development"
+              "buildTarget": "glint-site:build:development"
             },
             "development-zh": {
-              "browserTarget": "glint-site:build:development-zh"
+              "buildTarget": "glint-site:build:development-zh"
             }
           },
           "defaultConfiguration": "development"
@@ -144,7 +144,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "glint-site:build"
+            "buildTarget": "glint-site:build"
           }
         },
         "test": {
