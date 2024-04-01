@@ -2,6 +2,7 @@
 
 .env
 /.firebase
+firebase-debug.log
 
 # Compiled output
 /docs

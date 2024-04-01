@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16.17.1
+          node-version: 20.9.0
           cache: 'npm'
 
       - name: Build
@@ -24,7 +24,7 @@ jobs:
           npm run build
 
       - name: Deploy
-        uses: w9jds/firebase-action@v11.24.1
+        uses: w9jds/firebase-action@v13.6.0
         with:
           args: deploy --only hosting --project staging
         env:
