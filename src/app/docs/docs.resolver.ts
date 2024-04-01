@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { catchError, EMPTY, Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class DocsResolver implements Resolve<Observable<string>> {
+export class DocsResolver  {
   constructor(
     private http: HttpClient,
     private router: Router
