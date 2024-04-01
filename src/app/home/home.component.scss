@@ -35,6 +35,8 @@ article {
   }
 
   .main-title {
+    display: inline-block;
+    height: 96px;
     margin-left: -6px;
     margin-bottom: 20px;
     font-family: 'Alegreya Sans SC', sans-serif;
@@ -45,6 +47,7 @@ article {
     &.mat-headline-2 {
       font-size: 70px;
       margin-left: -2px;
+      height: 60px;
     }
   }
 

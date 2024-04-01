@@ -20,10 +20,29 @@
         <a *ngIf="releaseData.platform !== 'Other'" routerLink="/download" class="download-other" i18n>Other platform downloads</a>
       </div>
 
-      <a *ngIf="(ltMd | async) === false" routerLink="/playground" class="screenshot">
-        <img src="/assets/screenshot.webp" width="1920" height="1080" alt="Screenshot of Glint" i18n-src i18n-alt>
+      <a class="screenshot" [routerLink]="(ltMd | async) ? '' : '/playground'">
+        <img src="/assets/screenshot.webp"
+          srcset="
+            /assets/screenshot-1536.webp 1536w,
+            /assets/screenshot-1200.webp 1200w,
+            /assets/screenshot-1000.webp 1000w,
+            /assets/screenshot-895.webp 895w,
+            /assets/screenshot-600.webp 600w,
+            /assets/screenshot-400.webp 400w
+          "
+          sizes="
+            (max-width: 599.98px) calc(100vw - 32px),
+            (max-width: 959.98px) calc(100vw - 64px),
+            (max-width: 1279.98px) 895px,
+            (max-width: 1919.98px) calc(100vw - 384px),
+            1536px"
+          width="1920"
+          height="1080"
+          alt="Screenshot of Glint"
+          i18n-src
+          i18n-alt
+        >
       </a>
-      <img *ngIf="ltMd | async" class="screenshot" src="/assets/screenshot-sm.webp" width="960" height="540" alt="Screenshot of Glint" i18n-src i18n-alt>
     </app-container>
   </article>
 
@@ -33,11 +52,11 @@
         <h2 class="title" [ngClass]="(ltMd | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Sleek &amp; Powerful</h2>
         <p class="text" [style.margin-bottom.px]="(isXs | async) ? 20 : 40" i18n>Perform complex tasks without breaking a sweat.</p>
         <div class="feature-image" [@fade]="currentFeature | async">
-          <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" alt="Search within files & commits" i18n-src i18n-alt>
-          <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" alt="Manage multiple merges simultaneously" i18n-src i18n-alt>
-          <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" alt="Rewrite commit history" i18n-src i18n-alt>
-          <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" alt="Move branches manually" i18n-src i18n-alt>
-          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" alt="Resolve merge conflicts 3-way" i18n-src i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'search'" src="/assets/features/search.png" fetchpriority="low" alt="Search within files & commits" i18n-src i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'merge'" src="/assets/features/merge.png" fetchpriority="low" alt="Manage multiple merges simultaneously" i18n-src i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'edit'" src="/assets/features/edit.png" fetchpriority="low" alt="Rewrite commit history" i18n-src i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'move'" src="/assets/features/move.png" fetchpriority="low" alt="Move branches manually" i18n-src i18n-alt>
+          <img [class.show]="(lastFeature | async) === 'resolve'" src="/assets/features/resolve.png" fetchpriority="low" alt="Resolve merge conflicts 3-way" i18n-src i18n-alt>
         </div>
       </div>
       <div>
@@ -124,7 +143,7 @@
             <ng-container i18n>All essential features completely free</ng-container>
           </li>
           <li>
-            <mat-icon fontSet="material-icons-outlined">timer_off</mat-icon>
+            <mat-icon>timer_off</mat-icon>
             <ng-container i18n>No time limits or trial periods</ng-container>
           </li>
           <li>
