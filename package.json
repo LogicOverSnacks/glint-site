@@ -7,10 +7,11 @@
     "start:zh": "ng serve --configuration development-zh",
     "start:prod": "npm run build && firebase emulators:start",
     "build": "npm run update:releases && ng build",
+    "build:staging": "npm run update:releases && ng build --configuration staging",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "stage": "npm run build && firebase deploy -P staging",
+    "stage": "npm run build --development staging && firebase deploy -P staging",
     "update:favicons": "env-cmd --no-override --silent node ./scripts/update-favicons.mjs",
     "update:releases": "env-cmd --no-override --silent node ./scripts/update-releases.mjs",
     "i18n": "ng extract-i18n --output-path src/locale"
