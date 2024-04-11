@@ -21,7 +21,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           npm ci
-          npm run build
+          npm run build --configuration staging
 
       - name: Deploy
         uses: w9jds/firebase-action@v13.6.0
