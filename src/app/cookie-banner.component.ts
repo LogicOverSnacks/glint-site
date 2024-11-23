@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatSnackBarModule
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -45,7 +44,7 @@ import { RouterModule } from '@angular/router';
         OK, got it
       </button>
     </footer>
-  `,
+  `
 })
 export class CookieBannerComponent {
   constructor(

@@ -9,7 +9,6 @@ import { ContainerComponent } from '../shared/container.component';
     CommonModule,
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./cookies.component.scss'],
   templateUrl: './cookies.component.html'
 })

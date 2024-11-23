@@ -10,7 +10,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./refund-policy.component.scss'],
   templateUrl: './refund-policy.component.html'
 })

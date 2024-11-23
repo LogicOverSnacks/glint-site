@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

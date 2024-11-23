@@ -29,7 +29,6 @@ import { BaseComponent } from '../../shared';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

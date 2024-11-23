@@ -55,7 +55,6 @@ interface ProviderDetails {
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

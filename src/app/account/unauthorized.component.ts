@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

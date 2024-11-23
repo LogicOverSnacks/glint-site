@@ -41,7 +41,6 @@ import { UserVm } from './state/user.vm';
     MatSnackBarModule,
     MatToolbarModule
   ],
-  standalone: true,
   selector: 'app-root',
   styleUrls: ['./app.component.scss'],
   templateUrl: './app.component.html'

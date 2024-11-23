@@ -32,7 +32,6 @@ import { UserVm } from 'src/app/state/user.vm';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

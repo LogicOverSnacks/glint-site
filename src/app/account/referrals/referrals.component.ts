@@ -26,7 +26,6 @@ import { ContainerComponent } from 'src/app/shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./referrals.component.scss'],
   templateUrl: './referrals.component.html'
 })

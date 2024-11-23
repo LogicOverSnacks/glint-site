@@ -20,7 +20,6 @@ import { ReleasesState } from '../state/releases.state';
     ContainerComponent
   ],
   selector: 'app-download',
-  standalone: true,
   styleUrls: ['./download.component.scss'],
   templateUrl: './download.component.html'
 })

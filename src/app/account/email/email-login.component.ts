@@ -36,7 +36,6 @@ import { environment } from 'src/environments/environment';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

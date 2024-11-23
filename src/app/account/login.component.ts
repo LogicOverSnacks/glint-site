@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatIconModule
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;

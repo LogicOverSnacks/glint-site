@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [],
-  standalone: true,
   styles: [`
     :host {
       display: block;
