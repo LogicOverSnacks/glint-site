@@ -45,7 +45,7 @@ import { ContainerComponent } from '../shared/container.component';
         height: 50px;
         padding-top: 5px;
         padding-bottom: 5px;
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
 
         img {
           margin-right: 5px;
@@ -65,7 +65,7 @@ import { ContainerComponent } from '../shared/container.component';
     }
 
     a {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
     }
   `],
   template: `

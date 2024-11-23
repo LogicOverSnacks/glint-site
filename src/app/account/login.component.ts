@@ -20,7 +20,7 @@ import { RouterModule } from '@angular/router';
       text-align: center;
     }
 
-    .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+    .link { color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300); }
 
     .login-methods {
       margin: 40px auto;

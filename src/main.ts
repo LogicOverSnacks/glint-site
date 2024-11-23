@@ -38,7 +38,7 @@ bootstrapApplication(
             suppressErrors: false
           }
         }),
-        NgxsStoragePluginModule.forRoot({ key: ['auth'], migrations: migrations }),
+        NgxsStoragePluginModule.forRoot({ keys: ['auth'], migrations: migrations }),
         NgxsReduxDevtoolsPluginModule.forRoot({
           disabled: environment.production
         })

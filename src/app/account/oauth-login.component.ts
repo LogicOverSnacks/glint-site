@@ -66,7 +66,7 @@ interface ProviderDetails {
     }
 
     .link {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
       cursor: pointer;
     }
 
