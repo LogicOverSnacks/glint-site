@@ -21,7 +21,7 @@ app-container {
 
 .premium {
   .mat-headline-4 {
-    color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+    color: mat.m2-get-color-from-palette(theme.$app-accent-palette, A100);
   }
 
   .features {
@@ -30,7 +30,7 @@ app-container {
       text-decoration: underline;
 
       mat-icon {
-        color: mat.get-color-from-palette(theme.$app-accent-palette, A100);
+        color: mat.m2-get-color-from-palette(theme.$app-accent-palette, A100);
       }
     }
   }
@@ -76,7 +76,7 @@ app-container {
   }
 }
 
-.link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+.link { color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300); }
 
 .features {
   margin: 0;
@@ -101,6 +101,6 @@ app-container {
   }
 
   .highlight {
-    background-color: mat.get-color-from-palette(theme.$app-primary-palette, 900);
+    background-color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 900);
   }
 }

@@ -42,7 +42,7 @@ mat-toolbar {
       margin: 0 20px;
 
       > a.active {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
       }
     }
   }
@@ -58,12 +58,12 @@ mat-toolbar {
       font-size: 16px;
 
       &.active {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
       }
     }
 
     .download-button {
-      background-color: mat.get-color-from-palette(theme.$app-accent-palette, 300);
+      background-color: mat.m2-get-color-from-palette(theme.$app-accent-palette, 300);
     }
   }
 
@@ -81,7 +81,7 @@ mat-sidenav-container {
 
   .mat-mdc-list-item {
     &.active {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
     }
   }
 }
@@ -95,7 +95,7 @@ footer {
   }
 
   a {
-    color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+    color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
   }
 
   mat-select {

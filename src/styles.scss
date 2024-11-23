@@ -20,11 +20,11 @@ mat-snack-bar-container {
   --mdc-snackbar-supporting-text-color: #000 !important;
 
   &.error {
-    --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-warn-palette, 300)};
+    --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette(theme.$app-warn-palette, 300)};
   }
 
   &.success {
-    --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-primary-palette, 300)};
+    --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette(theme.$app-primary-palette, 300)};
   }
 }
 
