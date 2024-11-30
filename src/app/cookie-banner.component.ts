@@ -10,7 +10,6 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatSnackBarModule
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -26,7 +25,7 @@ import { RouterModule } from '@angular/router';
         }
 
         &.dismiss-btn {
-          --mat-mdc-snack-bar-button-color: #{mat.get-color-from-palette(theme.$app-primary-palette, 700)};
+          --mat-mdc-snack-bar-button-color: #{mat.m2-get-color-from-palette(theme.$app-primary-palette, 700)};
         }
 
         &:last-child {
@@ -45,7 +44,7 @@ import { RouterModule } from '@angular/router';
         OK, got it
       </button>
     </footer>
-  `,
+  `
 })
 export class CookieBannerComponent {
   constructor(

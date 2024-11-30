@@ -38,7 +38,6 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./features.component.scss'],
   templateUrl: './features.component.html'
 })

@@ -45,7 +45,6 @@ interface Heading {
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./docs.component.scss'],
   templateUrl: './docs.component.html'
 })

@@ -14,7 +14,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./playground.component.scss'],
   templateUrl: './playground.component.html'
 })

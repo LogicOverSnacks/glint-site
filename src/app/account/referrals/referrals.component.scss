@@ -7,7 +7,7 @@
   text-align: center;
 }
 
-a { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+a { color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300); }
 
 .create {
   p {

@@ -44,7 +44,6 @@ import { UserVm } from '../../state/user.vm';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./manage-account.component.scss'],
   templateUrl: './manage-account.component.html'
 })

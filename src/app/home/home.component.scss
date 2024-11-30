@@ -8,7 +8,7 @@
 
 article {
   padding: 60px 0;
-  background: mat.get-color-from-palette(theme.$app-primary-palette, 400);
+  background: mat.m2-get-color-from-palette(theme.$app-primary-palette, 400);
   font-size: 18px;
 
   &.banner {
@@ -25,7 +25,7 @@ article {
   }
 
   &:nth-child(even) {
-    background: mat.get-color-from-palette(map.get(mat.get-color-config(theme.$app-theme), background), background);
+    background: mat.m2-get-color-from-palette(map.get(mat.m2-get-color-config(theme.$app-theme), background), background);
 
     &.banner {
       app-container {
@@ -52,7 +52,7 @@ article {
   }
 
   .sub-title {
-    color: mat.get-color-from-palette(theme.$app-primary-palette, 800);
+    color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 800);
     margin-bottom: 40px;
   }
 
@@ -64,13 +64,13 @@ article {
   }
 
   .download-button {
-    background-color: mat.get-color-from-palette(theme.$app-accent-palette, 300);
+    background-color: mat.m2-get-color-from-palette(theme.$app-accent-palette, 300);
     margin-bottom: 15px;
     height: 50px;
   }
 
   .download-other {
-    color: mat.get-color-from-palette(theme.$app-primary-palette, 800);
+    color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 800);
     font-size: 16px;
     font-weight: 600;
   }
@@ -112,7 +112,7 @@ article {
   }
 
   .link {
-    color: mat.get-color-from-palette(theme.$app-primary-palette, 800);
+    color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 800);
   }
 
   .os-icon {

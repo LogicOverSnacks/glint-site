@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
   imports: [
     RouterModule
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -17,7 +16,7 @@ import { RouterModule } from '@angular/router';
       text-align: center;
     }
 
-    a { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+    a { color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300); }
   `],
   template: `
     <header class="mat-headline-3 title" i18n>403 Unauthorized</header>

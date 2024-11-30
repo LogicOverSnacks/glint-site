@@ -8,7 +8,6 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
     CommonModule,
     MatDialogModule
   ],
-  standalone: true,
   styles: [`
     img {
       max-width: 100%;

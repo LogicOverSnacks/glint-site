@@ -10,7 +10,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./terms.component.scss'],
   templateUrl: './terms.component.html'
 })

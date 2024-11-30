@@ -31,7 +31,7 @@ app-container {
 
   mat-expansion-panel {
     &.active {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
     }
 
     mat-expansion-panel-header {
@@ -56,10 +56,10 @@ app-container {
 
     a {
       display: block;
-      color: mat.get-color-from-palette(map.get(mat.get-color-config(theme.$app-theme), foreground), text);
+      color: mat.m2-get-color-from-palette(map.get(mat.m2-get-color-config(theme.$app-theme), foreground), text);
 
       &.active {
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
       }
     }
   }
@@ -71,7 +71,7 @@ article {
 
   markdown ::ng-deep {
     h1 {
-      @include mat.typography-level(theme.$app-typography, headline-3);
+      @include mat.m2-typography-level(theme.$app-typography, headline-3);
       margin-top: 60px;
 
       &:first-child {
@@ -79,11 +79,11 @@ article {
       }
     }
     h2 {
-      @include mat.typography-level(theme.$app-typography, headline-4);
+      @include mat.m2-typography-level(theme.$app-typography, headline-4);
       margin-top: 40px;
     }
     h3 {
-      @include mat.typography-level(theme.$app-typography, headline-5);
+      @include mat.m2-typography-level(theme.$app-typography, headline-5);
       margin-top: 40px;
     }
     h4 {
@@ -100,13 +100,13 @@ article {
 
       .language-bash::before {
         content: '$';
-        color: mat.get-color-from-palette(map.get(mat.get-color-config(theme.$app-theme), foreground), disabled);
+        color: mat.m2-get-color-from-palette(map.get(mat.m2-get-color-config(theme.$app-theme), foreground), disabled);
         margin-right: 10px;
       }
     }
 
     a {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
     }
 
     img {

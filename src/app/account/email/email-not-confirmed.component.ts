@@ -19,7 +19,6 @@ import { BaseComponent } from '../../shared';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -31,7 +30,7 @@ import { BaseComponent } from '../../shared';
     }
 
     a, .reset {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
       cursor: pointer;
     }
 

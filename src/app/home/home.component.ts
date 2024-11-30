@@ -38,7 +38,6 @@ import { ReleasesState } from '../state/releases.state';
     ContainerComponent,
     DownloadComponent
   ],
-  standalone: true,
   styleUrls: ['./home.component.scss'],
   templateUrl: './home.component.html'
 })

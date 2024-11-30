@@ -14,7 +14,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -46,7 +45,7 @@ import { ContainerComponent } from '../shared/container.component';
         height: 50px;
         padding-top: 5px;
         padding-bottom: 5px;
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
 
         img {
           margin-right: 5px;
@@ -66,25 +65,25 @@ import { ContainerComponent } from '../shared/container.component';
     }
 
     a {
-      color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+      color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
     }
   `],
   template: `
-  <app-container>
-    <h1 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Contact</h1>
+    <app-container>
+      <h1 class="title" [ngClass]="(isXs | async) ? 'mat-headline-4' : 'mat-headline-3'" i18n>Contact</h1>
 
-    <div class="discord-btn">
-      <a target="_blank" href="https://discord.gg/wXv8WUeFYZ" mat-stroked-button>
-        <img src="assets/discord.svg" alt="Join Discord" i18n-alt> <span class="white">|</span> <ng-container i18n>Join</ng-container>
-      </a>
-    </div>
+      <div class="discord-btn">
+        <a target="_blank" href="https://discord.gg/wXv8WUeFYZ" mat-stroked-button>
+          <img src="assets/discord.svg" alt="Join Discord" i18n-alt> <span class="white">|</span> <ng-container i18n>Join</ng-container>
+        </a>
+      </div>
 
-    <h2 i18n>Alternatively:</h2>
+      <h2 i18n>Alternatively:</h2>
 
-    <h3><ng-container i18n>General Help:</ng-container>&nbsp;<a href="mailto:help@glint.info">help&#64;glint.info</a></h3>
-    <h3><ng-container i18n>Legal Questions:</ng-container>&nbsp;<a href="mailto:legal@glint.info">legal&#64;glint.info</a></h3>
-    <h3><ng-container i18n>Sales Enquiries:</ng-container>&nbsp;<a href="mailto:sales@glint.info">sales&#64;glint.info</a></h3>
-  </app-container>
+      <h3><ng-container i18n>General Help:</ng-container>&nbsp;<a href="mailto:help@glint.info">help&#64;glint.info</a></h3>
+      <h3><ng-container i18n>Legal Questions:</ng-container>&nbsp;<a href="mailto:legal@glint.info">legal&#64;glint.info</a></h3>
+      <h3><ng-container i18n>Sales Enquiries:</ng-container>&nbsp;<a href="mailto:sales@glint.info">sales&#64;glint.info</a></h3>
+    </app-container>
   `
 })
 export class ContactComponent {

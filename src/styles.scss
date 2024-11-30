@@ -7,7 +7,8 @@ body, h1, h2, h3, h4, p, li { margin: 0; }
 a { color: unset; text-decoration: unset; }
 
 @include mat.all-component-typographies(theme.$app-typography);
-@include mat.core();
+@include mat.elevation-classes();
+@include mat.app-background();
 @include mat.all-component-themes(theme.$app-theme);
 
 // TODO: remove this when https://github.com/angular/components/issues/15326 is fixed
@@ -20,11 +21,11 @@ mat-snack-bar-container {
   --mdc-snackbar-supporting-text-color: #000 !important;
 
   &.error {
-    --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-warn-palette, 300)};
+    --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette(theme.$app-warn-palette, 300)};
   }
 
   &.success {
-    --mdc-snackbar-container-color: #{mat.get-color-from-palette(theme.$app-primary-palette, 300)};
+    --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette(theme.$app-primary-palette, 300)};
   }
 }
 

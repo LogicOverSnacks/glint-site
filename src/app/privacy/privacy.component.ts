@@ -12,7 +12,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./privacy.component.scss'],
   templateUrl: './privacy.component.html'
 })

@@ -14,7 +14,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styles: [`
     @use '@angular/material' as mat;
     @use 'src/theme' as theme;
@@ -24,7 +23,7 @@ import { ContainerComponent } from '../shared/container.component';
       padding-top: 40px;
     }
 
-    .link { color: mat.get-color-from-palette(theme.$app-primary-palette, 300); }
+    .link { color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300); }
 
     .faq-panel {
       .title {
@@ -34,13 +33,13 @@ import { ContainerComponent } from '../shared/container.component';
 
       h3 {
         font-size: 28px;
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 300);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 300);
         margin-top: 40px;
       }
 
       h4 {
         font-size: 18px;
-        color: mat.get-color-from-palette(theme.$app-primary-palette, 200);
+        color: mat.m2-get-color-from-palette(theme.$app-primary-palette, 200);
         margin-top: 15px;
         margin-bottom: 10px;
       }

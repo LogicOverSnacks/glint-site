@@ -12,7 +12,6 @@ import { ContainerComponent } from '../shared/container.component';
 
     ContainerComponent
   ],
-  standalone: true,
   styleUrls: ['./eula.component.scss'],
   templateUrl: './eula.component.html'
 })
