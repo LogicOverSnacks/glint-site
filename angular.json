@@ -96,6 +96,7 @@
               "outputHashing": "all"
             },
             "staging": {
+              "localize": true,
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
