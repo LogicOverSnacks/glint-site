@@ -33,7 +33,8 @@
           "options": {
             "localize": ["en"],
             "outputPath": {
-              "base": "docs"
+              "base": "docs",
+              "browser": ""
             },
             "index": "src/index.html",
             "polyfills": [
